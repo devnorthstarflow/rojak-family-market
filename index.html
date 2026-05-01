@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rojak Family Market — Street Food · Hot de Gamme</title>
+<title>Rojak Family Market — Street Food · Saveurs d'Asie</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -29,6 +29,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover{color:var(--cream);}
 .nav-cta{font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);background:var(--gold);padding:0.6rem 1.4rem;text-decoration:none;transition:opacity 0.2s;}
 .nav-cta:hover{opacity:0.85;}
+
+.lang-btn{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.12em;color:var(--cream);background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);padding:0.45rem 0.9rem;cursor:pointer;transition:all 0.2s;margin-right:0.5rem;}
+.lang-btn:hover{background:rgba(255,255,255,0.18);}
+
 
 /* HERO */
 .hero{min-height:100vh;background:var(--green);display:grid;grid-template-columns:1fr 1fr;padding-top:72px;position:relative;overflow:hidden;}
@@ -169,21 +173,24 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
     <li><a href="#lieu">Le lieu</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Être prévenu·e</a>
+  <div style="display:flex;align-items:center;gap:0.5rem;">
+    <button id="lang-btn" class="lang-btn" onclick="toggleLang()">EN</button>
+    <a href="#contact" class="nav-cta" id="nav-cta-btn">Être prévenu·e</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-badge">Ouverture prochaine · Pays de Gex</div>
+    <div class="hero-badge" data-key="hero-badge">Ouverture prochaine · Pays de Gex</div>
     <h1 class="hero-title">
       <span class="red">ROJAK</span><br>
       FAMILY<br>
       <span class="gold">MARKET</span>
     </h1>
-    <div class="hero-sub">Street Food · Hot de Gamme</div>
+    <div class="hero-sub" data-key="hero-sub">Street Food · Saveurs d'Asie</div>
     <div class="hero-divider"><span>Singapour × Pays de Gex</span></div>
-    <p class="hero-desc">L'esprit des hawker centers de Singapour — cuisine ouverte, produits authentiques, table partagée — au cœur du Pays de Gex.</p>
+    <p class="hero-desc" data-key="hero-desc">L'esprit des hawker centers de Singapour — cuisine ouverte, produits authentiques, table partagée — au cœur du Pays de Gex.</p>
     <div class="hero-actions">
       <a href="#menu" class="btn-primary">Voir la carte</a>
       <a href="#concept" class="btn-secondary">Notre histoire →</a>
@@ -215,7 +222,7 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
 
 <!-- CONCEPT -->
 <section id="concept" class="sec sec-dark">
-  <div class="label">Notre histoire</div>
+  <div class="label" data-key="label-concept">Notre histoire</div>
   <div class="concept-grid">
     <div>
       <h2 class="stitle">Un <span>mélange</span><br>qui a du goût</h2>
@@ -243,7 +250,7 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
 
 <!-- MENU -->
 <section id="menu" class="sec sec-green" style="padding-bottom:0;">
-  <div class="label">La carte</div>
+  <div class="label" data-key="label-menu">La carte</div>
   <div class="menu-intro">
     <h2 class="stitle">Street food<br><span>à la singapourienne</span></h2>
     <p class="body-p">Menu court, maîtrisé, authentique. Chaque plat a une histoire et une âme singapourienne.</p>
@@ -331,7 +338,7 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
 
 <!-- LIEU -->
 <section id="lieu" class="sec sec-dark">
-  <div class="label">Le lieu</div>
+  <div class="label" data-key="label-lieu">Le lieu</div>
   <div class="lieu-grid">
     <div>
       <h2 class="stitle">Un espace<br><span>pensé pour vivre</span></h2>
@@ -371,17 +378,17 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
 
 <!-- CTA -->
 <section id="contact" class="cta-sec">
-  <div class="cta-label">Bientôt dans le Pays de Gex</div>
+  <div class="cta-label" data-key="cta-label">Bientôt dans le Pays de Gex</div>
   <h2 class="cta-title">ON VIENT<br>ON PARTAGE<br><span>ON MÉLANGE</span></h2>
-  <p class="cta-sub">Rojak Family Market arrive bientôt. Laissez votre email pour être prévenus en avant-première de l'ouverture et des pop-ups.</p>
+  <p class="cta-sub" data-key="cta-sub">Rojak Family Market arrive bientôt. Laissez votre email pour être prévenus en avant-première de l'ouverture et des pop-ups.</p>
   <div id="form-wrap">
     <div class="form-row">
       <input type="email" id="email-in" class="email-in" placeholder="votre@email.com">
-      <button class="form-btn" onclick="sub()">Je veux être prévenu·e</button>
+      <button class="form-btn" data-key="form-btn" onclick="sub()">Je veux être prévenu·e</button>
     </div>
-    <p class="form-note">Pas de spam. Juste l'essentiel — l'ouverture, les pop-ups, les premières recettes.</p>
+    <p class="form-note" data-key="form-note">Pas de spam. Juste l'essentiel — l'ouverture, les pop-ups, les premières recettes.</p>
   </div>
-  <div class="form-success" id="fs">C'est noté ✦ On vous prévient dès qu'on ouvre !</div>
+  <div class="form-success" id="fs"><span data-key="success-msg">C'est noté ✦ On vous prévient dès qu'on ouvre !</span></div>
 </section>
 
 <footer>
@@ -398,6 +405,34 @@ function sub(){
   document.getElementById('fs').style.display='block';
 }
 document.getElementById('email-in').addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+</script>
+
+<script>
+var lang = 'fr';
+var T = {
+  'hero-badge':   {fr:'Ouverture prochaine · Pays de Gex', en:'Opening soon · Pays de Gex'},
+  'hero-sub':     {fr:'Street Food · Saveurs d'Asie', en:'Street Food · Flavors of Asia'},
+  'hero-desc':    {fr:"L'esprit des hawker centers de Singapour — cuisine ouverte, produits authentiques, table partagée — au cœur du Pays de Gex.", en:"The spirit of Singapore's hawker centers — open kitchen, authentic products, shared table — in the heart of Pays de Gex."},
+  'label-concept':{fr:'Notre histoire', en:'Our story'},
+  'label-menu':   {fr:'La carte', en:'The menu'},
+  'label-lieu':   {fr:'Le lieu', en:'The place'},
+  'cta-label':    {fr:'Bientôt dans le Pays de Gex', en:'Coming soon to Pays de Gex'},
+  'cta-sub':      {fr:"Rojak Family Market arrive bientôt. Laissez votre email pour être prévenus en avant-première de l'ouverture et des pop-ups.", en:"Rojak Family Market is coming soon. Leave your email to be notified first about the opening and pop-up events."},
+  'form-note':    {fr:"Pas de spam. Juste l'essentiel — l'ouverture, les pop-ups, les premières recettes.", en:"No spam. Just the essentials — the opening, pop-ups, first recipes."},
+  'form-btn':     {fr:'Je veux être prévenu·e', en:'Keep me informed'},
+  'success-msg':  {fr:"C'est noté ✦ On vous prévient dès qu'on ouvre !", en:"Noted ✦ We'll let you know as soon as we open!"},
+};
+function toggleLang(){
+  lang = lang==='fr'?'en':'fr';
+  document.getElementById('lang-btn').textContent = lang==='fr'?'EN':'FR';
+  document.getElementById('nav-cta-btn').textContent = lang==='fr'?'Être prévenu·e':'Stay informed';
+  var emailIn = document.getElementById('email-in');
+  if(emailIn) emailIn.placeholder = lang==='fr'?'votre@email.com':'your@email.com';
+  for(var k in T){
+    var els = document.querySelectorAll('[data-key="'+k+'"]');
+    els.forEach(function(el){ el.innerHTML = T[k][lang]; });
+  }
+}
 </script>
 </body>
 </html>

@@ -499,8 +499,7 @@ var T = {
   // FOOTER
   'footer-tag':  {fr:'"On vient, on partage, on mélange."', en:'"We come, we share, we blend."'},
 };
-function toggleLang(){
-  lang = lang==='fr'?'en':'fr';
+function applyLang(){
   document.getElementById('lang-btn').textContent = lang==='fr'?'EN':'FR';
   document.getElementById('nav-cta-btn').textContent = lang==='fr'?'Être prévenu·e':'Stay informed';
   var emailIn = document.getElementById('email-in');
@@ -509,7 +508,21 @@ function toggleLang(){
     var els = document.querySelectorAll('[data-key="'+k+'"]');
     els.forEach(function(el){ el.innerHTML = T[k][lang]; });
   }
+  // Update URL without reload
+  var url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  window.history.replaceState({}, '', url.toString());
 }
+function toggleLang(){
+  lang = lang==='fr'?'en':'fr';
+  applyLang();
+}
+// Auto-detect lang from URL on page load
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var urlLang = params.get('lang');
+  if(urlLang === 'en'){ lang = 'en'; applyLang(); }
+})();
 </script>
 </body>
 </html>

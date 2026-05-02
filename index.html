@@ -56,9 +56,9 @@ h1.hero-title .red{color:var(--red);} h1.hero-title .gold{color:var(--gold);}
 .btn-primary:hover{background:transparent;color:var(--red);}
 .btn-secondary{font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);padding-bottom:2px;transition:color 0.2s;}
 .btn-secondary:hover{color:var(--cream);}
-.hero-right{display:flex;align-items:center;justify-content:center;position:relative;z-index:1;padding:4rem 3rem;}
-.hero-logo-wrap{position:relative;animation:fadeUp 0.8s ease 0.3s both;}
-.hero-logo-wrap img{width:520px;max-width:95%;height:auto;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.6);}
+.hero-right{display:flex;align-items:center;justify-content:flex-end;position:relative;z-index:1;padding:5rem 3rem 5rem 1rem;}
+.hero-logo-wrap{position:relative;animation:fadeUp 0.8s ease 0.3s both;width:100%;}
+.hero-logo-wrap img{width:100%;max-width:100%;height:auto;border-radius:6px;box-shadow:0 24px 80px rgba(0,0,0,0.7);display:block;}
 .hero-tag{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--kraft);padding:0.65rem 1.1rem;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.12em;color:var(--dark);transform:rotate(-3deg);box-shadow:4px 4px 0 rgba(0,0,0,0.3);}
 
 /* TICKER */
@@ -186,7 +186,7 @@ footer{background:var(--dark);padding:2.5rem 6rem;display:flex;align-items:cente
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-badge" data-key="hero-badge">Ouverture prochaine · Pays de Gex</div>
+    <div class="hero-badge" data-key="hero-badge">Ouverture prochaine 2027 · Pays de Gex</div>
     <h1 class="hero-title">
       <span class="red">ROJAK</span><br>
       FAMILY<br>
@@ -426,7 +426,7 @@ document.getElementById('email-in').addEventListener('keydown',function(e){if(e.
 var lang = 'fr';
 var T = {
   // NAV & HERO
-  'hero-badge':  {fr:'Ouverture prochaine · Pays de Gex', en:'Opening soon · Pays de Gex'},
+  'hero-badge':  {fr:'Ouverture prochaine 2027 · Pays de Gex', en:'Opening soon 2027 · Pays de Gex'},
   'hero-sub':    {fr:'Street Food · Saveurs d\'Asie', en:'Street Food · Flavors of Asia'},
   'hero-desc':   {fr:"L'esprit des hawker centers de Singapour — cuisine ouverte, produits authentiques, table partagée — au cœur du Pays de Gex.", en:"The spirit of Singapore's hawker centers — open kitchen, authentic products, shared table — in the heart of Pays de Gex."},
   // CONCEPT

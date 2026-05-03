@@ -3,31 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <title>ROJAK PASSPORT</title>
-#title {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-  letter-spacing: -2px;
-  font-weight: 600;
-}
 
-#desc {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
 <style>
 
+/* GLOBAL */
 body {
   margin: 0;
   background: #0b1f17;
   color: #F2EBD9;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
-   opacity: 0;
+  opacity: 0;
   transition: opacity 1s ease;
 }
-  body.loaded {
+
+body.loaded {
   opacity: 1;
 }
 
@@ -61,29 +51,45 @@ body {
   position: relative;
 }
 
-/* TEXTE */
+/* TEXT */
 .text {
   max-width: 600px;
 }
 
+#title {
+  font-size: 70px;
+  color: #D4A843;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: -2px;
+  font-weight: 600;
+}
+
+#desc {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .text h2 {
   font-size: 70px;
-  margin: 0;
   color: #D4A843;
-  transform: translateY(50px);
-  opacity: 0;
-  transition: 0.6s ease;
+  margin: 0;
 }
 
 .text p {
+  opacity: 0.7;
+}
+
+/* SCROLL ANIMATION */
+.section {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(50px);
   transition: 0.6s ease;
 }
 
-/* APPARITION */
-.visible h2,
-.visible p {
+.section.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -91,7 +97,7 @@ body {
 /* STAMP */
 .stamp {
   margin-top: 30px;
-   border: 2px solid #C0392B;
+  border: 2px solid #C0392B;
   box-shadow: 0 0 20px rgba(192, 57, 43, 0.3);
   font-weight: bold;
   letter-spacing: 2px;
@@ -99,28 +105,12 @@ body {
   display: inline-block;
   transform: rotate(-8deg) scale(0.8);
   opacity: 0;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
 .stamp.active {
   opacity: 1;
   transform: rotate(-8deg) scale(1);
-}
-
-/* BOUTON */
-button {
-  margin-top: 30px;
-  padding: 12px 25px;
-  border: 1px solid #D4A843;
-  background: transparent;
-  color: #D4A843;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #D4A843;
-  color: black;
 }
 
 </style>
@@ -137,39 +127,11 @@ button:hover {
 <!-- SECTION 1 -->
 <section class="section">
   <div class="text">
-
     <h2 id="title">Singapore</h2>
-
     <p id="desc">Une entrée inspirée des hawker centers.</p>
-
     <div class="stamp" id="stamp1">APPROVED</div>
-
   </div>
 </section>
-
-<script>
-window.onload = () => {
-  document.body.classList.add("loaded");
-}
-// ANIMATION SÉQUENTIELLE (STYLE APPLE)
-window.addEventListener("load", () => {
-
-  setTimeout(() => {
-    document.getElementById("title").style.opacity = 1;
-    document.getElementById("title").style.transform = "translateY(0)";
-  }, 200);
-
-  setTimeout(() => {
-    document.getElementById("desc").style.opacity = 1;
-    document.getElementById("desc").style.transform = "translateY(0)";
-  }, 800);
-
-  setTimeout(() => {
-    document.getElementById("stamp1").classList.add("active");
-  }, 1600);
-
-});
-</script>
 
 <!-- SECTION 2 -->
 <section class="section">
@@ -197,7 +159,28 @@ window.addEventListener("load", () => {
 
 <script>
 
-// SCROLL ANIMATION (APPLE STYLE)
+/* LOAD + ANIMATION SEQUENTIELLE */
+window.addEventListener("load", () => {
+
+  document.body.classList.add("loaded");
+
+  setTimeout(() => {
+    document.getElementById("title").style.opacity = 1;
+    document.getElementById("title").style.transform = "translateY(0)";
+  }, 200);
+
+  setTimeout(() => {
+    document.getElementById("desc").style.opacity = 1;
+    document.getElementById("desc").style.transform = "translateY(0)";
+  }, 800);
+
+  setTimeout(() => {
+    document.getElementById("stamp1").classList.add("active");
+  }, 1600);
+
+});
+
+/* SCROLL EFFECT */
 const sections = document.querySelectorAll('.section');
 
 function reveal() {
@@ -211,11 +194,6 @@ function reveal() {
 
 window.addEventListener('scroll', reveal);
 reveal();
-
-// STAMP
-function stamp(id) {
-  document.getElementById(id).classList.add("active");
-}
 
 </script>
 

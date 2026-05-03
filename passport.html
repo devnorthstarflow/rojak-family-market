@@ -5,11 +5,12 @@
 <title>ROJAK PASSPORT</title>
 
 <style>
+
 body {
   margin: 0;
   background: #0b1f17;
   color: #F2EBD9;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
 
@@ -23,83 +24,86 @@ body {
 }
 
 .hero h1 {
-  font-size: 90px;
+  font-size: 100px;
   color: #D4A843;
   margin: 0;
+  letter-spacing: -2px;
 }
 
 .hero p {
-  font-size: 20px;
-  opacity: 0.7;
+  font-size: 22px;
+  opacity: 0.6;
 }
 
-.hero button {
-  margin-top: 30px;
-  padding: 14px 30px;
-  background: transparent;
-  border: 1px solid #D4A843;
-  color: #D4A843;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.hero button:hover {
-  background: #D4A843;
-  color: black;
-}
-
-/* SECTIONS */
+/* SECTION */
 .section {
-  height: 100vh;
+  height: 120vh;
   display: flex;
   align-items: center;
   padding: 0 10%;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  position: relative;
 }
 
-.content {
+/* TEXTE */
+.text {
   max-width: 600px;
 }
 
-.content h2 {
-  font-size: 60px;
+.text h2 {
+  font-size: 70px;
+  margin: 0;
   color: #D4A843;
-  margin-bottom: 10px;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: 0.6s ease;
 }
 
-.content p {
-  opacity: 0.7;
+.text p {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.6s ease;
+}
+
+/* APPARITION */
+.visible h2,
+.visible p {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* STAMP */
 .stamp {
   margin-top: 30px;
-  display: inline-block;
   border: 2px solid #C0392B;
-  padding: 10px 20px;
-  transform: rotate(-8deg);
-  color: #C0392B;
+  padding: 12px 25px;
+  display: inline-block;
+  transform: rotate(-8deg) scale(0.8);
   opacity: 0;
-  transition: 0.4s;
+  transition: 0.3s;
 }
 
 .stamp.active {
   opacity: 1;
+  transform: rotate(-8deg) scale(1);
 }
 
-/* SCROLL EFFECT */
-.section {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 0.6s;
+/* BOUTON */
+button {
+  margin-top: 30px;
+  padding: 12px 25px;
+  border: 1px solid #D4A843;
+  background: transparent;
+  color: #D4A843;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.section.visible {
-  opacity: 1;
-  transform: translateY(0);
+button:hover {
+  background: #D4A843;
+  color: black;
 }
+
 </style>
-
 </head>
 
 <body>
@@ -108,67 +112,65 @@ body {
 <section class="hero">
   <h1>ROJAK PASSPORT</h1>
   <p>Une expérience immersive au Pays de Gex</p>
-  <button onclick="scrollNext()">Enter the journey</button>
 </section>
 
 <!-- SECTION 1 -->
 <section class="section">
-  <div class="content">
-    <h2>Singapore Entry</h2>
-    <p>Bienvenue dans l’expérience ROJAK. Une destination unique.</p>
+  <div class="text">
+    <h2>Singapore</h2>
+    <p>Une entrée inspirée des hawker centers.</p>
+
     <div class="stamp" id="stamp1">APPROVED</div>
-    <br>
     <button onclick="stamp('stamp1')">Stamp</button>
   </div>
 </section>
 
 <!-- SECTION 2 -->
 <section class="section">
-  <div class="content">
+  <div class="text">
     <h2>Street Food</h2>
-    <p>Saveurs authentiques d’Asie, revisitées.</p>
+    <p>Des saveurs authentiques, modernes.</p>
   </div>
 </section>
 
 <!-- SECTION 3 -->
 <section class="section">
-  <div class="content">
-    <h2>Rooftop Experience</h2>
-    <p>Vue Alpes. Sunset. Atmosphère unique.</p>
+  <div class="text">
+    <h2>Rooftop</h2>
+    <p>Sunset. Alpes. Expérience.</p>
   </div>
 </section>
 
 <!-- SECTION 4 -->
 <section class="section">
-  <div class="content">
+  <div class="text">
     <h2>Merlion Beer</h2>
-    <p>Bière signature brassée localement.</p>
+    <p>Brassée localement. Signature.</p>
   </div>
 </section>
 
 <script>
-function scrollNext() {
-  window.scrollTo({
-    top: window.innerHeight,
-    behavior: "smooth"
+
+// SCROLL ANIMATION (APPLE STYLE)
+const sections = document.querySelectorAll('.section');
+
+function reveal() {
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if (top < window.innerHeight * 0.75) {
+      section.classList.add('visible');
+    }
   });
 }
 
+window.addEventListener('scroll', reveal);
+reveal();
+
+// STAMP
 function stamp(id) {
   document.getElementById(id).classList.add("active");
 }
 
-/* SCROLL ANIMATION */
-const sections = document.querySelectorAll('.section');
-
-window.addEventListener('scroll', () => {
-  sections.forEach(section => {
-    const top = section.getBoundingClientRect().top;
-    if (top < window.innerHeight - 100) {
-      section.classList.add('visible');
-    }
-  });
-});
 </script>
 
 </body>

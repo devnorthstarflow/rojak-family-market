@@ -117,13 +117,37 @@ button:hover {
 <!-- SECTION 1 -->
 <section class="section">
   <div class="text">
-    <h2>Singapore</h2>
-    <p>Une entrée inspirée des hawker centers.</p>
+
+    <h2 id="title">Singapore</h2>
+
+    <p id="desc">Une entrée inspirée des hawker centers.</p>
 
     <div class="stamp" id="stamp1">APPROVED</div>
-    <button onclick="stamp('stamp1')">Stamp</button>
+
   </div>
 </section>
+
+<script>
+
+// ANIMATION SÉQUENTIELLE (STYLE APPLE)
+window.addEventListener("load", () => {
+
+  setTimeout(() => {
+    document.getElementById("title").style.opacity = 1;
+    document.getElementById("title").style.transform = "translateY(0)";
+  }, 200);
+
+  setTimeout(() => {
+    document.getElementById("desc").style.opacity = 1;
+    document.getElementById("desc").style.transform = "translateY(0)";
+  }, 800);
+
+  setTimeout(() => {
+    document.getElementById("stamp1").classList.add("active");
+  }, 1600);
+
+});
+</script>
 
 <!-- SECTION 2 -->
 <section class="section">

@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Rojak Family Market — Singapore Spirit, Alpine Soul</title>
-<meta name="description" content="Rojak Family Market — hawker center singapourien, architecture containers, rooftop face aux Alpes dans le Pays de Gex."/>
+<meta name="description" content="Rojak Family Market — projet de pré-ouverture : hawker center singapourien, market asiatique premium, architecture containers et rooftop face aux Alpes dans le Pays de Gex."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -142,6 +142,25 @@ a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
 .pill{font-size:11px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);color:var(--cream-2);background:rgba(255,255,255,.04)}
 .pill.green{border-color:rgba(76,175,80,.4);color:#81c784;background:rgba(76,175,80,.08)}
 
+
+/* AJUSTEMENTS CRÉDIBILITÉ INVESTISSEUR */
+.preopen-note{margin-top:34px;border:1px solid rgba(212,168,67,.28);border-radius:28px;padding:clamp(24px,4vw,42px);background:radial-gradient(circle at 20% 0%,rgba(212,168,67,.12),transparent 42%),rgba(244,235,216,.035);box-shadow:0 18px 55px rgba(0,0,0,.18)}
+.preopen-note h3,.scenario-title,.risk-title{font-family:"Playfair Display",serif;font-size:clamp(26px,3vw,42px);line-height:1.05;margin-bottom:14px;color:var(--cream)}
+.preopen-note p{color:var(--cream-2);line-height:1.75;font-size:15px;max-width:960px}
+.assumption-grid,.scenario-grid,.risk-grid,.cta-grid{display:grid;gap:16px;margin-top:28px}
+.assumption-grid{grid-template-columns:repeat(4,1fr)}
+.scenario-grid{grid-template-columns:repeat(3,1fr)}
+.risk-grid{grid-template-columns:repeat(4,1fr)}
+.cta-grid{grid-template-columns:repeat(5,1fr)}
+.assumption-card,.scenario-card,.risk-card,.cta-card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(244,235,216,.07),rgba(244,235,216,.025));padding:22px;min-height:150px}
+.assumption-card h4,.scenario-card h4,.risk-card h4,.cta-card h4{font-family:"Bebas Neue",sans-serif;font-size:24px;letter-spacing:.06em;color:var(--gold);margin-bottom:8px}
+.assumption-card p,.scenario-card p,.risk-card p,.cta-card p{font-size:13px;line-height:1.6;color:var(--cream-2)}
+.scenario-card.central{background:linear-gradient(180deg,rgba(212,168,67,.16),rgba(212,168,67,.045));border-color:rgba(212,168,67,.36)}
+.scenario-card .metric{font-family:"Bebas Neue",sans-serif;font-size:34px;color:var(--cream);letter-spacing:.04em;margin:10px 0 4px}
+.disclaimer{margin-top:18px;font-size:12px;color:var(--cream-2);line-height:1.7;border-left:2px solid var(--gold);padding-left:14px;opacity:.9}
+.fin-note{margin-top:14px;font-size:12px;line-height:1.6;color:var(--cream-2)}
+.invest-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+
 /* BEER */
 .beer{background:linear-gradient(180deg,var(--green-3),#020d06,var(--green-3))}
 .beer-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;margin-top:52px}
@@ -174,8 +193,9 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
   .nav-links{display:none}
   .hero{min-height:88svh}
   .stats,.kpi-strip{grid-template-columns:repeat(2,1fr)}
-  .cards,.gallery,.invest-box,.beer-inner,.financement{grid-template-columns:1fr}
+  .cards,.gallery,.invest-box,.beer-inner,.financement,.assumption-grid,.scenario-grid,.risk-grid,.cta-grid{grid-template-columns:1fr}
   .piliers{grid-template-columns:1fr 1fr}
+  .cta-grid{grid-template-columns:1fr}
   .proj-grid{grid-template-columns:1fr 1fr}
   .level,.level:nth-child(even){grid-template-columns:1fr}
   .level:nth-child(even) .level-text{order:0}
@@ -184,43 +204,6 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
   .gallery .tile:first-child{grid-row:auto}
   footer{display:block}
 }
-
-/* ── V5 ADDITIONS ─────────────────────────── */
-.scenario-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
-.sc-tab{padding:10px 22px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;color:var(--cream-2)}
-.sc-tab.active{background:var(--gold);color:#09150e;border-color:var(--gold)}
-.sc-content{display:none}.sc-content.active{display:block}
-.hyp-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:14px}
-.hyp-table th{text-align:left;padding:10px 14px;background:rgba(244,235,216,.06);color:var(--gold);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)}
-.hyp-table td{padding:10px 14px;border-bottom:1px solid rgba(244,235,216,.08);color:var(--cream-2)}
-.hyp-table td:last-child{color:var(--cream);font-weight:600;text-align:right}
-.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
-.risk-card{border:1px solid var(--line);border-radius:16px;padding:18px;background:rgba(244,235,216,.03)}
-.risk-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
-.risk-high{background:rgba(192,57,43,.25);color:#e07060}
-.risk-med{background:rgba(212,168,67,.2);color:var(--gold)}
-.risk-low{background:rgba(13,43,29,.6);color:var(--cream-2)}
-.risk-title{font-weight:600;font-size:14px;margin-bottom:5px}
-.risk-mitigation{font-size:13px;color:var(--cream-2);line-height:1.5}
-.disclaimer-box{margin-top:32px;padding:18px 22px;border:1px solid rgba(212,168,67,.3);border-left:3px solid var(--gold);border-radius:12px;background:rgba(212,168,67,.04);font-size:13px;color:var(--cream-2);line-height:1.7}
-.disclaimer-box b{color:var(--gold)}
-.cta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
-.cta-card{border:1px solid var(--line);border-radius:20px;padding:24px;background:rgba(244,235,216,.04);display:flex;flex-direction:column;gap:12px}
-.cta-card h4{font-size:15px;font-weight:700;color:var(--cream)}
-.cta-card p{font-size:13px;color:var(--cream-2);line-height:1.5;flex:1}
-.cta-card a.btn{align-self:flex-start;margin-top:4px}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal-box{background:#0D2B1D;border:1px solid var(--line);border-radius:28px;padding:clamp(28px,5vw,52px);max-width:520px;width:90%;max-height:90vh;overflow-y:auto}
-.modal-box h3{font-family:"Playfair Display",serif;font-size:28px;margin-bottom:8px}
-.modal-box p{color:var(--cream-2);font-size:14px;line-height:1.6;margin-bottom:20px}
-.modal-form{display:flex;flex-direction:column;gap:12px}
-.modal-form input,.modal-form select,.modal-form textarea{background:rgba(244,235,216,.07);border:1px solid var(--line);border-radius:10px;padding:12px 16px;color:var(--cream);font-size:14px;font-family:inherit;outline:none;width:100%}
-.modal-form textarea{min-height:80px;resize:vertical}
-.modal-form input:focus,.modal-form select:focus{border-color:var(--gold)}
-.modal-close{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--cream-2);font-size:22px;cursor:pointer}
-@media(max-width:720px){.risk-grid{grid-template-columns:1fr}.cta-grid{grid-template-columns:1fr}}
-
 </style>
 </head>
 <body>
@@ -240,10 +223,10 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
   <div class="hero-content reveal">
     <div class="eyebrow">Singapore spirit · Alpine soul</div>
     <h1>Le hawker center singapourien face aux Alpes.</h1>
-    <p class="tagline">Street food asiatique, market premium, rooftop panoramique et Merlion iconique dans le Pays de Gex.</p>
+    <p class="tagline">Street food asiatique, market premium, rooftop panoramique et Merlion iconique dans le Pays de Gex — un projet de pré-ouverture structuré pour 2027.</p>
     <div class="hero-actions">
       <a class="btn" href="#concept">Découvrir</a>
-      <a class="btn secondary" href="#investir">Projet investisseur</a>
+      <a class="btn secondary" href="#investir">Recevoir le dossier</a>
     </div>
   </div>
 </header>
@@ -254,6 +237,14 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
   <div class="stat"><b>2027</b><span>ouverture cible</span></div>
   <div class="stat"><b>GEX</b><span>proche Genève</span></div>
 </div>
+
+<section class="section" style="padding-top:54px;padding-bottom:54px">
+  <div class="preopen-note reveal">
+    <div class="eyebrow">Pré-ouverture</div>
+    <h3>Une vision forte, désormais cadrée par des hypothèses.</h3>
+    <p>Rojak Family Market est présenté comme un projet en phase de validation : emplacement, bail, autorisations, plan travaux, recrutement et financement. Les chiffres affichés correspondent à une hypothèse centrale de travail et seront ajustés selon le site retenu, les conditions d'exploitation et le calendrier d'ouverture.</p>
+  </div>
+</section>
 
 <section id="concept" class="section">
   <div class="section-title reveal">
@@ -342,17 +333,30 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
 <section id="carte" class="section carte-section">
   <div class="section-title reveal">
     <div class="eyebrow">Carte investisseur</div>
-    <h2>Les chiffres qui font le projet.</h2>
-    <p>4 piliers de revenus, rentabilité dès le mois 4, architecture containers -20% vs local traditionnel. Voici Rojak en 60 secondes.</p>
+    <h2>Les hypothèses économiques du projet.</h2>
+    <p>Un modèle en 4 piliers, présenté en hypothèse centrale : restauration, épicerie premium, snacking & boissons, puis rooftop événementiel à partir de l’an 2. Les projections restent à confirmer selon l’emplacement, le bail et les autorisations.</p>
   </div>
 
   <!-- KPI STRIP -->
   <div class="kpi-strip reveal">
-    <div class="kpi"><div class="kpi-val">646k€</div><div class="kpi-label">CA An 1</div><div class="kpi-sub">Scénario réaliste</div></div>
-    <div class="kpi highlight"><div class="kpi-val">34,8%</div><div class="kpi-label">EBE / CA</div><div class="kpi-sub">225 000 € an 1</div></div>
-    <div class="kpi"><div class="kpi-val">Mois 4</div><div class="kpi-label">Rentabilité</div><div class="kpi-sub">Seuil an 1</div></div>
+    <div class="kpi"><div class="kpi-val">646k€</div><div class="kpi-label">CA An 1</div><div class="kpi-sub">Hypothèse centrale</div></div>
+    <div class="kpi highlight"><div class="kpi-val">34,8%</div><div class="kpi-label">EBE / CA</div><div class="kpi-sub">Projection à valider</div></div>
+    <div class="kpi"><div class="kpi-val">M4–M8</div><div class="kpi-label">Rentabilité</div><div class="kpi-sub">Objectif selon scénario</div></div>
     <div class="kpi highlight"><div class="kpi-val">280k€</div><div class="kpi-label">Investissement</div><div class="kpi-sub">Containers inclus</div></div>
-    <div class="kpi"><div class="kpi-val">8,1×</div><div class="kpi-label">Capacité remb.</div><div class="kpi-sub">Ratio bancaire</div></div>
+    <div class="kpi"><div class="kpi-val">8,1×</div><div class="kpi-label">Capacité remb.</div><div class="kpi-sub">Projection centrale</div></div>
+  </div>
+
+  <!-- HYPOTHÈSES CLÉS -->
+  <div class="preopen-note reveal">
+    <div class="eyebrow">Hypothèses clés</div>
+    <h3>Les bases qui expliquent le chiffre d’affaires.</h3>
+    <div class="assumption-grid">
+      <div class="assumption-card"><h4>Restauration</h4><p>50 couverts/jour · ticket moyen 16 € · cuisine ouverte et plats signature.</p></div>
+      <div class="assumption-card"><h4>Market</h4><p>40 clients/jour · panier moyen 22 € · 200 à 300 références asiatiques premium.</p></div>
+      <div class="assumption-card"><h4>Snacking</h4><p>50 ventes/jour · ticket moyen 8 € · bubble tea, kopi, matcha, snacks et pâtisseries.</p></div>
+      <div class="assumption-card"><h4>Rooftop</h4><p>Activation progressive à partir de l’an 2 · privatisations, corporate, anniversaires et événements locaux.</p></div>
+    </div>
+    <div class="disclaimer">Hypothèses à consolider après choix de l’emplacement : jours d’ouverture, saisonnalité, masse salariale, coût matière, flux piéton, parking, extraction, terrasse, licence alcool et conformité ERP.</div>
   </div>
 
   <!-- 4 PILIERS DE REVENUS avec photos plats -->
@@ -429,66 +433,63 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
     </div>
   </div>
 
-  <!-- PROJECTION FINANCIÈRE 3 SCÉNARIOS -->
-  <div class="projection reveal" style="margin-top:52px">
-    <div class="proj-title" style="margin-bottom:8px">Projections sur 5 ans — 3 scénarios.</div>
-    <p style="color:var(--cream-2);font-size:14px;margin-bottom:20px">Les chiffres ci-dessous sont des <b style="color:var(--gold)">objectifs de gestion</b> basés sur des hypothèses documentées (fichier Excel détaillé disponible). Ils ne constituent pas une garantie de résultats.</p>
-    <div class="scenario-tabs">
-      <button class="sc-tab" onclick="switchScenario('prudent',this)">🔵 Prudent</button>
-      <button class="sc-tab active" onclick="switchScenario('central',this)">🟡 Central (objectif)</button>
-      <button class="sc-tab" onclick="switchScenario('ambitieux',this)">🟠 Ambitieux</button>
+  <!-- PROJECTION FINANCIÈRE -->
+  <div class="projection reveal">
+    <div class="proj-title">Projection centrale sur 5 ans.</div>
+    <div class="proj-grid">
+      <div class="proj-col">
+        <div class="proj-year">An 1 — 2027</div>
+        <div class="proj-ca">646k€</div>
+        <div class="proj-ebe">EBE cible 225k€ — 34,8%</div>
+        <div class="proj-net">Hypothèse centrale · hors aléas d’ouverture</div>
+        <div class="proj-bar-wrap"><div class="proj-bar" style="width:56%"></div></div>
+      </div>
+      <div class="proj-col">
+        <div class="proj-year">An 2 — 2028</div>
+        <div class="proj-ca">808k€</div>
+        <div class="proj-ebe">EBE 268k€ — 33,1%</div>
+        <div class="proj-net">Activation rooftop progressive</div>
+        <div class="proj-bar-wrap"><div class="proj-bar" style="width:70%"></div></div>
+      </div>
+      <div class="proj-col best">
+        <div class="proj-year">An 3 — 2029</div>
+        <div class="proj-ca">937k€</div>
+        <div class="proj-ebe">EBE 340k€ — 36,3%</div>
+        <div class="proj-net">Montée en puissance du modèle</div>
+        <div class="proj-bar-wrap"><div class="proj-bar" style="width:81%"></div></div>
+      </div>
+      <div class="proj-col best">
+        <div class="proj-year">An 5 — 2031</div>
+        <div class="proj-ca">1 154k€</div>
+        <div class="proj-ebe">EBE 462k€ — 40%</div>
+        <div class="proj-net">Objectif de maturité</div>
+        <div class="proj-bar-wrap"><div class="proj-bar" style="width:100%"></div></div>
+      </div>
     </div>
+  </div>
 
-    <div id="sc-prudent" class="sc-content">
-      <div style="margin-bottom:12px;padding:10px 16px;border:1px solid rgba(100,150,255,.3);border-radius:10px;font-size:13px;color:var(--cream-2)">
-        📊 <b style="color:#7090ff">Scénario prudent</b> — 40 couverts/j · panier 14€ · 280 j/an. Seuil de rentabilité objectif : mois 7–8.
+  <!-- SCÉNARIOS -->
+  <div class="preopen-note reveal">
+    <div class="eyebrow">Lecture du risque</div>
+    <h3>Trois scénarios pour ne pas vendre un seul chiffre.</h3>
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <h4>Prudent</h4>
+        <div class="metric">CA -20%</div>
+        <p>Traction plus progressive, saisonnalité plus marquée, rentabilité visée entre le mois 8 et le mois 12.</p>
       </div>
-      <div class="proj-grid">
-        <div class="proj-col"><div class="proj-year">An 1 — 2027</div><div class="proj-ca">517k€</div><div class="proj-ebe">EBE ~140k€ — 27%</div><div class="proj-net">Net ~82k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:45%"></div></div></div>
-        <div class="proj-col"><div class="proj-year">An 2 — 2028</div><div class="proj-ca">645k€</div><div class="proj-ebe">EBE ~175k€ — 27%</div><div class="proj-net">Net ~105k€ + Rooftop</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:56%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 3 — 2029</div><div class="proj-ca">745k€</div><div class="proj-ebe">EBE ~210k€ — 28%</div><div class="proj-net">Net ~130k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:65%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 5 — 2031</div><div class="proj-ca">905k€</div><div class="proj-ebe">EBE ~280k€ — 31%</div><div class="proj-net">Net ~175k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:78%"></div></div></div>
+      <div class="scenario-card central">
+        <h4>Central</h4>
+        <div class="metric">646k€</div>
+        <p>Objectif année 1 basé sur les hypothèses de fréquentation, panier moyen et montée en charge opérationnelle.</p>
       </div>
-    </div>
-
-    <div id="sc-central" class="sc-content active">
-      <div style="margin-bottom:12px;padding:10px 16px;border:1px solid rgba(212,168,67,.35);border-radius:10px;font-size:13px;color:var(--cream-2)">
-        ⭐ <b style="color:var(--gold)">Scénario central (objectif)</b> — 50 couverts/j · panier 16€ · 300 j/an. Seuil de rentabilité objectif : mois 4.
-      </div>
-      <div class="proj-grid">
-        <div class="proj-col"><div class="proj-year">An 1 — 2027</div><div class="proj-ca">646k€</div><div class="proj-ebe">EBE 225k€ — 34,8%</div><div class="proj-net">Net 136k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:56%"></div></div></div>
-        <div class="proj-col"><div class="proj-year">An 2 — 2028</div><div class="proj-ca">808k€</div><div class="proj-ebe">EBE 268k€ — 33,1%</div><div class="proj-net">Net 169k€ + Rooftop</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:70%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 3 — 2029</div><div class="proj-ca">937k€</div><div class="proj-ebe">EBE 340k€ — 36,3%</div><div class="proj-net">Net 224k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:81%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 5 — 2031</div><div class="proj-ca">1 154k€</div><div class="proj-ebe">EBE 462k€ — 40%</div><div class="proj-net">Net 317k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:100%"></div></div></div>
+      <div class="scenario-card">
+        <h4>Ambitieux</h4>
+        <div class="metric">+ rooftop</div>
+        <p>Accélération possible si l’emplacement, les événements et la notoriété locale dépassent l’hypothèse centrale.</p>
       </div>
     </div>
-
-    <div id="sc-ambitieux" class="sc-content">
-      <div style="margin-bottom:12px;padding:10px 16px;border:1px solid rgba(192,57,43,.3);border-radius:10px;font-size:13px;color:var(--cream-2)">
-        🚀 <b style="color:#e07060">Scénario ambitieux</b> — 65 couverts/j · panier 18€ · 320 j/an. Seuil de rentabilité objectif : mois 3.
-      </div>
-      <div class="proj-grid">
-        <div class="proj-col"><div class="proj-year">An 1 — 2027</div><div class="proj-ca">743k€</div><div class="proj-ebe">EBE ~285k€ — 38%</div><div class="proj-net">Net ~195k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:64%"></div></div></div>
-        <div class="proj-col"><div class="proj-year">An 2 — 2028</div><div class="proj-ca">925k€</div><div class="proj-ebe">EBE ~360k€ — 39%</div><div class="proj-net">Net ~240k€ + Rooftop</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:80%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 3 — 2029</div><div class="proj-ca">1 065k€</div><div class="proj-ebe">EBE ~430k€ — 40%</div><div class="proj-net">Net ~285k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:92%"></div></div></div>
-        <div class="proj-col best"><div class="proj-year">An 5 — 2031</div><div class="proj-ca">1 310k€</div><div class="proj-ebe">EBE ~560k€ — 43%</div><div class="proj-net">Net ~380k€</div><div class="proj-bar-wrap"><div class="proj-bar" style="width:100%"></div></div></div>
-      </div>
-    </div>
-
-    <!-- Hypothèses clés -->
-    <div style="margin-top:32px">
-      <div class="eyebrow" style="margin-bottom:14px">Hypothèses clés — scénario central</div>
-      <table class="hyp-table">
-        <thead><tr><th>Pilier</th><th>Paramètre</th><th>Objectif central</th></tr></thead>
-        <tbody>
-          <tr><td>Restauration (55% CA)</td><td>Couverts/jour × ticket moyen × 300 j</td><td>50 × 16€ × 300j</td></tr>
-          <tr><td>Épicerie fine (30% CA)</td><td>Clients/jour × panier moyen × 300 j</td><td>40 × 22€ × 300j</td></tr>
-          <tr><td>Snacking (15% CA)</td><td>Clients/jour × panier moyen × 300 j</td><td>50 × 8€ × 300j</td></tr>
-          <tr><td>Rooftop (an 2+)</td><td>Événements/an × CA moyen</td><td>12 × 5 000€</td></tr>
-          <tr><td>Coûts matières</td><td>Restauration · Épicerie · Snacking</td><td>29% · 57% · 38%</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="disclaimer">Ces données sont des projections prévisionnelles. Elles ne constituent pas une garantie de performance et doivent être recalculées après validation du bail, du CAPEX réel, des autorisations et du plan de recrutement.</div>
   </div>
 
   <!-- FINANCEMENT -->
@@ -499,70 +500,36 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
       <div class="fin-item"><span>BPI taux 0%</span><b class="gold">40 000 €</b></div>
       <div class="fin-item"><span>Prêt bancaire</span><b>155 000 €</b></div>
       <div class="fin-item"><span>Aides &amp; subventions</span><b class="gold">25 000 €</b></div>
-      <div class="fin-item" style="border-top:1px solid var(--gold);margin-top:6px;padding-top:14px"><span style="color:var(--cream);font-weight:700">Total mobilisé</span><b class="gold" style="font-size:18px">240 000 €</b></div>
-      <div style="margin-top:12px;padding:12px 14px;border:1px solid rgba(212,168,67,.2);border-radius:10px;font-size:12px;color:var(--cream-2);line-height:1.6">
-        ℹ️ <b style="color:var(--gold)">Note sur l'écart 280k€ / 240k€</b> — Le solde de <b>40 000 €</b> représente le fonds de roulement initial (3 mois de charges fixes) et la réserve imprévus chantier (10%). Ce poste est couvert par une ligne de trésorerie bancaire ou un apport complémentaire — en cours de finalisation. Transparence totale dans le dossier investisseur complet.
-      </div>
+      <div class="fin-item"><span>Complément à sécuriser</span><b class="gold">40 000 €</b></div>
+      <div class="fin-item" style="border-top:1px solid var(--gold);margin-top:6px;padding-top:14px"><span style="color:var(--cream);font-weight:700">Total cible</span><b class="gold" style="font-size:18px">280 000 €</b></div>
       <div class="fin-pill">
         <span class="pill green">BPI Création</span>
         <span class="pill green">ACRE</span>
         <span class="pill green">Région AuRA</span>
         <span class="pill">CC Pays de Gex</span>
       </div>
+      <p class="fin-note">Le montage définitif dépendra de l’emplacement, du niveau de travaux, des conditions bancaires et des aides effectivement obtenues.</p>
     </div>
     <div class="fin-box">
       <h4>Indicateurs clés</h4>
       <div class="fin-item"><span>Mensualités prêt</span><b>~2 450 €/mois</b></div>
-      <div class="fin-item"><span>Seuil rentabilité</span><b class="gold">Mois 4, An 1</b></div>
-      <div class="fin-item"><span>Capacité remboursement</span><b class="gold">8,1×</b></div>
+      <div class="fin-item"><span>Seuil rentabilité</span><b class="gold">Objectif M4–M8</b></div>
+      <div class="fin-item"><span>Capacité remboursement</span><b class="gold">Projection 8,1×</b></div>
       <div class="fin-item"><span>Containers vs local trad.</span><b class="gold">-20% investissement</b></div>
-      <div class="fin-item"><span>ROI rooftop an 2</span><b class="gold">&lt; 5 mois</b></div>
+      <div class="fin-item"><span>ROI rooftop an 2</span><b class="gold">À confirmer</b></div>
       <div class="fin-item"><span>Marché cible</span><b>29 400 frontaliers</b></div>
     </div>
   </div>
-
-  <!-- RISQUES IDENTIFIÉS -->
-  <div style="margin-top:52px" class="reveal">
-    <div class="eyebrow" style="margin-bottom:14px">Risques identifiés & mitigations</div>
+  <div class="preopen-note reveal">
+    <div class="eyebrow">Points à sécuriser</div>
+    <h3>Les validations qui feront passer le projet du concept à l’ouverture.</h3>
     <div class="risk-grid">
-      <div class="risk-card">
-        <span class="risk-badge risk-high">Critique</span>
-        <div class="risk-title">Emplacement non sécurisé</div>
-        <div class="risk-mitigation">Prospection active mairie Saint-Genis-Pouilly + agents immobiliers. Délai estimé 6–12 mois. Alternative : terrain industriel reconverti.</div>
-      </div>
-      <div class="risk-card">
-        <span class="risk-badge risk-high">Élevé</span>
-        <div class="risk-title">Autorisations ERP / terrasse</div>
-        <div class="risk-mitigation">Délai 3–12 mois selon mairie. Architecture containers facilite permis de construire modulaire. Dossier CCI Ain en cours.</div>
-      </div>
-      <div class="risk-card">
-        <span class="risk-badge risk-med">Modéré</span>
-        <div class="risk-title">Fréquentation an 1 décevante</div>
-        <div class="risk-mitigation">Scénario prudent reste viable (rentabilité mois 7–8). Épicerie + snacking compensent restauration. Pop-up test prévu avant ouverture.</div>
-      </div>
-      <div class="risk-card">
-        <span class="risk-badge risk-med">Modéré</span>
-        <div class="risk-title">Dépassement budget containers</div>
-        <div class="risk-mitigation">Réserve 10% prévue (12k€). 3 devis en cours : Kubeko, France Modulaire, MouvBox. Architecture -20% vs local traditionnel.</div>
-      </div>
-      <div class="risk-card">
-        <span class="risk-badge risk-low">Faible</span>
-        <div class="risk-title">Saisonnalité marquée</div>
-        <div class="risk-mitigation">Épicerie fine (achat + emporter) compense hiver. Événementiel rooftop an 2. Plan trésorerie mensuel intégré au dossier Excel.</div>
-      </div>
-      <div class="risk-card">
-        <span class="risk-badge risk-low">Faible</span>
-        <div class="risk-title">Taux bancaire variable</div>
-        <div class="risk-mitigation">Taux fixé à la signature. BPI taux 0% couvre 14% du financement. Ratio capacité remboursement 8,1× — marge confortable.</div>
-      </div>
+      <div class="risk-card"><h4>Emplacement</h4><p>Flux, parking, visibilité, accès livraison et potentiel de terrasse.</p></div>
+      <div class="risk-card"><h4>Autorisations</h4><p>ERP, extraction, sécurité incendie, rooftop, alcool, containers et terrasse.</p></div>
+      <div class="risk-card"><h4>Exploitation</h4><p>Masse salariale, coût matière, jours d’ouverture, saisonnalité et logistique import.</p></div>
+      <div class="risk-card"><h4>Financement</h4><p>Alignement besoin total, prêt bancaire, aides, complément et calendrier de décaissement.</p></div>
     </div>
   </div>
-
-  <!-- DISCLAIMER INVESTISSEUR -->
-  <div class="disclaimer-box reveal" style="margin-top:36px">
-    ⚠️ <b>Projections financières à titre indicatif.</b> Ces chiffres sont des objectifs de gestion basés sur des hypothèses documentées dans le fichier Excel Étape 2 (603 formules vérifiées). Ils ne constituent pas une garantie de résultats. Un dossier investisseur complet (Excel 5 onglets, rapport stratégique 8 sections) est disponible sur demande à <b>contact@rojak-family-market.com</b>.
-  </div>
-
 </section>
 
 <!-- BEER -->
@@ -615,14 +582,17 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
     <div>
       <div class="eyebrow">Projet investisseur</div>
       <h2>Un concept iconique à implanter dans le Pays de Gex.</h2>
-      <p>Rojak cherche un emplacement stratégique ou un partenaire foncier proche de Genève. CA projeté 646k€ dès l'an 1, seuil de rentabilité mois 4.</p>
-      <a class="btn" href="mailto:contact@rojak-family-market.com">Prendre contact</a>
+      <p>Rojak cherche un emplacement stratégique, un partenaire foncier ou des partenaires financiers proches de Genève. Les projections sont présentées comme une hypothèse centrale, à confirmer selon bail, autorisations et conditions d’exploitation.</p>
+      <div class="invest-actions">
+        <a class="btn" href="mailto:contact@rojak-family-market.com?subject=Dossier%20investisseur%20Rojak%20Family%20Market">Recevoir le dossier</a>
+        <a class="btn secondary" href="mailto:contact@rojak-family-market.com?subject=Emplacement%20Rojak%20Family%20Market">Proposer un emplacement</a>
+      </div>
     </div>
     <div class="invest-list">
       <div class="invest-item"><span>Zone cible</span><b>Saint-Genis-Pouilly, Pays de Gex</b></div>
       <div class="invest-item"><span>Investissement total</span><b>280 000 €</b></div>
-      <div class="invest-item"><span>CA an 1</span><b>646 000 €</b></div>
-      <div class="invest-item"><span>EBE an 1</span><b>225 000 € — 34,8%</b></div>
+      <div class="invest-item"><span>CA an 1</span><b>646 000 € · hypothèse centrale</b></div>
+      <div class="invest-item"><span>EBE an 1</span><b>225 000 € · projection cible</b></div>
       <div class="invest-item"><span>Architecture</span><b>Containers modulaires 3 niveaux</b></div>
       <div class="invest-item"><span>Signature</span><b>Merlion + Alpes</b></div>
       <div class="invest-item"><span>Ouverture cible</span><b>2027</b></div>
@@ -630,17 +600,24 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
   </div>
 </section>
 
+<section class="section" style="padding-top:72px;padding-bottom:84px">
+  <div class="section-title reveal">
+    <div class="eyebrow">Participer au projet</div>
+    <h2>Un appel à l’action pour chaque interlocuteur.</h2>
+    <p>La page reste premium et émotionnelle, mais elle donne désormais des portes d’entrée claires pour les financeurs, bailleurs, partenaires locaux, futurs clients et candidats.</p>
+  </div>
+  <div class="cta-grid reveal">
+    <a class="cta-card" href="mailto:contact@rojak-family-market.com?subject=Investisseur%20Rojak"><h4>Investisseur</h4><p>Recevoir les hypothèses détaillées et le dossier de présentation.</p></a>
+    <a class="cta-card" href="mailto:contact@rojak-family-market.com?subject=Emplacement%20Rojak"><h4>Bailleur</h4><p>Proposer un local, terrain ou emplacement stratégique dans le Pays de Gex.</p></a>
+    <a class="cta-card" href="mailto:contact@rojak-family-market.com?subject=Partenariat%20Rojak"><h4>Partenaire</h4><p>Créer une collaboration locale, événementielle ou produit.</p></a>
+    <a class="cta-card" href="mailto:contact@rojak-family-market.com?subject=Ouverture%20Rojak"><h4>Ouverture</h4><p>Recevoir les actualités, invitations dégustation et informations de lancement.</p></a>
+    <a class="cta-card" href="mailto:contact@rojak-family-market.com?subject=Recrutement%20Rojak"><h4>Équipe</h4><p>Être informé des futurs recrutements avant l’ouverture.</p></a>
+  </div>
+</section>
+
 <footer>
-  <div>
-    <b>ROJAK FAMILY MARKET</b><br>Singapore spirit. Alpine soul.
-    <span style="font-size:12px;opacity:.6;display:block;margin-top:6px">rojak-family-market.vercel.app</span>
-    <span style="font-size:11px;opacity:.4;display:block;margin-top:8px;max-width:380px;line-height:1.5">Projections financières à titre indicatif — objectifs de gestion, hypothèses documentées, sans garantie de résultats. Document confidentiel, diffusion restreinte.</span>
-  </div>
-  <div style="font-size:13px;line-height:1.9;text-align:right">
-    Pays de Gex · Ouverture cible 2027<br>
-    <em style="color:var(--gold)">"On vient, on partage, on mélange."</em><br>
-    <span style="font-size:11px;opacity:.5">© 2026 Rojak Family Market — Early Maker Project</span>
-  </div>
+  <div><b>ROJAK FAMILY MARKET</b><br>Singapore spirit. Alpine soul.<br><span style="font-size:12px;opacity:.6;display:block;margin-top:6px">rojak-family-market.vercel.app</span></div>
+  <div style="font-size:13px;line-height:1.9;text-align:right">Pays de Gex · Ouverture 2027<br><em style="color:var(--gold)">"On vient, on partage, on mélange."</em></div>
 </footer>
 
 <script>
@@ -649,42 +626,6 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
 }, {threshold:.12});
 items.forEach(i => io.observe(i));
-
-// Scénarios financiers
-function switchScenario(id, btn) {
-  document.querySelectorAll('.sc-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.sc-tab').forEach(el => el.classList.remove('active'));
-  document.getElementById('sc-' + id).classList.add('active');
-  btn.classList.add('active');
-}
-
-// Modal contact
-const modalTitles = {
-  investisseur: ['Demande de dossier investisseur', 'Recevez le dossier complet (Excel 5 onglets, rapport 8 sections, 3 scénarios). Réponse sous 48h.', 'Société / Fonds'],
-  bailleur: ['Proposer un terrain / local', 'Décrivez votre bien : localisation, surface, statut. Nous étudions toute proposition dans le Pays de Gex.', 'Type de bien'],
-  partenaire: ['Devenir partenaire Rojak', 'Fournisseur, micro-brasserie, prestataire événementiel... Dites-nous qui vous êtes.', 'Type de partenariat'],
-  early: ['Liste d'attente — Early Access', 'Soyez parmi les premiers informés. Invitations pop-up test, ouverture soft, offre exclusive.', 'Découvert via...']
-};
-function openModal(type) {
-  const [title, desc, field] = modalTitles[type];
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-desc').textContent = desc;
-  document.getElementById('modal-field').placeholder = field;
-  document.getElementById('modal-type').value = type;
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function submitModal(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = '✓ Envoyé !';
-  btn.style.background = '#2a7a4a';
-  setTimeout(() => { closeModal(); btn.textContent = 'Envoyer →'; btn.style.background = ''; }, 2000);
-}
 </script>
 </body>
 </html>

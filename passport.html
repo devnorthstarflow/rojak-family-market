@@ -1,90 +1,175 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>ROJAK PASSPORT</title>
+<meta charset="UTF-8">
+<title>ROJAK PASSPORT</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #0f1f17;
-      color: #F2EBD9;
-      font-family: Arial, sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  background: #0b1f17;
+  color: #F2EBD9;
+  font-family: 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
 
-    section {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 60px;
-    }
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10%;
+}
 
-    h1 {
-      font-size: 60px;
-      color: #D4A843;
-    }
+.hero h1 {
+  font-size: 90px;
+  color: #D4A843;
+  margin: 0;
+}
 
-    h2 {
-      color: #D4A843;
-    }
+.hero p {
+  font-size: 20px;
+  opacity: 0.7;
+}
 
-    img {
-      width: 50%;
-      object-fit: cover;
-    }
+.hero button {
+  margin-top: 30px;
+  padding: 14px 30px;
+  background: transparent;
+  border: 1px solid #D4A843;
+  color: #D4A843;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .content {
-      width: 50%;
-      padding: 40px;
-    }
+.hero button:hover {
+  background: #D4A843;
+  color: black;
+}
 
-    .stamp {
-      border: 2px solid red;
-      display: inline-block;
-      padding: 10px;
-      margin-top: 20px;
-      transform: rotate(-10deg);
-    }
-  </style>
+/* SECTIONS */
+.section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.content {
+  max-width: 600px;
+}
+
+.content h2 {
+  font-size: 60px;
+  color: #D4A843;
+  margin-bottom: 10px;
+}
+
+.content p {
+  opacity: 0.7;
+}
+
+/* STAMP */
+.stamp {
+  margin-top: 30px;
+  display: inline-block;
+  border: 2px solid #C0392B;
+  padding: 10px 20px;
+  transform: rotate(-8deg);
+  color: #C0392B;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.stamp.active {
+  opacity: 1;
+}
+
+/* SCROLL EFFECT */
+.section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.6s;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
 </head>
 
 <body>
 
 <!-- HERO -->
-<section>
-  <div>
-    <h1>ROJAK PASSPORT</h1>
-    <p>Une expérience immersive au Pays de Gex</p>
-  </div>
+<section class="hero">
+  <h1>ROJAK PASSPORT</h1>
+  <p>Une expérience immersive au Pays de Gex</p>
+  <button onclick="scrollNext()">Enter the journey</button>
 </section>
 
-<!-- PAGE 1 -->
-<section>
-  <img src="ton-image-1.png">
+<!-- SECTION 1 -->
+<section class="section">
   <div class="content">
-    <h2>Entrée Singapour</h2>
-    <p>Bienvenue chez Rojak.</p>
-    <div class="stamp">APPROVED</div>
+    <h2>Singapore Entry</h2>
+    <p>Bienvenue dans l’expérience ROJAK. Une destination unique.</p>
+    <div class="stamp" id="stamp1">APPROVED</div>
+    <br>
+    <button onclick="stamp('stamp1')">Stamp</button>
   </div>
 </section>
 
-<!-- PAGE 2 -->
-<section>
-  <img src="ton-image-2.png">
+<!-- SECTION 2 -->
+<section class="section">
   <div class="content">
     <h2>Street Food</h2>
-    <p>Saveurs d’Asie modernes</p>
+    <p>Saveurs authentiques d’Asie, revisitées.</p>
   </div>
 </section>
 
-<!-- PAGE 3 -->
-<section>
-  <img src="ton-image-3.png">
+<!-- SECTION 3 -->
+<section class="section">
   <div class="content">
-    <h2>Rooftop</h2>
-    <p>Vue Alpes + sunset</p>
+    <h2>Rooftop Experience</h2>
+    <p>Vue Alpes. Sunset. Atmosphère unique.</p>
   </div>
 </section>
+
+<!-- SECTION 4 -->
+<section class="section">
+  <div class="content">
+    <h2>Merlion Beer</h2>
+    <p>Bière signature brassée localement.</p>
+  </div>
+</section>
+
+<script>
+function scrollNext() {
+  window.scrollTo({
+    top: window.innerHeight,
+    behavior: "smooth"
+  });
+}
+
+function stamp(id) {
+  document.getElementById(id).classList.add("active");
+}
+
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll('.section');
+
+window.addEventListener('scroll', () => {
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      section.classList.add('visible');
+    }
+  });
+});
+</script>
 
 </body>
 </html>

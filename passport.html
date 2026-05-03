@@ -24,6 +24,11 @@ body {
   color: #F2EBD9;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
+   opacity: 0;
+  transition: opacity 1s ease;
+}
+  body.loaded {
+  opacity: 1;
 }
 
 /* HERO */
@@ -86,7 +91,10 @@ body {
 /* STAMP */
 .stamp {
   margin-top: 30px;
-  border: 2px solid #C0392B;
+   border: 2px solid #C0392B;
+  box-shadow: 0 0 20px rgba(192, 57, 43, 0.3);
+  font-weight: bold;
+  letter-spacing: 2px;
   padding: 12px 25px;
   display: inline-block;
   transform: rotate(-8deg) scale(0.8);
@@ -140,7 +148,9 @@ button:hover {
 </section>
 
 <script>
-
+window.onload = () => {
+  document.body.classList.add("loaded");
+}
 // ANIMATION SÉQUENTIELLE (STYLE APPLE)
 window.addEventListener("load", () => {
 

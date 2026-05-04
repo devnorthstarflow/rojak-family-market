@@ -1,136 +1,161 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+'use client';
 
-<title>ROJAK EXPERIENCE</title>
+import { Handle, Position, NodeProps } from '@xyflow/react';
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+const typeConfig: Record<string, {
+  border: string;
+  labelColor: string;
+  handleBg: string;
+  icon: string;
+  iconBg: string;
+}> = {
+  TRIGGER:      { border: '#1A2B5E', labelColor: '#1A2B5E', handleBg: '#1A2B5E', icon: '⚡', iconBg: '#EEF3FB' },
+  FORM:         { border: '#059669', labelColor: '#059669', handleBg: '#059669', icon: '📋', iconBg: '#ECFDF5' },
+  CONDITION:    { border: '#D4A017', labelColor: '#D4A017', handleBg: '#D4A017', icon: '◆', iconBg: '#FFFBEB' },
+  ACTION:       { border: '#7C3AED', labelColor: '#7C3AED', handleBg: '#7C3AED', icon: '⚙', iconBg: '#F5F3FF' },
+  NOTIFICATION: { border: '#DC2626', labelColor: '#DC2626', handleBg: '#DC2626', icon: '🔔', iconBg: '#FEF2F2' },
+  PDF:          { border: '#0369A1', labelColor: '#0369A1', handleBg: '#0369A1', icon: '📄', iconBg: '#EFF6FF' },
+  APPROVAL:     { border: '#059669', labelColor: '#059669', handleBg: '#059669', icon: '✓', iconBg: '#ECFDF5' },
+};
 
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+export default function CustomNode({ data, selected }: NodeProps) {
+  const type = String(data.type || 'ACTION');
+  const cfg = typeConfig[type] || typeConfig.ACTION;
+  const config = (data.config ?? {}) as Record<string, unknown>;
+  const connector = config.connector ? String(config.connector) : null;
+  const execStatus = String(data.execStatus || 'idle');
+  const onContinue = data.onContinue as (() => void) | undefined;
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+  const statusStyles: Record<string, { border: string; bg: string; badge?: string; badgeColor?: string }> = {
+    idle:    { border: cfg.border, bg: '#FFFFFF' },
+    running: { border: '#f59e0b', bg: '#fffbeb', badge: '⏳', badgeColor: '#d97706' },
+    waiting: { border: '#2563eb', bg: '#eff6ff', badge: '⏸',  badgeColor: '#2563eb' },
+    success: { border: '#16a34a', bg: '#f0fdf4', badge: '✓',  badgeColor: '#16a34a' },
+    error:   { border: '#dc2626', bg: '#fef2f2', badge: '✕',  badgeColor: '#dc2626' },
+  };
+  const ss = statusStyles[execStatus] || statusStyles.idle;
 
-body{
-  font-family:Inter;
-  background:#050807;
-  color:#F4EBD8;
-  overflow-x:hidden;
+  return (
+    <div
+      style={{
+        background: ss.bg,
+        border: `0.5px solid ${execStatus === 'idle' ? '#E2E8F0' : ss.border}`,
+        borderLeft: `3px solid ${ss.border}`,
+        borderRadius: '8px',
+        minWidth: '168px',
+        maxWidth: '220px',
+        boxShadow: execStatus === 'running'
+          ? `0 0 0 3px #f59e0b33`
+          : execStatus === 'waiting'
+          ? `0 0 0 3px #2563eb33`
+          : execStatus === 'success'
+          ? `0 0 0 3px #16a34a22`
+          : selected
+          ? `0 0 0 2px ${cfg.border}33`
+          : 'none',
+        overflow: 'hidden',
+        position: 'relative',
+        transition: 'all 0.25s ease',
+      }}
+    >
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{
+          width: '9px', height: '9px',
+          background: '#FFFFFF',
+          border: `2px solid ${cfg.handleBg}`,
+          borderRadius: '50%',
+        }}
+      />
+
+      {/* Header sobre — fond blanc, label coloré */}
+      <div style={{
+        padding: '7px 10px 5px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '5px',
+        borderBottom: '0.5px solid #F1F5F9',
+      }}>
+        <span style={{ fontSize: '11px', lineHeight: 1 }}>{cfg.icon}</span>
+        <span style={{
+          fontSize: '9px',
+          fontWeight: 700,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          color: execStatus === 'idle' ? cfg.labelColor : ss.badgeColor,
+          fontFamily: 'Inter, sans-serif',
+        }}>
+          {type}
+        </span>
+        {ss.badge && (
+          <span style={{
+            marginLeft: 'auto',
+            fontSize: '10px',
+            color: ss.badgeColor,
+            fontWeight: 700,
+          }}>
+            {ss.badge}
+          </span>
+        )}
+      </div>
+
+      {/* Nom */}
+      <div style={{ padding: '7px 10px 10px' }}>
+        <div style={{
+          fontSize: '13px',
+          fontWeight: 600,
+          color: '#0F172A',
+          lineHeight: 1.35,
+          fontFamily: 'Inter, sans-serif',
+          letterSpacing: '-0.01em',
+        }}>
+          {String(data.name || data.label || '')}
+        </div>
+        {connector && (
+          <div style={{
+            fontSize: '11px',
+            color: '#94A3B8',
+            marginTop: '3px',
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: 500,
+          }}>
+            {connector}
+          </div>
+        )}
+        {execStatus === 'waiting' && onContinue && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onContinue(); }}
+            style={{
+              marginTop: '8px',
+              width: '100%',
+              padding: '5px 0',
+              background: '#2563eb',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              fontSize: '11px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif',
+              letterSpacing: '0.02em',
+            }}
+          >
+            ▶ Continuer
+          </button>
+        )}
+      </div>
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{
+          width: '9px', height: '9px',
+          background: '#FFFFFF',
+          border: `2px solid ${cfg.handleBg}`,
+          borderRadius: '50%',
+        }}
+      />
+    </div>
+  );
 }
-
-/* NAV */
-.nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  padding:20px;
-  z-index:100;
-  background:rgba(0,0,0,0.4);
-}
-
-.brand{
-  font-family:"Bebas Neue";
-  font-size:24px;
-}
-
-/* SECTION */
-.panel{
-  height:100vh;
-  position:relative;
-  overflow:hidden;
-}
-
-/* IMAGE */
-.panel img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* TEXT */
-.caption{
-  position:absolute;
-  bottom:60px;
-  left:40px;
-  font-family:"Bebas Neue";
-  font-size:48px;
-  opacity:0;
-}
-</style>
-</head>
-
-<body>
-
-<div class="nav">
-  <div class="brand">ROJAK</div>
-</div>
-
-<section class="panel">
-  <img src="https://picsum.photos/1600/900?1">
-  <div class="caption">Arrival</div>
-</section>
-
-<section class="panel">
-  <img src="https://picsum.photos/1600/900?2">
-  <div class="caption">Dining</div>
-</section>
-
-<section class="panel">
-  <img src="https://picsum.photos/1600/900?3">
-  <div class="caption">Kitchen</div>
-</section>
-
-<section class="panel">
-  <img src="https://picsum.photos/1600/900?4">
-  <div class="caption">Rooftop</div>
-</section>
-
-<script>
-window.addEventListener("load", () => {
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  document.querySelectorAll(".panel").forEach(panel => {
-
-    const img = panel.querySelector("img");
-    const text = panel.querySelector(".caption");
-
-    gsap.fromTo(img,
-      { scale: 1.2 },
-      {
-        scale: 1,
-        scrollTrigger: {
-          trigger: panel,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      }
-    );
-
-    gsap.fromTo(text,
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: panel,
-          start: "top 60%",
-          end: "top 40%",
-          scrub: true
-        }
-      }
-    );
-
-  });
-
-});
-</script>
-
-</body>
-</html>

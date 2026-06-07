@@ -63,7 +63,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:cent
 .divider span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 .cocktail-hero{margin:2rem 0;border-radius:4px;overflow:hidden;position:relative;}
-.cocktail-hero img{width:100%;max-height:560px;object-fit:cover;object-position:center center;display:block;}
+.cocktail-hero img{width:100%;max-height:520px;object-fit:cover;object-position:center top;display:block;}
 .cocktail-hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:2rem;background:linear-gradient(transparent,rgba(10,26,16,.92));}
 .cocktail-hero-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.1em;color:var(--text);}
 .cocktail-hero-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);font-style:italic;}
@@ -106,14 +106,14 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
   <div class="item"><div class="item-photo-empty"></div><div><div class="item-name">Satay de poulet <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Brochettes marinées aux épices, cuites au charbon, sauce cacahuète, concombre, oignon rouge</div></div><div><div class="item-price">12 €</div><div class="item-price-note">4 pièces</div></div></div>
   <div class="item"><img class="item-photo" src="images/Gado Gado Salad.png" alt="Gado Gado" loading="lazy"><div><div class="item-name">Gado Gado <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Salade singapourienne, tempeh frit, légumes croquants, œuf dur, crackers belinjau, sauce cacahuète maison</div></div><div><div class="item-price">10 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Bakwan Jagung.png" alt="Cucur Sayur" loading="lazy"><div><div class="item-name">Cucur Sayur <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Beignets de légumes assortis, sauce tomate belado maison</div></div><div><div class="item-price">7 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Kaya Toast.png" alt="Kaya Toast" loading="lazy"><div><div class="item-name">Kaya Toast <span class="badge badge-sig">signature</span></div><div class="item-desc">Pain brioché grillé, kaya maison (coco, pandan, œuf), beurre, œufs mollets sauce soja</div></div><div><div class="item-price">7 €</div></div></div>
+  <div class="item"><div class="item-photo-empty"></div><div><div class="item-name">Bánh mì du marché <span class="badge badge-new">exclusif</span></div><div class="item-desc">Baguette croustillante, porc fondant ou tofu, pickles de daikon, coriandre fraîche, sriracha</div></div><div><div class="item-price">9 €</div></div></div>
 </section>
 
 <section class="section" id="nasi">
   <div class="section-head"><div class="section-num">02</div><div><div class="section-title">Nasi Lemak</div><div class="section-sub">notre signature · le cœur de la carte</div></div></div>
   <div class="nasi-note"><p>Tous nos Nasi Lemak sont servis avec riz au lait de coco pressé à froid, œuf frit au wok, anchois croustillants, cacahuètes torréfiées, concombre frais et sambal maison.</p></div>
   <div class="item"><img class="item-photo" src="images/Ayam Goreng Berempah Nasi Lemak.png" alt="Ayam Goreng Berempah" loading="lazy"><div><div class="item-name">Ayam Goreng Berempah <span class="badge badge-sig">best-seller</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Poulet fermier frit aux épices rempah, chapelure croustillante, sambal tumis maison</div></div><div><div class="item-price">16 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Homemade Otah.png" alt="Otah Otah" loading="lazy"><div><div class="item-name">Otah Otah</div><div class="item-desc">Galette de poisson grillée au charbon, herbes fraîches et épices rempah, feuille de bananier</div></div><div><div class="item-price">13 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Homemade Otah Nasi Lemak.png" alt="Otah Otah" loading="lazy"><div><div class="item-name">Otah Otah</div><div class="item-desc">Galette de poisson grillée au charbon, herbes fraîches et épices rempah, feuille de bananier</div></div><div><div class="item-price">13 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Beef Rendang Nasi Lemak.png" alt="Beef Rendang" loading="lazy"><div><div class="item-name">Beef Rendang <span class="badge badge-sig">signature</span></div><div class="item-desc">Curry sec de joue de bœuf braisée 6h aux épices, lait de coco, toasted coconut</div></div><div><div class="item-price">19 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Mushroom Rendang Nasi Lemak.png" alt="Mushroom Rendang" loading="lazy"><div><div class="item-name">Mushroom Rendang <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Champignons braisés aux épices rendang, lait de coco, toasted coconut, feuilles de combava</div></div><div><div class="item-price">14 €</div></div></div>
   <div class="addon-block"><div class="addon-title">Suppléments</div><div class="addon-row"><span>Riz coco supplémentaire</span><span>3 €</span></div><div class="addon-row"><span>Beef Rendang</span><span>7 €</span></div><div class="addon-row"><span>Otah Otah</span><span>5 €</span></div><div class="addon-row"><span>Œuf frit supplémentaire</span><span>2 €</span></div></div>
@@ -121,7 +121,7 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
 
 <section class="section" id="specialites">
   <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Spécialités maison</div><div class="section-sub">Singapour · Malaisie · Vietnam · Thaïlande</div></div></div>
-  <div class="item"><img class="item-photo" src="images/laksa.jpeg" alt="Laksa" loading="lazy"><div><div class="item-name">Laksa signature Rojak <span class="badge badge-sig">signature</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Bouillon de coco épicé, vermicelles de riz, crevettes tiger, palourdes, otah maison, œuf mollet</div></div><div><div class="item-price">18 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Singaporean Seafood Laksa.png" alt="Laksa" loading="lazy"><div><div class="item-name">Laksa signature Rojak <span class="badge badge-sig">signature</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Bouillon de coco épicé, vermicelles de riz, crevettes tiger, palourdes, otah maison, œuf mollet</div></div><div><div class="item-price">18 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Coconut Rice.png" alt="Chicken Rice" loading="lazy"><div><div class="item-name">Hainanese Chicken Rice <span class="badge badge-sig">incontournable</span></div><div class="item-desc">Poulet poché fondant, riz cuit au bouillon de volaille, sauce gingembre, sauce soja sucrée</div></div><div><div class="item-price">15 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Sambal Squid.png" alt="Sambal Sotong" loading="lazy"><div><div class="item-name">Sambal Sotong <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Encornets sautés au wok, sambal tumis maison, tomates cerises, poivrons verts</div></div><div><div class="item-price">16 €</div></div></div>
   <div class="item"><img class="item-photo" src="images/Threadfin Fish Curry.png" alt="Fish Curry" loading="lazy"><div><div class="item-name">Threadfin Fish Curry <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Curry de poisson threadfin, lait de coco, aubergines, tomates, riz jasmin</div></div><div><div class="item-price">17 €</div></div></div>
@@ -150,7 +150,7 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
     <div>
       <div class="item"><img class="item-photo" src="images/Teh tarik.png" alt="Teh Tarik" loading="lazy"><div><div class="item-name">Teh Tarik</div><div class="item-desc">Thé malaisien tiré, lait concentré sucré</div></div><div><div class="item-price">4 €</div></div></div>
       <div class="item"><img class="item-photo" src="images/Calamansi Juice.png" alt="Calamansi" loading="lazy"><div><div class="item-name">Calamansi Sourplum</div><div class="item-desc">Calamansi pressé, prune salée, soda</div></div><div><div class="item-price">4 €</div></div></div>
-      <div class="item"><img class="item-photo" src="images/Lychee Spritz Bubble Tea.png" alt="Bubble Tea" loading="lazy" style="object-position:right center"><div><div class="item-name">Bubble Tea maison <span class="badge badge-new">fait maison</span></div><div class="item-desc">Thé noir, vert ou taro — perles de tapioca fraîches cuites maison, lait ou option végétale</div></div><div><div class="item-price">5 €</div></div></div>
+      <div class="item-simple"><div><div class="item-name">Bubble Tea maison <span class="badge badge-new">fait maison</span></div><div class="item-desc">Thé noir, vert ou taro, perles de tapioca fraîches</div></div><div><div class="item-price">5 €</div></div></div>
       <div class="item-simple"><div><div class="item-name">Kopi O</div><div class="item-desc">Café singapourien torréfié au beurre, noir</div></div><div><div class="item-price">3 €</div></div></div>
     </div>
   </div>
@@ -183,49 +183,9 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
       </div>
     </div>
   </div>
-  <div class="cocktail-hero" style="margin-top:1.5rem">
-    <img src="images/Merlion Sling.png" alt="Merlion Sling">
-    <div class="cocktail-hero-overlay">
-      <div class="cocktail-hero-name">MERLION SLING</div>
-      <div class="cocktail-hero-sub">Hommage au Singapore Sling · 12 €</div>
-      <div class="cocktail-ingredients">
-        <span class="cocktail-ingredient">Gin</span>
-        <span class="cocktail-ingredient">Calamansi</span>
-        <span class="cocktail-ingredient">Grenadine pandan</span>
-        <span class="cocktail-ingredient">Cherry brandy</span>
-        <span class="cocktail-ingredient">Angostura</span>
-      </div>
-    </div>
-  </div>
-  <div class="cocktail-hero" style="margin-top:1.5rem">
-    <img src="images/Merlion Sling Pandan Mojito.png" alt="Merlion Sling & Pandan Mojito">
-    <div class="cocktail-hero-overlay">
-      <div class="cocktail-hero-name">PANDAN MOJITO</div>
-      <div class="cocktail-hero-sub">Fraîcheur tropicale & herbacée · version avec ou sans alcool · 11 €</div>
-      <div class="cocktail-ingredients">
-        <span class="cocktail-ingredient">Rhum blanc</span>
-        <span class="cocktail-ingredient">Sirop pandan maison</span>
-        <span class="cocktail-ingredient">Citron vert</span>
-        <span class="cocktail-ingredient">Menthe fraîche</span>
-        <span class="cocktail-ingredient">Soda</span>
-        <span class="cocktail-ingredient">Virgin dispo</span>
-      </div>
-    </div>
-  </div>
-  <div class="cocktail-hero" style="margin-top:1.5rem">
-    <img src="images/Lychee Spritz.png" alt="Lychee Spritz">
-    <div class="cocktail-hero-overlay">
-      <div class="cocktail-hero-name">LYCHEE SPRITZ</div>
-      <div class="cocktail-hero-sub">Fraîcheur florale & pétillante · 10 €</div>
-      <div class="cocktail-ingredients">
-        <span class="cocktail-ingredient">Liqueur de litchi</span>
-        <span class="cocktail-ingredient">Prosecco</span>
-        <span class="cocktail-ingredient">Eau pétillante</span>
-        <span class="cocktail-ingredient">Citron vert</span>
-        <span class="cocktail-ingredient">Menthe fraîche</span>
-      </div>
-    </div>
-  </div>
+  <div class="item-simple"><div><div class="item-name">Merlion Sling <span class="badge badge-new">création</span></div><div class="item-desc">Gin, calamansi, grenadine pandan, cherry brandy, Angostura — hommage au Singapore Sling</div></div><div><div class="item-price">12 €</div></div></div>
+  <div class="item-simple"><div><div class="item-name">Pandan Mojito <span class="badge badge-veg">sans alcool dispo</span></div><div class="item-desc">Rhum blanc, sirop pandan maison, citron vert, menthe fraîche, soda</div></div><div><div class="item-price">11 €</div></div></div>
+  <div class="item-simple"><div><div class="item-name">Lychee Spritz</div><div class="item-desc">Prosecco, liqueur de litchi, eau de rose, rondelle de calamansi</div></div><div><div class="item-price">10 €</div></div></div>
 </section>
 
 </div>

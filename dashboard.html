@@ -132,7 +132,10 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     <div class="slider-card"><div class="slider-label">Mix Tang Frères épicerie</div><div class="slider-row"><input type="range" id="s-mix" min="0" max="1" step="0.05" value="0.80" oninput="recalc()"><span class="slider-val" id="v-mix">80%</span></div></div>
   </div>
 
-  <div class="sec-label" style="margin-top:.5rem;">Masse salariale</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:.5rem;margin-bottom:.4rem;">
+    <div class="sec-label" style="margin:0;">Masse salariale</div>
+    <button onclick="resetSalaires()" style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)';">↺ Réinitialiser</button>
+  </div>
   <div class="sliders-grid" style="margin-bottom:1.5rem;">
     <div class="slider-card">
       <div class="slider-label">Chef cuisinier (€/mois chargé)</div>
@@ -527,6 +530,15 @@ function setScenario(s,el){
   document.getElementById('s-snack').value=sc.snack;
   document.getElementById('s-fc').value=sc.fc;
   document.getElementById('s-mix').value=sc.mix;
+  recalc();
+}
+
+function resetSalaires(){
+  document.getElementById('s-chef').value=3800;
+  document.getElementById('s-second').value=2900;
+  document.getElementById('s-serv').value=2600;
+  document.getElementById('s-nbserv').value=2;
+  document.getElementById('s-gerant').value=2500;
   recalc();
 }
 

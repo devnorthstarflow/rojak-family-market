@@ -399,11 +399,11 @@ function drawPL(ca,cout,charges,ebe,rn){
     meta.data.forEach(function(bar,i){
       var v=Math.abs(vals[i]);
       var txt=v>=1000?Math.round(v/1000)+'k€':Math.round(v)+'€';
-      var xPos=bar.x+(vals[i]>=0?6:-6);
+      var xPos=bar.base+(vals[i]>=0?bar.width:0)+8;
       c2.save();
       c2.fillStyle='#e8dfc8';
       c2.font='500 9.5px DM Sans,sans-serif';
-      c2.textAlign=vals[i]>=0?'left':'right';
+      c2.textAlign='left';
       c2.textBaseline='middle';
       c2.fillText(txt,xPos,bar.y);
       c2.restore();

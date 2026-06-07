@@ -280,6 +280,71 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   </div>
 
   <div class="divider"></div>
+
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:.4rem;">
+    <div class="sec-label" style="margin:0;">Rooftop événementiel</div>
+    <button onclick="resetRooftop()" style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)';">↺ Réinitialiser</button>
+  </div>
+
+  <div class="sliders-grid" style="margin-bottom:.75rem;">
+    <div class="slider-card">
+      <div class="slider-label">Privatisations / an</div>
+      <div class="slider-row"><input type="range" id="rt-priv-nb" min="0" max="24" step="1" value="4" oninput="recalcRooftop()"><span class="slider-val" id="rtv-priv-nb">4</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Recette / privatisation (€) <span style="opacity:.5;font-size:.6rem;">salle + conso + service</span></div>
+      <div class="slider-row"><input type="range" id="rt-priv-mt" min="500" max="6000" step="100" value="3500" oninput="recalcRooftop()"><span class="slider-val" id="rtv-priv-mt">3500€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Soirées à thème / an</div>
+      <div class="slider-row"><input type="range" id="rt-them-nb" min="0" max="24" step="1" value="6" oninput="recalcRooftop()"><span class="slider-val" id="rtv-them-nb">6</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Recette / soirée thème (€)</div>
+      <div class="slider-row"><input type="range" id="rt-them-mt" min="200" max="4000" step="100" value="880" oninput="recalcRooftop()"><span class="slider-val" id="rtv-them-mt">880€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Corporate CERN/ONU / an</div>
+      <div class="slider-row"><input type="range" id="rt-corp-nb" min="0" max="20" step="1" value="4" oninput="recalcRooftop()"><span class="slider-val" id="rtv-corp-nb">4</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Recette / corporate (€)</div>
+      <div class="slider-row"><input type="range" id="rt-corp-mt" min="500" max="6000" step="100" value="2475" oninput="recalcRooftop()"><span class="slider-val" id="rtv-corp-mt">2475€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Autres événements / an</div>
+      <div class="slider-row"><input type="range" id="rt-other-nb" min="0" max="30" step="1" value="6" oninput="recalcRooftop()"><span class="slider-val" id="rtv-other-nb">6</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Recette / autre événement (€)</div>
+      <div class="slider-row"><input type="range" id="rt-other-mt" min="200" max="4000" step="100" value="900" oninput="recalcRooftop()"><span class="slider-val" id="rtv-other-mt">900€</span></div>
+    </div>
+  </div>
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:1.5rem;">
+    <div class="kpi-card">
+      <div class="kpi-label">Nb événements total / an</div>
+      <div class="kpi-val" id="rt-total-nb">—</div>
+      <div class="kpi-sub">Toutes catégories</div>
+    </div>
+    <div class="kpi-card gold-border">
+      <div class="kpi-label">CA rooftop / an</div>
+      <div class="kpi-val" id="rt-total-ca">—</div>
+      <div class="kpi-sub" id="rt-total-ca-sub">—</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Recette moy. / événement</div>
+      <div class="kpi-val" id="rt-moy-evt">—</div>
+      <div class="kpi-sub">Toutes catégories</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Marge brute rooftop</div>
+      <div class="kpi-val" id="rt-marge">—</div>
+      <div class="kpi-sub">Coût variable 45%</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
   <div class="sec-label">Structure de financement</div>
   <div class="sec-title">Plan de financement.</div>
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
@@ -679,6 +744,7 @@ function resetSalaires(){
   document.getElementById('s-gerant').value=2500;
   recalc();
   recalcRobots();
+  recalcRooftop();
 }
 
 function resetAll(){
@@ -746,11 +812,61 @@ function recalcFin(){
   card.style.borderColor = emprunt < 0 ? 'rgba(126,200,126,0.4)' : emprunt > invest*0.7 ? 'rgba(224,112,96,0.4)' : 'var(--border)';
 }
 
+function recalcRooftop(){
+  var priv_nb  = +document.getElementById('rt-priv-nb').value;
+  var priv_mt  = +document.getElementById('rt-priv-mt').value;
+  var them_nb  = +document.getElementById('rt-them-nb').value;
+  var them_mt  = +document.getElementById('rt-them-mt').value;
+  var corp_nb  = +document.getElementById('rt-corp-nb').value;
+  var corp_mt  = +document.getElementById('rt-corp-mt').value;
+  var other_nb = +document.getElementById('rt-other-nb').value;
+  var other_mt = +document.getElementById('rt-other-mt').value;
+
+  document.getElementById('rtv-priv-nb').textContent  = priv_nb;
+  document.getElementById('rtv-priv-mt').textContent  = priv_mt.toLocaleString('fr-FR')+'€';
+  document.getElementById('rtv-them-nb').textContent  = them_nb;
+  document.getElementById('rtv-them-mt').textContent  = them_mt.toLocaleString('fr-FR')+'€';
+  document.getElementById('rtv-corp-nb').textContent  = corp_nb;
+  document.getElementById('rtv-corp-mt').textContent  = corp_mt.toLocaleString('fr-FR')+'€';
+  document.getElementById('rtv-other-nb').textContent = other_nb;
+  document.getElementById('rtv-other-mt').textContent = other_mt.toLocaleString('fr-FR')+'€';
+
+  var total_nb = priv_nb + them_nb + corp_nb + other_nb;
+  var ca_priv  = priv_nb  * priv_mt;
+  var ca_them  = them_nb  * them_mt;
+  var ca_corp  = corp_nb  * corp_mt;
+  var ca_other = other_nb * other_mt;
+  var ca_total = ca_priv + ca_them + ca_corp + ca_other;
+  var marge    = ca_total * 0.55;
+  var moy      = total_nb > 0 ? Math.round(ca_total / total_nb) : 0;
+
+  document.getElementById('rt-total-nb').textContent  = total_nb + ' evt';
+  document.getElementById('rt-total-ca').textContent  = Math.round(ca_total/1000) + 'k€';
+  document.getElementById('rt-total-ca-sub').textContent =
+    'Priv. ' + Math.round(ca_priv/1000) + 'k · Thème ' + Math.round(ca_them/1000) +
+    'k · Corp. ' + Math.round(ca_corp/1000) + 'k · Autres ' + Math.round(ca_other/1000) + 'k€';
+  document.getElementById('rt-moy-evt').textContent   = moy.toLocaleString('fr-FR') + '€';
+  document.getElementById('rt-marge').textContent     = Math.round(marge/1000) + 'k€';
+}
+
+function resetRooftop(){
+  document.getElementById('rt-priv-nb').value  = 4;
+  document.getElementById('rt-priv-mt').value  = 3500;
+  document.getElementById('rt-them-nb').value  = 6;
+  document.getElementById('rt-them-mt').value  = 880;
+  document.getElementById('rt-corp-nb').value  = 4;
+  document.getElementById('rt-corp-mt').value  = 2475;
+  document.getElementById('rt-other-nb').value = 6;
+  document.getElementById('rt-other-mt').value = 900;
+  recalcRooftop();
+}
+
 window.addEventListener('load',function(){
   setTimeout(function(){
     recalc();
     recalcFin();
     recalcRobots();
+    recalcRooftop();
   }, 100);
 });
 </script>

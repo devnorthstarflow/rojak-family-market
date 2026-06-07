@@ -94,6 +94,24 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   z-index:101;pointer-events:none;
 }
 .kpi-card[data-tip]{cursor:help;}
+
+.slots-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;}
+.slot-btn{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:3px;padding:8px 12px;cursor:pointer;
+  min-width:110px;transition:all .2s;position:relative;
+}
+.slot-btn:hover{border-color:var(--border2);}
+.slot-btn.saved{border-color:rgba(201,168,76,0.5);}
+.slot-btn.saved .slot-indicator{background:var(--gold);}
+.slot-name{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.slot-name-input{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--gold);width:90px;text-align:center;outline:none;font-family:'DM Sans',sans-serif;}
+.slot-indicator{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);margin-bottom:2px;}
+.slot-actions{display:flex;gap:4px;margin-top:4px;}
+.slot-action{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--border);border-radius:1px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.slot-action:hover{border-color:var(--gold);color:var(--gold);}
+.slot-action.del:hover{border-color:#e07060;color:#e07060;}
 .robot-tip{position:relative;cursor:help;}
 .robot-tip:hover .robot-tip-box{display:block;}
 .robot-tip-box{
@@ -146,6 +164,10 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
 
   <div class="sec-label">Simulation interactive</div>
   <div class="sec-title">Ajustez les paramètres.</div>
+
+  <div class="slots-bar" id="slots-bar">
+    <span style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-right:4px;">Configs sauvegardées :</span>
+  </div>
 
   <div class="tabs">
     <button class="tab active" onclick="setScenario('central',this)">Central</button>
@@ -907,8 +929,138 @@ function resetRooftop(){
   recalcRooftop();
 }
 
+// ============ SLOTS SAVE/LOAD ============
+var SLOTS = [null,null,null,null,null];
+var SLOT_NAMES = ['Config 1','Config 2','Config 3','Config 4','Config 5'];
+
+function getAllParams(){
+  return {
+    couverts: document.getElementById('s-couverts').value,
+    ticket:   document.getElementById('s-ticket').value,
+    epics:    document.getElementById('s-epics').value,
+    snack:    document.getElementById('s-snack').value,
+    fc:       document.getElementById('s-fc').value,
+    mix:      document.getElementById('s-mix').value,
+    tkte:     document.getElementById('s-ticket-epic').value,
+    tkts:     document.getElementById('s-ticket-snack').value,
+    capa:     document.getElementById('s-capa').value,
+    chef:     document.getElementById('s-chef').value,
+    second:   document.getElementById('s-second').value,
+    serv:     document.getElementById('s-serv').value,
+    nbserv:   document.getElementById('s-nbserv').value,
+    gerant:   document.getElementById('s-gerant').value,
+    nbrobot:  document.getElementById('s-nbrobot').value,
+    nbservr:  document.getElementById('s-nbservrobot').value,
+    coutrobot:document.getElementById('s-coutrobot').value,
+    rt_pn:    document.getElementById('rt-priv-nb').value,
+    rt_pm:    document.getElementById('rt-priv-mt').value,
+    rt_tn:    document.getElementById('rt-them-nb').value,
+    rt_tm:    document.getElementById('rt-them-mt').value,
+    rt_cn:    document.getElementById('rt-corp-nb').value,
+    rt_cm:    document.getElementById('rt-corp-mt').value,
+    rt_on:    document.getElementById('rt-other-nb').value,
+    rt_om:    document.getElementById('rt-other-mt').value,
+    fi_invest:document.getElementById('fi-invest').textContent,
+    fi_apport:document.getElementById('fi-apport').textContent,
+    fi_bpi:   document.getElementById('fi-bpi').textContent,
+    fi_cci:   document.getElementById('fi-cci').textContent,
+    fi_loyer: document.getElementById('fi-loyer').textContent,
+  };
+}
+
+function setAllParams(p){
+  var ids = ['s-couverts','s-ticket','s-epics','s-snack','s-fc','s-mix',
+             's-ticket-epic','s-ticket-snack','s-capa',
+             's-chef','s-second','s-serv','s-nbserv','s-gerant',
+             's-nbrobot','s-nbservrobot','s-coutrobot',
+             'rt-priv-nb','rt-priv-mt','rt-them-nb','rt-them-mt',
+             'rt-corp-nb','rt-corp-mt','rt-other-nb','rt-other-mt'];
+  var keys = ['couverts','ticket','epics','snack','fc','mix',
+              'tkte','tkts','capa',
+              'chef','second','serv','nbserv','gerant',
+              'nbrobot','nbservr','coutrobot',
+              'rt_pn','rt_pm','rt_tn','rt_tm',
+              'rt_cn','rt_cm','rt_on','rt_om'];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && p[keys[i]] !== undefined) el.value = p[keys[i]];
+  }
+  var fi_map = {
+    'fi-invest': p.fi_invest, 'fi-apport': p.fi_apport,
+    'fi-bpi': p.fi_bpi, 'fi-cci': p.fi_cci, 'fi-loyer': p.fi_loyer
+  };
+  for(var id in fi_map){
+    var el2=document.getElementById(id);
+    if(el2 && fi_map[id]) el2.textContent=fi_map[id];
+  }
+  recalc(); recalcRooftop(); recalcRobots(); recalcFin();
+}
+
+function saveSlot(idx){
+  SLOTS[idx] = getAllParams();
+  try{ localStorage.setItem('rojak_slot_'+idx, JSON.stringify(SLOTS[idx])); } catch(e){}
+  try{ localStorage.setItem('rojak_slot_name_'+idx, SLOT_NAMES[idx]); } catch(e){}
+  renderSlots();
+}
+
+function loadSlot(idx){
+  if(!SLOTS[idx]) return;
+  setAllParams(SLOTS[idx]);
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelector('.tab[onclick*="custom"]').classList.add('active');
+}
+
+function resetSlot(idx){
+  SLOTS[idx] = null;
+  try{ localStorage.removeItem('rojak_slot_'+idx); } catch(e){}
+  renderSlots();
+}
+
+function renameSlot(idx, val){
+  SLOT_NAMES[idx] = val || ('Config '+(idx+1));
+  try{ localStorage.setItem('rojak_slot_name_'+idx, SLOT_NAMES[idx]); } catch(e){}
+  renderSlots();
+}
+
+function renderSlots(){
+  var bar = document.getElementById('slots-bar');
+  var label = bar.querySelector('span');
+  bar.innerHTML = '';
+  bar.appendChild(label);
+  for(var i=0;i<5;i++){
+    var saved = SLOTS[i] !== null;
+    var div = document.createElement('div');
+    div.className = 'slot-btn' + (saved?' saved':'');
+    var idx = i;
+    div.innerHTML =
+      '<div class="slot-indicator"></div>'+
+      '<input class="slot-name-input" value="'+SLOT_NAMES[i]+'" placeholder="Config '+(i+1)+'" '+
+        'onblur="renameSlot('+i+',this.value)" onkeydown="if(event.key==='Enter')this.blur()" '+
+        'onclick="event.stopPropagation()">'+
+      '<div class="slot-actions">'+
+        '<button class="slot-action" onclick="saveSlot('+i+')" title="Sauvegarder">💾 Save</button>'+
+        (saved ? '<button class="slot-action" onclick="loadSlot('+i+')" title="Charger">▶ Load</button>' : '')+
+        (saved ? '<button class="slot-action del" onclick="resetSlot('+i+')" title="Effacer">✕</button>' : '')+
+      '</div>';
+    bar.appendChild(div);
+  }
+}
+
+function loadSlotsFromStorage(){
+  for(var i=0;i<5;i++){
+    try{
+      var d=localStorage.getItem('rojak_slot_'+i);
+      if(d) SLOTS[i]=JSON.parse(d);
+      var n=localStorage.getItem('rojak_slot_name_'+i);
+      if(n) SLOT_NAMES[i]=n;
+    }catch(e){}
+  }
+  renderSlots();
+}
+
 window.addEventListener('load',function(){
   setTimeout(function(){
+    loadSlotsFromStorage();
     recalc();
     recalcFin();
     recalcRobots();

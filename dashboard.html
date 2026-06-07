@@ -419,9 +419,9 @@ let nRobots=0,chartCA=null,chartPL=null,chartTrezo=null;
 const COLS=['#1C3D2B','#C9A84C','#8B2A1A','#2D6A4A','#7a6020'];
 const LABS=['Restaurant','Épicerie','Snacking','Bière','Rooftop'];
 
-function fmtK(n){return Math.round(n/1000)+'k€';}
+function fmtK(n){if(isNaN(n)||!isFinite(n))return '—';var v=Math.round(n/1000);return (v<0?'-'+Math.abs(v):v)+'k€';}
 function fmt(n){return Math.round(n).toLocaleString('fr-FR')+'€';}
-function pct(n){return (n*100).toFixed(1)+'%';}
+function pct(n){if(isNaN(n)||!isFinite(n))return '—';return (n*100).toFixed(1)+'%';}
 function badge(id,txt,cls){var e=document.getElementById(id);e.textContent=txt;e.className='kpi-badge '+cls;}
 
 function recalc(){

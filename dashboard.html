@@ -6,6 +6,7 @@
 <title>Dashboard Financier — Rojak Family Market</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
 :root {
   --bg:     #07120c;
@@ -644,9 +645,22 @@ function updateCA(data){
       responsive:true,maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+' ('+pct(c.raw/data.reduce((a,b)=>a+b,0))+')'}}
+        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+' ('+pct(c.raw/data.reduce((a,b)=>a+b,0))+')'}} ,
+        datalabels:{
+          color:'#e8dfc8',
+          font:{family:"'DM Sans',sans-serif",size:10,weight:'500'},
+          formatter:(val,ctx)=>{
+            const tot=ctx.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+            const p=(val/tot*100);
+            return p>6?ctx.chart.data.labels[ctx.dataIndex]+'
+'+Math.round(p)+'%':'';
+          },
+          textAlign:'center',
+          anchor:'center',align:'center'
+        }
       },cutout:'62%'
-    }
+    },
+    plugins:[ChartDataLabels]
   });
   const tot = data.reduce((a,b)=>a+b,0);
   document.getElementById('legend-ca').innerHTML = LABS.map((l,i)=>
@@ -669,12 +683,27 @@ function updatePL(ca,cout,charges,ebe,rn){
     },
     options:{
       responsive:true,maintainAspectRatio:false,indexAxis:'y',
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(Math.abs(c.raw))}}},
+      layout:{padding:{right:55}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' '+fmt(Math.abs(c.raw))}},
+        datalabels:{
+          color:'#e8dfc8',
+          font:{family:"'DM Sans',sans-serif",size:9.5,weight:'500'},
+          anchor:'end',align:'end',
+          formatter:(val)=>{
+            const v=Math.abs(val);
+            return v>=1000?Math.round(v/1000)+'k€':Math.round(v)+'€';
+          },
+          clamp:true
+        }
+      },
       scales:{
         x:{ticks:{color:'#9a9080',font:{size:9},callback:v=>Math.round(Math.abs(v)/1000)+'k€'},grid:{color:'rgba(201,168,76,0.06)'}},
         y:{ticks:{color:'#c8b89a',font:{size:9.5}},grid:{display:false}}
       }
-    }
+    },
+    plugins:[ChartDataLabels]
   });
 }
 
@@ -702,13 +731,26 @@ function updateTrezo(ca_an,cf_an){
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)}}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)}},
+        datalabels:{
+          color:(ctx)=>ctx.dataset.data[ctx.dataIndex]>=0?'#7ec87e':'#e07060',
+          font:{family:"'DM Sans',sans-serif",size:8.5,weight:'500'},
+          anchor:'top',align:'top',offset:4,
+          formatter:(val)=>{
+            const v=Math.abs(val);
+            return (val<0?'−':'')+Math.round(v/1000)+'k€';
+          }
+        }
+      },
       scales:{
         x:{ticks:{color:'#9a9080',font:{size:9}},grid:{display:false}},
         y:{ticks:{color:'#9a9080',font:{size:9},callback:v=>Math.round(v/1000)+'k€'},grid:{color:'rgba(201,168,76,0.06)'},
            afterDataLimits:ax=>{ax.min=Math.min(ax.min,-5000);}}
       }
-    }
+    },
+    plugins:[ChartDataLabels]
   });
 }
 

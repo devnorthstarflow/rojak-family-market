@@ -179,7 +179,10 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="divider"></div>
   <div class="sec-label">Structure de financement</div>
   <div class="sec-title">Plan de financement.</div>
-  <div style="font-size:.68rem;color:var(--muted);margin-bottom:1rem;">Cliquez sur une valeur pour la modifier — l'équilibre se recalcule automatiquement</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
+    <div style="font-size:.68rem;color:var(--muted);">Cliquez sur une valeur pour la modifier — l'équilibre se recalcule automatiquement</div>
+    <button onclick="resetFin()" style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)';">↺ Réinitialiser</button>
+  </div>
   <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
     <div class="kpi-card">
       <div class="kpi-label">Investissement total</div>
@@ -485,6 +488,15 @@ function setScenario(s,el){
   document.getElementById('s-fc').value=sc.fc;
   document.getElementById('s-mix').value=sc.mix;
   recalc();
+}
+
+function resetFin(){
+  document.getElementById('fi-invest').textContent = '430';
+  document.getElementById('fi-apport').textContent = '100';
+  document.getElementById('fi-bpi').textContent    = '50';
+  document.getElementById('fi-cci').textContent    = '20';
+  document.getElementById('fi-loyer').textContent  = '2500';
+  recalcFin();
 }
 
 function recalcFin(){

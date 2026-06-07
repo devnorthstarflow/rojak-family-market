@@ -94,6 +94,20 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   z-index:101;pointer-events:none;
 }
 .kpi-card[data-tip]{cursor:help;}
+.robot-tip{position:relative;cursor:help;}
+.robot-tip:hover .robot-tip-box{display:block;}
+.robot-tip-box{
+  display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#0d1f15;border:1px solid var(--border2);
+  color:var(--text);font-size:.7rem;line-height:1.6;
+  padding:10px 14px;border-radius:3px;
+  white-space:normal;width:260px;text-align:left;
+  z-index:200;pointer-events:none;
+}
+.robot-tip-box::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--border2);
+}
 </style>
 </head>
 <body>
@@ -251,10 +265,11 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);" id="r-new-ms">—</div>
         <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-new-detail">—</div>
       </div>
-      <div style="background:rgba(28,61,43,0.4);border:1px solid var(--border2);border-radius:3px;padding:14px 16px;">
-        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Économie annuelle</div>
+      <div class="robot-tip" style="background:rgba(28,61,43,0.4);border:1px solid var(--border2);border-radius:3px;padding:14px 16px;">
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Économie annuelle <span style="opacity:.5;font-size:.5rem;">ⓘ</span></div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;" id="r-eco-val">—</div>
         <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-eco-detail">—</div>
+        <div class="robot-tip-box" id="r-eco-tip">—</div>
       </div>
       <div style="background:rgba(7,18,12,0.5);border:1px solid var(--border);border-radius:3px;padding:14px 16px;">
         <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Investissement robots</div>
@@ -610,6 +625,32 @@ function recalcRobots(){
 
   document.getElementById('r-invest-val').textContent   = Math.round(invest_r/1000)+'k€';
   document.getElementById('r-invest-detail').textContent = nbrobot+' × '+coutrobot.toLocaleString('fr-FR')+'€ · amort. 3 ans';
+
+  var tipEl = document.getElementById('r-eco-tip');
+  var postes_sup = nbserv - nbservr;
+  var eco_postes = postes_sup * serv * 12;
+  var cout_amort = nbrobot * coutrobot / 3;
+  if(nbrobot === 0){
+    tipEl.innerHTML = '<strong>Aucun robot sélectionné.</strong><br>Ajoutez des robots et réduisez le nombre de serveurs conservés pour générer des économies.';
+  } else if(eco > 0){
+    tipEl.innerHTML =
+      '<strong style="color:#7ec87e;">Économie positive ✓</strong><br><br>'+
+      '− '+postes_sup+' poste'+(postes_sup>1?'s':'')+' supprimé'+(postes_sup>1?'s':'')+' : <strong>+'+Math.round(eco_postes/1000)+'k€/an</strong><br>'+
+      'Amortissement robots : <strong>−'+Math.round(cout_amort/1000)+'k€/an</strong><br>'+
+      '<hr style="border-color:rgba(201,168,76,0.2);margin:6px 0;">'+
+      'Économie nette : <strong style="color:#7ec87e;">+'+Math.round(eco/1000)+'k€/an</strong><br>'+
+      'Break-even : <strong>'+be_mois+' mois</strong><br><br>'+
+      '<span style="opacity:.7;font-size:.65rem;">Le robot remplace, il ne s'ajoute pas. L'économie vient de la réduction des postes humains.</span>';
+  } else {
+    tipEl.innerHTML =
+      '<strong style="color:#e07060;">Surcoût — configuration non optimale</strong><br><br>'+
+      'Postes supprimés : '+postes_sup+'<br>'+
+      'Économie sur salaires : <strong>'+Math.round(eco_postes/1000)+'k€/an</strong><br>'+
+      'Amortissement robots : <strong>−'+Math.round(cout_amort/1000)+'k€/an</strong><br>'+
+      '<hr style="border-color:rgba(201,168,76,0.2);margin:6px 0;">'+
+      'Résultat : <strong style="color:#e07060;">'+Math.round(eco/1000)+'k€/an</strong><br><br>'+
+      '<span style="opacity:.7;font-size:.65rem;">Pour économiser, réduisez le nombre de serveurs conservés. Le robot remplace, il ne s'ajoute pas à l'effectif existant.</span>';
+  }
 }
 
 function setScenario(s,el){

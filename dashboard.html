@@ -467,7 +467,6 @@ function recalc(){
   var MS = (chef+second+NS*serv+gerant)*12 + nRobots*CR/AR;
   var CF=MS+(LOYER+CF_BASE)*12;
   var EBE=MB-CF, EBE_P=EBE/CA;
-  var RN=EBE-FF-IS, RN_P=RN/CA;
   var MCV=tkt*(1-fc), SEUIL_J=CF/12/MCV/25, SEUIL_P=SEUIL_J/capa;
   var FC_P=fc;
   var FF=8000;
@@ -475,6 +474,7 @@ function recalc(){
   var REMB_AN=MENSUALITE*12;
   var CF_LIBRE=EBE-FF-IS-REMB_AN;
   var BE=CF_LIBRE>0?INVEST/CF_LIBRE*12:9999;
+  var RN=EBE-FF-IS, RN_P=RN/CA;
   var MS_P=MS/CA;
 
   document.getElementById('k-ca').textContent=fmtK(CA);

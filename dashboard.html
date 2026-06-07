@@ -1035,7 +1035,7 @@ function renderSlots(){
     div.innerHTML =
       '<div class="slot-indicator"></div>'+
       '<input class="slot-name-input" value="'+SLOT_NAMES[i]+'" placeholder="Config '+(i+1)+'" '+
-        'onblur="renameSlot('+i+',this.value)" onkeydown="if(event.key==='Enter')this.blur()" '+
+        'onblur="renameSlot('+i+',this.value)" onkeydown="if(event.keyCode===13)this.blur()" '+
         'onclick="event.stopPropagation()">'+
       '<div class="slot-actions">'+
         '<button class="slot-action" onclick="saveSlot('+i+')" title="Sauvegarder">💾 Save</button>'+

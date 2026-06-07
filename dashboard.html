@@ -644,17 +644,59 @@ function updateCA(data){
     data:{labels:LABS,datasets:[{data,backgroundColor:COLS,borderWidth:2,borderColor:'#07120c'}]},
     options:{
       responsive:true,maintainAspectRatio:false,
+      layout:{padding:40},
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+' ('+pct(c.raw/tot)+')'}}
+        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+' ('+pct(c.raw/tot)+')'}},
+        datalabels:{
+          display:(ctx)=>(ctx.dataset.data[ctx.dataIndex]/tot)>0.04,
+          color:'#ffffff',
+          font:{size:10,weight:'500'},
+          anchor:'end',
+          align:'end',
+          offset:8,
+          formatter:(val,ctx)=>{
+            const p=(val/tot*100);
+            return LABS[ctx.dataIndex]+'
+'+Math.round(p)+'%';
+          },
+          textAlign:'center',
+        }
       },
       cutout:'60%'
     }
   });
+
   const leg = document.getElementById('legend-ca');
   leg.innerHTML = LABS.map((l,i)=>
     `<span class="legend-item"><span class="legend-dot" style="background:${COLS[i]}"></span>${l} — ${fmtK(data[i])} (${pct(data[i]/tot)})</span>`
   ).join('');
+
+  chartCA.update();
+
+  setTimeout(()=>{
+    const c2 = document.getElementById('chart-ca').getContext('2d');
+    const chart = chartCA;
+    const meta = chart.getDatasetMeta(0);
+    meta.data.forEach((arc,i)=>{
+      if(data[i]/tot < 0.04) return;
+      const angle = (arc.startAngle + arc.endAngle)/2;
+      const outerR = arc.outerRadius;
+      const x1 = arc.x + Math.cos(angle)*(outerR+3);
+      const y1 = arc.y + Math.sin(angle)*(outerR+3);
+      const x2 = arc.x + Math.cos(angle)*(outerR+16);
+      const y2 = arc.y + Math.sin(angle)*(outerR+16);
+      c2.save();
+      c2.beginPath();
+      c2.moveTo(x1,y1);
+      c2.lineTo(x2,y2);
+      c2.strokeStyle = COLS[i];
+      c2.lineWidth = 0.8;
+      c2.globalAlpha = 0.7;
+      c2.stroke();
+      c2.restore();
+    });
+  },100);
 }
 
 function updatePL(ca,cout,charges,ebe,rn){

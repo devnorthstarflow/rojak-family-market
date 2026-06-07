@@ -179,13 +179,45 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="divider"></div>
   <div class="sec-label">Structure de financement</div>
   <div class="sec-title">Plan de financement.</div>
+  <div style="font-size:.68rem;color:var(--muted);margin-bottom:1rem;">Cliquez sur une valeur pour la modifier — l'équilibre se recalcule automatiquement</div>
   <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
-    <div class="kpi-card"><div class="kpi-label">Investissement total</div><div class="kpi-val">430k€</div><div class="kpi-sub">Containers + équipements + BFR</div></div>
-    <div class="kpi-card"><div class="kpi-label">Apport personnel</div><div class="kpi-val" style="color:var(--gold);">100k€</div><div class="kpi-sub">Fonds propres</div></div>
-    <div class="kpi-card"><div class="kpi-label">BPI France</div><div class="kpi-val" style="color:var(--gold);">50k€</div><div class="kpi-sub">Prêt d'honneur sans intérêts</div></div>
-    <div class="kpi-card"><div class="kpi-label">CCI Ain</div><div class="kpi-val" style="color:var(--gold);">20k€</div><div class="kpi-sub">Aide à la création</div></div>
-    <div class="kpi-card"><div class="kpi-label">Emprunt bancaire</div><div class="kpi-val">260k€</div><div class="kpi-sub">10 ans · taux ~4,2% · garantie BPI</div></div>
-    <div class="kpi-card"><div class="kpi-label">Loyer terrain</div><div class="kpi-val">2 500€</div><div class="kpi-sub">Par mois · 30k€/an</div></div>
+    <div class="kpi-card">
+      <div class="kpi-label">Investissement total</div>
+      <div class="kpi-val" id="fi-invest" contenteditable="true" spellcheck="false" style="outline:none;border-bottom:1px solid var(--border2);cursor:text;" onblur="recalcFin()" onkeydown="if(event.key==='Enter'){this.blur();}">430</div>
+      <div class="kpi-sub">k€ · Containers + équipements + BFR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Apport personnel</div>
+      <div class="kpi-val" id="fi-apport" contenteditable="true" spellcheck="false" style="outline:none;border-bottom:1px solid var(--border2);cursor:text;color:var(--gold);" onblur="recalcFin()" onkeydown="if(event.key==='Enter'){this.blur();}">100</div>
+      <div class="kpi-sub">k€ · Fonds propres</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">BPI France</div>
+      <div class="kpi-val" id="fi-bpi" contenteditable="true" spellcheck="false" style="outline:none;border-bottom:1px solid var(--border2);cursor:text;color:var(--gold);" onblur="recalcFin()" onkeydown="if(event.key==='Enter'){this.blur();}">50</div>
+      <div class="kpi-sub">k€ · Prêt d'honneur sans intérêts</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CCI Ain</div>
+      <div class="kpi-val" id="fi-cci" contenteditable="true" spellcheck="false" style="outline:none;border-bottom:1px solid var(--border2);cursor:text;color:var(--gold);" onblur="recalcFin()" onkeydown="if(event.key==='Enter'){this.blur();}">20</div>
+      <div class="kpi-sub">k€ · Aide à la création</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Loyer terrain</div>
+      <div class="kpi-val" id="fi-loyer" contenteditable="true" spellcheck="false" style="outline:none;border-bottom:1px solid var(--border2);cursor:text;" onblur="recalcFin()" onkeydown="if(event.key==='Enter'){this.blur();}">2500</div>
+      <div class="kpi-sub">€/mois · <span id="fi-loyer-an">30k€</span>/an</div>
+    </div>
+    <div class="kpi-card" id="fi-emprunt-card">
+      <div class="kpi-label">Emprunt bancaire <span style="color:var(--gold);font-size:.55rem;">(calculé)</span></div>
+      <div class="kpi-val" id="fi-emprunt">260k€</div>
+      <div class="kpi-sub" id="fi-emprunt-sub">10 ans · taux ~4,2% · garantie BPI</div>
+    </div>
+  </div>
+  <div style="margin-top:1rem;padding:10px 14px;background:rgba(201,168,76,0.06);border:1px solid var(--border);border-radius:3px;display:flex;gap:24px;flex-wrap:wrap;font-size:.72rem;">
+    <span>Fonds propres : <strong id="fi-fp" style="color:var(--gold);">170k€</strong></span>
+    <span>Emprunt : <strong id="fi-emp2" style="color:var(--text);">260k€</strong></span>
+    <span>Ratio FP/Invest. : <strong id="fi-ratio" style="color:var(--gold);">39.5%</strong></span>
+    <span>Mensualité estimée : <strong id="fi-mens" style="color:var(--text);">2 700€/mois</strong></span>
+    <span id="fi-equil-txt" style="color:#7ec87e;">✓ Plan équilibré</span>
   </div>
 </div>
 
@@ -455,7 +487,41 @@ function setScenario(s,el){
   recalc();
 }
 
-window.addEventListener('load',function(){recalc();});
+function recalcFin(){
+  var invest = parseFloat(document.getElementById('fi-invest').textContent.replace(/[^0-9.]/g,''))||430;
+  var apport = parseFloat(document.getElementById('fi-apport').textContent.replace(/[^0-9.]/g,''))||100;
+  var bpi    = parseFloat(document.getElementById('fi-bpi').textContent.replace(/[^0-9.]/g,''))||50;
+  var cci    = parseFloat(document.getElementById('fi-cci').textContent.replace(/[^0-9.]/g,''))||20;
+  var loyer  = parseFloat(document.getElementById('fi-loyer').textContent.replace(/[^0-9.]/g,''))||2500;
+
+  var fp = apport + bpi + cci;
+  var emprunt = invest - fp;
+  var ratio = fp / invest;
+  var taux = 0.042;
+  var duree = 10 * 12;
+  var mens = emprunt > 0 ? Math.round(emprunt * 1000 * (taux/12) / (1 - Math.pow(1+taux/12,-duree))) : 0;
+
+  document.getElementById('fi-fp').textContent = Math.round(fp) + 'k€';
+  document.getElementById('fi-emp2').textContent = Math.round(emprunt) + 'k€';
+  document.getElementById('fi-emprunt').textContent = Math.round(emprunt) + 'k€';
+  document.getElementById('fi-ratio').textContent = (ratio*100).toFixed(1) + '%';
+  document.getElementById('fi-mens').textContent = mens.toLocaleString('fr-FR') + '€/mois';
+  document.getElementById('fi-loyer-an').textContent = Math.round(loyer*12/1000) + 'k€';
+
+  var equil = document.getElementById('fi-equil-txt');
+  if(Math.abs(emprunt) < 0.5){
+    equil.textContent = '✓ Plan équilibré'; equil.style.color = '#7ec87e';
+  } else if(emprunt > 0){
+    equil.textContent = 'Emprunt nécessaire : ' + Math.round(emprunt) + 'k€'; equil.style.color = '#e8c97a';
+  } else {
+    equil.textContent = 'Excédent : ' + Math.round(-emprunt) + 'k€ non utilisé'; equil.style.color = '#7ec87e';
+  }
+
+  var card = document.getElementById('fi-emprunt-card');
+  card.style.borderColor = emprunt < 0 ? 'rgba(126,200,126,0.4)' : emprunt > invest*0.7 ? 'rgba(224,112,96,0.4)' : 'var(--border)';
+}
+
+window.addEventListener('load',function(){recalc();recalcFin();});
 </script>
 </body>
 </html>

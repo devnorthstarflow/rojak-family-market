@@ -169,7 +169,7 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     </div>
     <div class="slider-card">
       <div class="slider-label">Nb serveurs (sans robot)</div>
-      <div class="slider-row"><input type="range" id="s-nbserv" min="1" max="5" step="1" value="2" oninput="recalc()"><span class="slider-val" id="v-nbserv">2</span></div>
+      <div class="slider-row"><input type="range" id="s-nbserv" min="1" max="5" step="1" value="2" oninput="recalc();recalcRobots();"><span class="slider-val" id="v-nbserv">2</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Gérant (€/mois chargé)</div>
@@ -229,6 +229,7 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
           <input type="range" id="s-nbservrobot" min="0" max="5" step="1" value="2" oninput="recalcRobots()">
           <span class="slider-val" id="v-nbservrobot">2</span>
         </div>
+        <div style="font-size:.6rem;color:var(--muted);margin-top:4px;">≤ nb serveurs référence (<span id="r-ref-max">2</span>)</div>
       </div>
       <div class="slider-card" style="background:rgba(201,168,76,0.04);border-color:var(--border2);">
         <div class="slider-label" style="color:var(--gold);">Coût robot unitaire (€)</div>
@@ -561,17 +562,24 @@ function setRobots(n,el){
 
 function recalcRobots(){
   var nbrobot   = +document.getElementById('s-nbrobot').value;
-  var nbservr   = +document.getElementById('s-nbservrobot').value;
   var coutrobot = +document.getElementById('s-coutrobot').value;
-  document.getElementById('v-nbrobot').textContent    = nbrobot;
-  document.getElementById('v-nbservrobot').textContent = nbservr;
-  document.getElementById('v-coutrobot').textContent  = coutrobot.toLocaleString('fr-FR')+'€';
 
   var chef   = +document.getElementById('s-chef').value;
   var second = +document.getElementById('s-second').value;
   var serv   = +document.getElementById('s-serv').value;
   var nbserv = +document.getElementById('s-nbserv').value;
   var gerant = +document.getElementById('s-gerant').value;
+
+  // Sync: nb serveurs conservés ne peut pas dépasser la référence
+  var sliderServ = document.getElementById('s-nbservrobot');
+  sliderServ.max = nbserv;
+  if(+sliderServ.value > nbserv) sliderServ.value = nbserv;
+  var nbservr = +sliderServ.value;
+
+  document.getElementById('v-nbrobot').textContent     = nbrobot;
+  document.getElementById('v-nbservrobot').textContent = nbservr;
+  document.getElementById('v-coutrobot').textContent   = coutrobot.toLocaleString('fr-FR')+'€';
+  document.getElementById('r-ref-max').textContent     = nbserv;
 
   var ms_ref  = (chef+second+nbserv*serv+gerant)*12;
   var amort   = nbrobot*coutrobot/3;
@@ -698,7 +706,7 @@ function recalcFin(){
   card.style.borderColor = emprunt < 0 ? 'rgba(126,200,126,0.4)' : emprunt > invest*0.7 ? 'rgba(224,112,96,0.4)' : 'var(--border)';
 }
 
-window.addEventListener('load',function(){recalc();recalcFin();});
+window.addEventListener('load',function(){recalc();recalcFin();recalcRobots();});
 </script>
 </body>
 </html>

@@ -162,6 +162,18 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     <div class="slider-card"><div class="slider-label">Clients snacking / jour</div><div class="slider-row"><input type="range" id="s-snack" min="10" max="100" step="1" value="50" oninput="recalc()"><span class="slider-val" id="v-snack">50</span></div></div>
     <div class="slider-card"><div class="slider-label">Food cost restaurant</div><div class="slider-row"><input type="range" id="s-fc" min="0.22" max="0.42" step="0.01" value="0.30" oninput="recalc()"><span class="slider-val" id="v-fc">30%</span></div></div>
     <div class="slider-card"><div class="slider-label">Mix Tang Frères épicerie</div><div class="slider-row"><input type="range" id="s-mix" min="0" max="1" step="0.05" value="0.80" oninput="recalc()"><span class="slider-val" id="v-mix">80%</span></div></div>
+    <div class="slider-card">
+      <div class="slider-label">Ticket moyen épicerie (€)</div>
+      <div class="slider-row"><input type="range" id="s-ticket-epic" min="10" max="60" step="1" value="28" oninput="recalc()"><span class="slider-val" id="v-ticket-epic">28 €</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Ticket moyen snacking (€)</div>
+      <div class="slider-row"><input type="range" id="s-ticket-snack" min="3" max="15" step="0.5" value="4.8" oninput="recalc()"><span class="slider-val" id="v-ticket-snack">4.8 €</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Capacité salle (couverts max)</div>
+      <div class="slider-row"><input type="range" id="s-capa" min="30" max="120" step="5" value="75" oninput="recalc()"><span class="slider-val" id="v-capa">75</span></div>
+    </div>
   </div>
 
   <div style="display:flex;align-items:center;gap:12px;margin-top:.5rem;margin-bottom:.4rem;">
@@ -427,10 +439,16 @@ function recalc(){
   document.getElementById('v-fc').textContent=Math.round(fc*100)+'%';
   document.getElementById('v-mix').textContent=Math.round(mix*100)+'%';
   document.getElementById('hyp-resto').textContent=cov+' couverts/jour · ticket moyen '+tkt.toFixed(0)+'€ · cuisine ouverte et plats signature.';
-  document.getElementById('hyp-epic').textContent=epi+' clients/jour · panier moyen 28€ · 200 à 300 références asiatiques premium.';
-  document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket 4,8€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
+  document.getElementById('hyp-epic').textContent=epi+' clients/jour · panier moyen '+tkt_epic.toFixed(0)+'€ · 200 à 300 références asiatiques premium.';
+  document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket '+tkt_snack.toFixed(1)+'€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
 
-  var CA_R=cov*tkt*JOURS, CA_E=epi*28*JOURS, CA_S=snk*4.8*JOURS, CA_B=30*4.55*JOURS, CA_RT=8000;
+  var tkt_epic  = +document.getElementById('s-ticket-epic').value;
+  var tkt_snack = +document.getElementById('s-ticket-snack').value;
+  var capa      = +document.getElementById('s-capa').value;
+  document.getElementById('v-ticket-epic').textContent  = tkt_epic.toFixed(0)+' €';
+  document.getElementById('v-ticket-snack').textContent = tkt_snack.toFixed(1)+' €';
+  document.getElementById('v-capa').textContent         = capa;
+  var CA_R=cov*tkt*JOURS, CA_E=epi*tkt_epic*JOURS, CA_S=snk*tkt_snack*JOURS, CA_B=30*4.55*JOURS, CA_RT=8000;
   var CA=CA_R+CA_E+CA_S+CA_B+CA_RT;
   var MG_E=mix*0.35+(1-mix)*0.42;
   var CT=CA_R*fc+CA_E*(1-MG_E)+CA_S*0.22+CA_B*0.25+CA_RT*0.45;
@@ -450,7 +468,7 @@ function recalc(){
   var CF=MS+(LOYER+CF_BASE)*12;
   var EBE=MB-CF, EBE_P=EBE/CA;
   var RN=EBE-FF-IS, RN_P=RN/CA;
-  var MCV=tkt*(1-fc), SEUIL_J=CF/12/MCV/25, SEUIL_P=SEUIL_J/cov;
+  var MCV=tkt*(1-fc), SEUIL_J=CF/12/MCV/25, SEUIL_P=SEUIL_J/capa;
   var FC_P=fc;
   var FF=8000;
   var IS=Math.max((EBE-FF)*0.25,0);
@@ -727,9 +745,9 @@ function setScenario(s,el){
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   el.classList.add('active');
   var sc={
-    pessimiste:{couverts:55,ticket:20,epics:25,snack:35,fc:.33,mix:.80},
-    central:   {couverts:75,ticket:22,epics:35,snack:50,fc:.30,mix:.80},
-    optimiste: {couverts:90,ticket:24,epics:50,snack:65,fc:.28,mix:.70},
+    pessimiste:{couverts:55,ticket:20,epics:25,snack:35,fc:.33,mix:.80,tkte:24,tkts:4.0,capa:75},
+    central:   {couverts:75,ticket:22,epics:35,snack:50,fc:.30,mix:.80,tkte:28,tkts:4.8,capa:75},
+    optimiste: {couverts:90,ticket:24,epics:50,snack:65,fc:.28,mix:.70,tkte:32,tkts:5.5,capa:90},
     custom:    null
   }[s];
   if(!sc) return;
@@ -739,6 +757,9 @@ function setScenario(s,el){
   document.getElementById('s-snack').value=sc.snack;
   document.getElementById('s-fc').value=sc.fc;
   document.getElementById('s-mix').value=sc.mix;
+  document.getElementById('s-ticket-epic').value=sc.tkte;
+  document.getElementById('s-ticket-snack').value=sc.tkts;
+  document.getElementById('s-capa').value=sc.capa;
   recalc();
 }
 
@@ -760,6 +781,9 @@ function resetAll(){
   document.getElementById('s-snack').value=50;
   document.getElementById('s-fc').value=0.30;
   document.getElementById('s-mix').value=0.80;
+  document.getElementById('s-ticket-epic').value=28;
+  document.getElementById('s-ticket-snack').value=4.8;
+  document.getElementById('s-capa').value=75;
   document.getElementById('s-chef').value=3800;
   document.getElementById('s-second').value=2900;
   document.getElementById('s-serv').value=2600;

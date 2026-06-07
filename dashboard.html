@@ -439,8 +439,6 @@ function recalc(){
   document.getElementById('v-fc').textContent=Math.round(fc*100)+'%';
   document.getElementById('v-mix').textContent=Math.round(mix*100)+'%';
   document.getElementById('hyp-resto').textContent=cov+' couverts/jour · ticket moyen '+tkt.toFixed(0)+'€ · cuisine ouverte et plats signature.';
-  document.getElementById('hyp-epic').textContent=epi+' clients/jour · panier moyen '+tkt_epic.toFixed(0)+'€ · 200 à 300 références asiatiques premium.';
-  document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket '+tkt_snack.toFixed(1)+'€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
 
   var tkt_epic  = +document.getElementById('s-ticket-epic').value;
   var tkt_snack = +document.getElementById('s-ticket-snack').value;
@@ -448,6 +446,8 @@ function recalc(){
   document.getElementById('v-ticket-epic').textContent  = tkt_epic.toFixed(0)+' €';
   document.getElementById('v-ticket-snack').textContent = tkt_snack.toFixed(1)+' €';
   document.getElementById('v-capa').textContent         = capa;
+  document.getElementById('hyp-epic').textContent=epi+' clients/jour · panier moyen '+tkt_epic.toFixed(0)+'€ · 200 à 300 références asiatiques premium.';
+  document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket '+tkt_snack.toFixed(1)+'€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
   var CA_R=cov*tkt*JOURS, CA_E=epi*tkt_epic*JOURS, CA_S=snk*tkt_snack*JOURS, CA_B=30*4.55*JOURS, CA_RT=8000;
   var CA=CA_R+CA_E+CA_S+CA_B+CA_RT;
   var MG_E=mix*0.35+(1-mix)*0.42;

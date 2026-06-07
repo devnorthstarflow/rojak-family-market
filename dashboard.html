@@ -76,6 +76,24 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
 .footer-logo span{color:var(--gold);}
 .footer-note{font-size:.65rem;color:var(--muted);}
 @media(max-width:768px){nav{padding:1rem 1.5rem;}.container{padding:1.5rem 1.5rem 4rem;}.charts-grid{grid-template-columns:1fr;}.hero{padding:6rem 1.5rem 2rem;}}
+
+.kpi-card{position:relative;}
+.kpi-card[data-tip]:hover::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#0d1f15;border:1px solid var(--border2);
+  color:var(--text);font-size:.7rem;line-height:1.5;
+  padding:8px 12px;border-radius:3px;
+  white-space:normal;width:220px;text-align:left;
+  z-index:100;pointer-events:none;
+  font-family:'DM Sans',sans-serif;font-weight:400;
+}
+.kpi-card[data-tip]:hover::before{
+  content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--border2);
+  z-index:101;pointer-events:none;
+}
+.kpi-card[data-tip]{cursor:help;}
 </style>
 </head>
 <body>
@@ -161,14 +179,14 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
 
   <div class="sec-label">Indicateurs clés</div>
   <div class="kpi-grid">
-    <div class="kpi-card gold-border"><div class="kpi-label">CA total / an</div><div class="kpi-val" id="k-ca">—</div><div class="kpi-sub" id="k-ca-sub">—</div></div>
-    <div class="kpi-card"><div class="kpi-label">Marge brute</div><div class="kpi-val" id="k-mb">—</div><div class="kpi-sub" id="k-mb-pct">—</div><div><span class="kpi-badge" id="b-mb">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">EBE estimé</div><div class="kpi-val" id="k-ebe">—</div><div class="kpi-sub" id="k-ebe-pct">—</div><div><span class="kpi-badge" id="b-ebe">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">Seuil rentabilité</div><div class="kpi-val" id="k-seuil">—</div><div class="kpi-sub" id="k-seuil-sub">—</div><div><span class="kpi-badge" id="b-seuil">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">Food cost pondéré</div><div class="kpi-val" id="k-fc">—</div><div class="kpi-sub">Norme : 28–32%</div><div><span class="kpi-badge" id="b-fc">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">Break-even</div><div class="kpi-val" id="k-be">—</div><div class="kpi-sub">Invest. 430k€</div><div><span class="kpi-badge" id="b-be">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">Masse salariale / an</div><div class="kpi-val" id="k-ms">—</div><div class="kpi-sub" id="k-ms-pct">—</div><div><span class="kpi-badge" id="b-ms">—</span></div></div>
-    <div class="kpi-card"><div class="kpi-label">Résultat net estimé</div><div class="kpi-val" id="k-rn">—</div><div class="kpi-sub" id="k-rn-pct">—</div><div><span class="kpi-badge" id="b-rn">—</span></div></div>
+    <div class="kpi-card gold-border" data-tip="Chiffre d'affaires total toutes activités consolidées (restaurant + épicerie + snacking + bière + rooftop) sur 300 jours d'ouverture."><div class="kpi-label">CA total / an</div><div class="kpi-val" id="k-ca">—</div><div class="kpi-sub" id="k-ca-sub">—</div></div>
+    <div class="kpi-card" data-tip="CA moins le coût des matières premières. Norme restauration : > 60%. En dessous de 55% : alerte sur les prix d'achat ou le food cost."><div class="kpi-label">Marge brute</div><div class="kpi-val" id="k-mb">—</div><div class="kpi-sub" id="k-mb-pct">—</div><div><span class="kpi-badge" id="b-mb">—</span></div></div>
+    <div class="kpi-card" data-tip="Excédent Brut d'Exploitation = Marge brute moins toutes les charges fixes. Norme saine : 12-18% du CA. En dessous de 8% : vigilance."><div class="kpi-label">EBE estimé</div><div class="kpi-val" id="k-ebe">—</div><div class="kpi-sub" id="k-ebe-pct">—</div><div><span class="kpi-badge" id="b-ebe">—</span></div></div>
+    <div class="kpi-card" data-tip="Nombre minimum de couverts/jour pour couvrir toutes les charges fixes. En dessous de ce seuil, le restaurant est en perte."><div class="kpi-label">Seuil rentabilité</div><div class="kpi-val" id="k-seuil">—</div><div class="kpi-sub" id="k-seuil-sub">—</div><div><span class="kpi-badge" id="b-seuil">—</span></div></div>
+    <div class="kpi-card" data-tip="Ratio coût matières / CA toutes activités. Norme restauration : 28-32%. Au-delà de 35%, la rentabilité est compromise."><div class="kpi-label">Food cost pondéré</div><div class="kpi-val" id="k-fc">—</div><div class="kpi-sub">Norme : 28–32%</div><div><span class="kpi-badge" id="b-fc">—</span></div></div>
+    <div class="kpi-card" data-tip="Nombre de mois pour récupérer l'investissement total (430k€) grâce à l'EBE généré. Objectif : < 48 mois pour rassurer les investisseurs."><div class="kpi-label">Break-even</div><div class="kpi-val" id="k-be">—</div><div class="kpi-sub">Invest. 430k€</div><div><span class="kpi-badge" id="b-be">—</span></div></div>
+    <div class="kpi-card" data-tip="Total des charges de personnel annuelles (salaires + charges sociales). Norme : < 35% du CA. Zone frontalière : +15-20% vs moyenne nationale."><div class="kpi-label">Masse salariale / an</div><div class="kpi-val" id="k-ms">—</div><div class="kpi-sub" id="k-ms-pct">—</div><div><span class="kpi-badge" id="b-ms">—</span></div></div>
+    <div class="kpi-card" data-tip="Bénéfice net après frais financiers (emprunt) et IS à 25%. C'est ce qui reste réellement pour le gérant ou le réinvestissement."><div class="kpi-label">Résultat net estimé</div><div class="kpi-val" id="k-rn">—</div><div class="kpi-sub" id="k-rn-pct">—</div><div><span class="kpi-badge" id="b-rn">—</span></div></div>
   </div>
 
   <div class="charts-grid">

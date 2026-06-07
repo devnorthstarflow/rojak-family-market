@@ -301,35 +301,35 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="sliders-grid" style="margin-bottom:.75rem;">
     <div class="slider-card">
       <div class="slider-label">Privatisations / an</div>
-      <div class="slider-row"><input type="range" id="rt-priv-nb" min="0" max="24" step="1" value="4" oninput="recalcRooftop()"><span class="slider-val" id="rtv-priv-nb">4</span></div>
+      <div class="slider-row"><input type="range" id="rt-priv-nb" min="0" max="24" step="1" value="4" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-priv-nb">4</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Recette / privatisation (€) <span style="opacity:.5;font-size:.6rem;">salle + conso + service</span></div>
-      <div class="slider-row"><input type="range" id="rt-priv-mt" min="500" max="6000" step="100" value="3500" oninput="recalcRooftop()"><span class="slider-val" id="rtv-priv-mt">3500€</span></div>
+      <div class="slider-row"><input type="range" id="rt-priv-mt" min="500" max="6000" step="100" value="3500" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-priv-mt">3500€</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Soirées à thème / an</div>
-      <div class="slider-row"><input type="range" id="rt-them-nb" min="0" max="24" step="1" value="6" oninput="recalcRooftop()"><span class="slider-val" id="rtv-them-nb">6</span></div>
+      <div class="slider-row"><input type="range" id="rt-them-nb" min="0" max="24" step="1" value="6" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-them-nb">6</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Recette / soirée thème (€)</div>
-      <div class="slider-row"><input type="range" id="rt-them-mt" min="200" max="4000" step="100" value="880" oninput="recalcRooftop()"><span class="slider-val" id="rtv-them-mt">880€</span></div>
+      <div class="slider-row"><input type="range" id="rt-them-mt" min="200" max="4000" step="100" value="880" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-them-mt">880€</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Corporate CERN/ONU / an</div>
-      <div class="slider-row"><input type="range" id="rt-corp-nb" min="0" max="20" step="1" value="4" oninput="recalcRooftop()"><span class="slider-val" id="rtv-corp-nb">4</span></div>
+      <div class="slider-row"><input type="range" id="rt-corp-nb" min="0" max="20" step="1" value="4" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-corp-nb">4</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Recette / corporate (€)</div>
-      <div class="slider-row"><input type="range" id="rt-corp-mt" min="500" max="6000" step="100" value="2475" oninput="recalcRooftop()"><span class="slider-val" id="rtv-corp-mt">2475€</span></div>
+      <div class="slider-row"><input type="range" id="rt-corp-mt" min="500" max="6000" step="100" value="2475" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-corp-mt">2475€</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Autres événements / an</div>
-      <div class="slider-row"><input type="range" id="rt-other-nb" min="0" max="30" step="1" value="6" oninput="recalcRooftop()"><span class="slider-val" id="rtv-other-nb">6</span></div>
+      <div class="slider-row"><input type="range" id="rt-other-nb" min="0" max="30" step="1" value="6" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-other-nb">6</span></div>
     </div>
     <div class="slider-card">
       <div class="slider-label">Recette / autre événement (€)</div>
-      <div class="slider-row"><input type="range" id="rt-other-mt" min="200" max="4000" step="100" value="900" oninput="recalcRooftop()"><span class="slider-val" id="rtv-other-mt">900€</span></div>
+      <div class="slider-row"><input type="range" id="rt-other-mt" min="200" max="4000" step="100" value="900" oninput="recalcRooftop();recalc();"><span class="slider-val" id="rtv-other-mt">900€</span></div>
     </div>
   </div>
 
@@ -424,6 +424,22 @@ function fmt(n){return Math.round(n).toLocaleString('fr-FR')+'€';}
 function pct(n){if(isNaN(n)||!isFinite(n))return '—';return (n*100).toFixed(1)+'%';}
 function badge(id,txt,cls){var e=document.getElementById(id);e.textContent=txt;e.className='kpi-badge '+cls;}
 
+function getRooftopCA(){
+  var el_pn=document.getElementById('rt-priv-nb');
+  var el_pm=document.getElementById('rt-priv-mt');
+  var el_tn=document.getElementById('rt-them-nb');
+  var el_tm=document.getElementById('rt-them-mt');
+  var el_cn=document.getElementById('rt-corp-nb');
+  var el_cm=document.getElementById('rt-corp-mt');
+  var el_on=document.getElementById('rt-other-nb');
+  var el_om=document.getElementById('rt-other-mt');
+  if(!el_pn) return 0;
+  return (+el_pn.value * +el_pm.value)
+       + (+el_tn.value * +el_tm.value)
+       + (+el_cn.value * +el_cm.value)
+       + (+el_on.value * +el_om.value);
+}
+
 function recalc(){
   var cov=+document.getElementById('s-couverts').value;
   var tkt=+document.getElementById('s-ticket').value;
@@ -448,7 +464,7 @@ function recalc(){
   document.getElementById('v-capa').textContent         = capa;
   document.getElementById('hyp-epic').textContent=epi+' clients/jour · panier moyen '+tkt_epic.toFixed(0)+'€ · 200 à 300 références asiatiques premium.';
   document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket '+tkt_snack.toFixed(1)+'€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
-  var CA_R=cov*tkt*JOURS, CA_E=epi*tkt_epic*JOURS, CA_S=snk*tkt_snack*JOURS, CA_B=30*4.55*JOURS, CA_RT=8000;
+  var CA_R=cov*tkt*JOURS, CA_E=epi*tkt_epic*JOURS, CA_S=snk*tkt_snack*JOURS, CA_B=30*4.55*JOURS, CA_RT=getRooftopCA();
   var CA=CA_R+CA_E+CA_S+CA_B+CA_RT;
   var MG_E=mix*0.35+(1-mix)*0.42;
   var CT=CA_R*fc+CA_E*(1-MG_E)+CA_S*0.22+CA_B*0.25+CA_RT*0.45;

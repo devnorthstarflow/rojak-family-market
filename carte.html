@@ -76,6 +76,14 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
 .footer-cta a{background:var(--gold);color:var(--bg);padding:.75rem 1.5rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;border-radius:1px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @media(max-width:768px){nav{padding:1rem 1.5rem;}.drinks-grid{grid-template-columns:1fr;}.item{grid-template-columns:60px 1fr auto;}.item-photo,.item-photo-empty{width:60px;height:60px;}}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 0 80px rgba(0,0,0,0.8);}
+.lightbox-close{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:var(--gold);cursor:pointer;line-height:1;opacity:0.7;}
+.lightbox-close:hover{opacity:1;}
+.item-photo{cursor:zoom-in;}
 </style>
 </head>
 <body>
@@ -102,32 +110,32 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
 
 <section class="section" id="petites">
   <div class="section-head"><div class="section-num">01</div><div><div class="section-title">Petites assiettes</div><div class="section-sub">à partager · pour commencer</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Kueh Pie Ti.png" alt="Kueh Pie Ti" loading="lazy"><div><div class="item-name">Kueh Pie Ti <span class="badge badge-sig">signature</span></div><div class="item-desc">Petites coques croustillantes, jicama sauté, crevettes, œuf émincé, sauce chili maison</div></div><div><div class="item-price">8 €</div><div class="item-price-note">4 pièces</div></div></div>
-  <div class="item"><div class="item-photo-empty"></div><div><div class="item-name">Satay de poulet <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Brochettes marinées aux épices, cuites au charbon, sauce cacahuète, concombre, oignon rouge</div></div><div><div class="item-price">12 €</div><div class="item-price-note">4 pièces</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Gado Gado Salad.png" alt="Gado Gado" loading="lazy"><div><div class="item-name">Gado Gado <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Salade singapourienne, tempeh frit, légumes croquants, œuf dur, crackers belinjau, sauce cacahuète maison</div></div><div><div class="item-price">10 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Bakwan Jagung.png" alt="Cucur Sayur" loading="lazy"><div><div class="item-name">Cucur Sayur <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Beignets de légumes assortis, sauce tomate belado maison</div></div><div><div class="item-price">7 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Kaya Toast.png" alt="Kaya Toast" loading="lazy"><div><div class="item-name">Kaya Toast <span class="badge badge-sig">signature</span></div><div class="item-desc">Pain brioché grillé, kaya maison (coco, pandan, œuf), beurre, œufs mollets sauce soja</div></div><div><div class="item-price">7 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Kueh Pie Ti.png" alt="Kueh Pie Ti" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Kueh Pie Ti <span class="badge badge-sig">signature</span></div><div class="item-desc">Petites coques croustillantes, jicama sauté, crevettes, œuf émincé, sauce chili maison</div></div><div><div class="item-price">8 €</div><div class="item-price-note">4 pièces</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Satay Poulet.png" alt="Satay de poulet" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Satay de poulet <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Brochettes marinées aux épices, cuites au charbon, sauce cacahuète, concombre, oignon rouge</div></div><div><div class="item-price">12 €</div><div class="item-price-note">4 pièces</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Gado Gado Salad.png" alt="Gado Gado" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Gado Gado <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Salade singapourienne, tempeh frit, légumes croquants, œuf dur, crackers belinjau, sauce cacahuète maison</div></div><div><div class="item-price">10 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Bakwan Jagung.png" alt="Cucur Sayur" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Cucur Sayur <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Beignets de légumes assortis, sauce tomate belado maison</div></div><div><div class="item-price">7 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Kaya Toast.png" alt="Kaya Toast" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Kaya Toast <span class="badge badge-sig">signature</span></div><div class="item-desc">Pain brioché grillé, kaya maison (coco, pandan, œuf), beurre, œufs mollets sauce soja</div></div><div><div class="item-price">7 €</div></div></div>
 </section>
 
 <section class="section" id="nasi">
   <div class="section-head"><div class="section-num">02</div><div><div class="section-title">Nasi Lemak</div><div class="section-sub">notre signature · le cœur de la carte</div></div></div>
   <div class="nasi-note"><p>Tous nos Nasi Lemak sont servis avec riz au lait de coco pressé à froid, œuf frit au wok, anchois croustillants, cacahuètes torréfiées, concombre frais et sambal maison.</p></div>
-  <div class="item"><img class="item-photo" src="images/Ayam Goreng Berempah Nasi Lemak.png" alt="Ayam Goreng Berempah" loading="lazy"><div><div class="item-name">Ayam Goreng Berempah <span class="badge badge-sig">best-seller</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Poulet fermier frit aux épices rempah, chapelure croustillante, sambal tumis maison</div></div><div><div class="item-price">16 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Homemade Otah.png" alt="Otah Otah" loading="lazy"><div><div class="item-name">Otah Otah</div><div class="item-desc">Galette de poisson grillée au charbon, herbes fraîches et épices rempah, feuille de bananier</div></div><div><div class="item-price">13 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Beef Rendang Nasi Lemak.png" alt="Beef Rendang" loading="lazy"><div><div class="item-name">Beef Rendang <span class="badge badge-sig">signature</span></div><div class="item-desc">Curry sec de joue de bœuf braisée 6h aux épices, lait de coco, toasted coconut</div></div><div><div class="item-price">19 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Mushroom Rendang Nasi Lemak.png" alt="Mushroom Rendang" loading="lazy"><div><div class="item-name">Mushroom Rendang <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Champignons braisés aux épices rendang, lait de coco, toasted coconut, feuilles de combava</div></div><div><div class="item-price">14 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Ayam Goreng Berempah Nasi Lemak.png" alt="Ayam Goreng Berempah" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Ayam Goreng Berempah <span class="badge badge-sig">best-seller</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Poulet fermier frit aux épices rempah, chapelure croustillante, sambal tumis maison</div></div><div><div class="item-price">16 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Homemade Otah.png" alt="Otah Otah" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Otah Otah</div><div class="item-desc">Galette de poisson grillée au charbon, herbes fraîches et épices rempah, feuille de bananier</div></div><div><div class="item-price">13 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Beef Rendang Nasi Lemak.png" alt="Beef Rendang" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Beef Rendang <span class="badge badge-sig">signature</span></div><div class="item-desc">Curry sec de joue de bœuf braisée 6h aux épices, lait de coco, toasted coconut</div></div><div><div class="item-price">19 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Mushroom Rendang Nasi Lemak.png" alt="Mushroom Rendang" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Mushroom Rendang <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Champignons braisés aux épices rendang, lait de coco, toasted coconut, feuilles de combava</div></div><div><div class="item-price">14 €</div></div></div>
   <div class="addon-block"><div class="addon-title">Suppléments</div><div class="addon-row"><span>Riz coco supplémentaire</span><span>3 €</span></div><div class="addon-row"><span>Beef Rendang</span><span>7 €</span></div><div class="addon-row"><span>Otah Otah</span><span>5 €</span></div><div class="addon-row"><span>Œuf frit supplémentaire</span><span>2 €</span></div></div>
 </section>
 
 <section class="section" id="specialites">
   <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Spécialités maison</div><div class="section-sub">Singapour · Malaisie · Vietnam · Thaïlande</div></div></div>
-  <div class="item"><img class="item-photo" src="images/laksa.jpeg" alt="Laksa" loading="lazy"><div><div class="item-name">Laksa signature Rojak <span class="badge badge-sig">signature</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Bouillon de coco épicé, vermicelles de riz, crevettes tiger, palourdes, otah maison, œuf mollet</div></div><div><div class="item-price">18 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Coconut Rice.png" alt="Chicken Rice" loading="lazy"><div><div class="item-name">Hainanese Chicken Rice <span class="badge badge-sig">incontournable</span></div><div class="item-desc">Poulet poché fondant, riz cuit au bouillon de volaille, sauce gingembre, sauce soja sucrée</div></div><div><div class="item-price">15 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Sambal Squid.png" alt="Sambal Sotong" loading="lazy"><div><div class="item-name">Sambal Sotong <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Encornets sautés au wok, sambal tumis maison, tomates cerises, poivrons verts</div></div><div><div class="item-price">16 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Threadfin Fish Curry.png" alt="Fish Curry" loading="lazy"><div><div class="item-name">Threadfin Fish Curry <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Curry de poisson threadfin, lait de coco, aubergines, tomates, riz jasmin</div></div><div><div class="item-price">17 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Mixed Vegetable Curry.png" alt="Sayur Lodeh" loading="lazy"><div><div class="item-name">Sayur Lodeh <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Curry de légumes de saison au lait de coco, tempeh croustillant, riz brun</div></div><div><div class="item-price">13 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Sweet and Sour Eggplant.png" alt="Eggplant" loading="lazy"><div><div class="item-name">Sweet & Sour Eggplant <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Aubergines frites, sauce aigre-douce maison, basilic thaï, piment rouge</div></div><div><div class="item-price">12 €</div></div></div>
-  <div class="item"><img class="item-photo" src="images/Ayam Bakar Madu.png" alt="Iga Bakar" loading="lazy"><div><div class="item-name">Ayam Bakar Madu <span class="badge badge-wkd">weekend</span></div><div class="item-desc">Poulet grillé au charbon, marinade miel & épices, sambal hijau — sur commande 30 min</div></div><div><div class="item-price">28 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/laksa.jpeg" alt="Laksa" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Laksa signature Rojak <span class="badge badge-sig">signature</span> <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Bouillon de coco épicé, vermicelles de riz, crevettes tiger, palourdes, otah maison, œuf mollet</div></div><div><div class="item-price">18 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Coconut Rice.png" alt="Chicken Rice" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Hainanese Chicken Rice <span class="badge badge-sig">incontournable</span></div><div class="item-desc">Poulet poché fondant, riz cuit au bouillon de volaille, sauce gingembre, sauce soja sucrée</div></div><div><div class="item-price">15 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Sambal Squid.png" alt="Sambal Sotong" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Sambal Sotong <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Encornets sautés au wok, sambal tumis maison, tomates cerises, poivrons verts</div></div><div><div class="item-price">16 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Threadfin Fish Curry.png" alt="Fish Curry" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Threadfin Fish Curry <span class="badge badge-hot">pimenté</span></div><div class="item-desc">Curry de poisson threadfin, lait de coco, aubergines, tomates, riz jasmin</div></div><div><div class="item-price">17 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Mixed Vegetable Curry.png" alt="Sayur Lodeh" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Sayur Lodeh <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Curry de légumes de saison au lait de coco, tempeh croustillant, riz brun</div></div><div><div class="item-price">13 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Sweet and Sour Eggplant.png" alt="Eggplant" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Sweet & Sour Eggplant <span class="badge badge-veg">végétarien</span></div><div class="item-desc">Aubergines frites, sauce aigre-douce maison, basilic thaï, piment rouge</div></div><div><div class="item-price">12 €</div></div></div>
+  <div class="item"><img class="item-photo" src="images/Ayam Bakar Madu.png" alt="Iga Bakar" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Ayam Bakar Madu <span class="badge badge-wkd">weekend</span></div><div class="item-desc">Poulet grillé au charbon, marinade miel & épices, sambal hijau — sur commande 30 min</div></div><div><div class="item-price">28 €</div></div></div>
 </section>
 
 <section class="section" id="desserts">
@@ -143,13 +151,13 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;justify-cont
   <div class="divider"><span>Signatures</span></div>
   <div class="drinks-grid">
     <div>
-      <div class="item"><img class="item-photo" src="images/Coconut Shake Rojak.png" alt="Coconut Shake" loading="lazy"><div><div class="item-name">Coconut Shake Rojak <span class="badge badge-sig">signature</span></div><div class="item-desc">Eau de coco, lait de coco, glace pilée, chair fraîche</div></div><div><div class="item-price">6 €</div></div></div>
-      <div class="item"><img class="item-photo" src="images/Pandan latte.png" alt="Pandan Latte" loading="lazy"><div><div class="item-name">Pandan Latte</div><div class="item-desc">Pandan maison, lait d'avoine — chaud ou glacé</div></div><div><div class="item-price">5 €</div></div></div>
-      <div class="item"><img class="item-photo" src="images/Organic Coconut Water.png" alt="Coco fraîche" loading="lazy"><div><div class="item-name">Noix de coco fraîche</div><div class="item-desc">Coco jeune thaï bio, paille bambou</div></div><div><div class="item-price">6 €</div></div></div>
+      <div class="item"><img class="item-photo" src="images/Coconut Shake Rojak.png" alt="Coconut Shake" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Coconut Shake Rojak <span class="badge badge-sig">signature</span></div><div class="item-desc">Eau de coco, lait de coco, glace pilée, chair fraîche</div></div><div><div class="item-price">6 €</div></div></div>
+      <div class="item"><img class="item-photo" src="images/Pandan latte.png" alt="Pandan Latte" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Pandan Latte</div><div class="item-desc">Pandan maison, lait d'avoine — chaud ou glacé</div></div><div><div class="item-price">5 €</div></div></div>
+      <div class="item"><img class="item-photo" src="images/Organic Coconut Water.png" alt="Coco fraîche" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Noix de coco fraîche</div><div class="item-desc">Coco jeune thaï bio, paille bambou</div></div><div><div class="item-price">6 €</div></div></div>
     </div>
     <div>
-      <div class="item"><img class="item-photo" src="images/Teh tarik.png" alt="Teh Tarik" loading="lazy"><div><div class="item-name">Teh Tarik</div><div class="item-desc">Thé malaisien tiré, lait concentré sucré</div></div><div><div class="item-price">4 €</div></div></div>
-      <div class="item"><img class="item-photo" src="images/Calamansi Juice.png" alt="Calamansi" loading="lazy"><div><div class="item-name">Calamansi Sourplum</div><div class="item-desc">Calamansi pressé, prune salée, soda</div></div><div><div class="item-price">4 €</div></div></div>
+      <div class="item"><img class="item-photo" src="images/Teh tarik.png" alt="Teh Tarik" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Teh Tarik</div><div class="item-desc">Thé malaisien tiré, lait concentré sucré</div></div><div><div class="item-price">4 €</div></div></div>
+      <div class="item"><img class="item-photo" src="images/Calamansi Juice.png" alt="Calamansi" loading="lazy" onclick="openLightbox(this.src)"><div><div class="item-name">Calamansi Sourplum</div><div class="item-desc">Calamansi pressé, prune salée, soda</div></div><div><div class="item-price">4 €</div></div></div>
       <div class="item"><img class="item-photo" src="images/Lychee Spritz Bubble Tea.png" alt="Bubble Tea" loading="lazy" style="object-position:right center"><div><div class="item-name">Bubble Tea maison <span class="badge badge-new">fait maison</span></div><div class="item-desc">Thé noir, vert ou taro — perles de tapioca fraîches cuites maison, lait ou option végétale</div></div><div><div class="item-price">5 €</div></div></div>
       <div class="item-simple"><div><div class="item-name">Kopi O</div><div class="item-desc">Café singapourien torréfié au beurre, noir</div></div><div><div class="item-price">3 €</div></div></div>
     </div>
@@ -245,5 +253,24 @@ const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersec
 sections.forEach(s=>obs.observe(s));
 function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
 </script>
-</body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="zoom">
+</div>
+<script>
+// Lightbox
+function openLightbox(src){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+</script></body>
 </html>

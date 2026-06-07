@@ -213,12 +213,53 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
 
   <div class="robots-card">
     <div class="chart-title">Simulation robots serveurs — impact masse salariale</div>
-    <div style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem;">Coût unitaire : 4 000 € · Amortissement 3 ans · Serveur zone frontalière : 2 600 €/mois chargé</div>
-    <div class="robots-grid">
-      <div class="robot-opt active" onclick="setRobots(0,this)"><div class="robot-name">Sans robot</div><div class="robot-detail">2 serveurs humains</div><div class="robot-eco neg" id="r0-eco">—</div></div>
-      <div class="robot-opt" onclick="setRobots(1,this)"><div class="robot-name">1 Robot</div><div class="robot-detail">1 robot + 1 serveur</div><div class="robot-eco pos" id="r1-eco">—</div></div>
-      <div class="robot-opt" onclick="setRobots(2,this)"><div class="robot-name">2 Robots</div><div class="robot-detail">2 robots + 1 superviseur</div><div class="robot-eco pos" id="r2-eco">—</div></div>
-      <div class="robot-opt" onclick="setRobots(3,this)"><div class="robot-name">3 Robots</div><div class="robot-detail">3 robots + 1 superviseur</div><div class="robot-eco pos" id="r3-eco">—</div></div>
+    <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem;">Paramètres issus des curseurs masse salariale ci-dessus · Coût robot : 4 000 € · Amortissement 3 ans</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1rem;">
+      <div class="slider-card">
+        <div class="slider-label">Nb robots</div>
+        <div class="slider-row">
+          <input type="range" id="s-nbrobot" min="0" max="5" step="1" value="0" oninput="recalcRobots()">
+          <span class="slider-val" id="v-nbrobot">0</span>
+        </div>
+      </div>
+      <div class="slider-card">
+        <div class="slider-label">Nb serveurs humains conservés</div>
+        <div class="slider-row">
+          <input type="range" id="s-nbservrobot" min="0" max="5" step="1" value="2" oninput="recalcRobots()">
+          <span class="slider-val" id="v-nbservrobot">2</span>
+        </div>
+      </div>
+      <div class="slider-card" style="background:rgba(201,168,76,0.04);border-color:var(--border2);">
+        <div class="slider-label" style="color:var(--gold);">Coût robot unitaire (€)</div>
+        <div class="slider-row">
+          <input type="range" id="s-coutrobot" min="2000" max="8000" step="500" value="4000" oninput="recalcRobots()">
+          <span class="slider-val" id="v-coutrobot">4000€</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:1rem;" id="robots-result">
+      <div style="background:rgba(7,18,12,0.5);border:1px solid var(--border);border-radius:3px;padding:14px 16px;">
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Référence (sans robot)</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);" id="r-ref-ms">—</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-ref-detail">—</div>
+      </div>
+      <div style="background:rgba(7,18,12,0.5);border:1px solid var(--border);border-radius:3px;padding:14px 16px;">
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Configuration choisie</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);" id="r-new-ms">—</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-new-detail">—</div>
+      </div>
+      <div style="background:rgba(28,61,43,0.4);border:1px solid var(--border2);border-radius:3px;padding:14px 16px;">
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Économie annuelle</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;" id="r-eco-val">—</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-eco-detail">—</div>
+      </div>
+      <div style="background:rgba(7,18,12,0.5);border:1px solid var(--border);border-radius:3px;padding:14px 16px;">
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Investissement robots</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);" id="r-invest-val">—</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:3px;" id="r-invest-detail">—</div>
+      </div>
     </div>
   </div>
 
@@ -354,21 +395,7 @@ function recalc(){
   badge('b-ms',MS_P<=.35?'OK ✓':MS_P<=.40?'Attention':'Élevé',MS_P<=.35?'ok':MS_P<=.40?'warn':'bad');
   badge('b-rn',RN_P>=.08?'OK ✓':RN_P>=.03?'Attention':'Négatif',RN_P>=.08?'ok':RN_P>=.03?'warn':'bad');
 
-  var nbserv_r = +document.getElementById('s-nbserv').value;
-  var serv_r   = +document.getElementById('s-serv').value;
-  var chef_r   = +document.getElementById('s-chef').value;
-  var second_r = +document.getElementById('s-second').value;
-  var gerant_r = +document.getElementById('s-gerant').value;
-  for(var i=0;i<=3;i++){
-    var s2 = i===0 ? nbserv_r : Math.max(1, Math.floor(nbserv_r/2));
-    var ms0=(chef_r+second_r+nbserv_r*serv_r+gerant_r)*12;
-    var msi=(chef_r+second_r+s2*serv_r+gerant_r)*12+i*CR/AR;
-    var eco=ms0-msi;
-    var el=document.getElementById('r'+i+'-eco');
-    if(i===0){el.textContent='Référence: '+fmt(ms0)+'/an';el.className='robot-eco neg';}
-    else if(eco>0){el.textContent='Éco '+fmt(eco)+'/an · BE '+Math.round(i*CR/(eco/12))+'m';el.className='robot-eco pos';}
-    else{el.textContent='Surcoût: '+fmt(-eco)+'/an';el.className='robot-eco neg';}
-  }
+  recalcRobots();
 
   drawCA([CA_R,CA_E,CA_S,CA_B,CA_RT]);
   drawPL(CA,CT,CF,EBE,RN);
@@ -532,6 +559,51 @@ function setRobots(n,el){
   recalc();
 }
 
+function recalcRobots(){
+  var nbrobot   = +document.getElementById('s-nbrobot').value;
+  var nbservr   = +document.getElementById('s-nbservrobot').value;
+  var coutrobot = +document.getElementById('s-coutrobot').value;
+  document.getElementById('v-nbrobot').textContent    = nbrobot;
+  document.getElementById('v-nbservrobot').textContent = nbservr;
+  document.getElementById('v-coutrobot').textContent  = coutrobot.toLocaleString('fr-FR')+'€';
+
+  var chef   = +document.getElementById('s-chef').value;
+  var second = +document.getElementById('s-second').value;
+  var serv   = +document.getElementById('s-serv').value;
+  var nbserv = +document.getElementById('s-nbserv').value;
+  var gerant = +document.getElementById('s-gerant').value;
+
+  var ms_ref  = (chef+second+nbserv*serv+gerant)*12;
+  var amort   = nbrobot*coutrobot/3;
+  var ms_new  = (chef+second+nbservr*serv+gerant)*12 + amort;
+  var eco     = ms_ref - ms_new;
+  var invest_r= nbrobot*coutrobot;
+  var be_mois = eco>0 ? Math.round(invest_r/(eco/12)) : null;
+
+  document.getElementById('r-ref-ms').textContent    = Math.round(ms_ref/1000)+'k€/an';
+  document.getElementById('r-ref-detail').textContent = nbserv+' serveur'+(nbserv>1?'s':'')+' humain'+(nbserv>1?'s':'')+' · salaire '+serv.toLocaleString('fr-FR')+'€/mois';
+  document.getElementById('r-new-ms').textContent    = Math.round(ms_new/1000)+'k€/an';
+  document.getElementById('r-new-detail').textContent = nbrobot+' robot'+(nbrobot>1?'s':'')+' + '+nbservr+' serveur'+(nbservr>1?'s':'')+' · amort. '+Math.round(amort/1000)+'k€/an';
+
+  var ecoEl = document.getElementById('r-eco-val');
+  if(eco>0){
+    ecoEl.textContent = '+'+Math.round(eco/1000)+'k€/an';
+    ecoEl.style.color = '#7ec87e';
+    document.getElementById('r-eco-detail').textContent = be_mois ? 'Break-even : '+be_mois+' mois' : '—';
+  } else if(eco<0){
+    ecoEl.textContent = Math.round(eco/1000)+'k€/an';
+    ecoEl.style.color = '#e07060';
+    document.getElementById('r-eco-detail').textContent = 'Surcoût vs référence';
+  } else {
+    ecoEl.textContent = '0k€';
+    ecoEl.style.color = 'var(--muted)';
+    document.getElementById('r-eco-detail').textContent = 'Neutre';
+  }
+
+  document.getElementById('r-invest-val').textContent   = Math.round(invest_r/1000)+'k€';
+  document.getElementById('r-invest-detail').textContent = nbrobot+' × '+coutrobot.toLocaleString('fr-FR')+'€ · amort. 3 ans';
+}
+
 function setScenario(s,el){
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   el.classList.add('active');
@@ -558,6 +630,7 @@ function resetSalaires(){
   document.getElementById('s-nbserv').value=2;
   document.getElementById('s-gerant').value=2500;
   recalc();
+  recalcRobots();
 }
 
 function resetAll(){
@@ -575,9 +648,11 @@ function resetAll(){
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.querySelector('.tab').classList.add('active');
   nRobots=0;
-  document.querySelectorAll('.robot-opt').forEach(function(e){e.classList.remove('active');});
-  document.querySelector('.robot-opt').classList.add('active');
+  document.getElementById('s-nbrobot').value=0;
+  document.getElementById('s-nbservrobot').value=2;
+  document.getElementById('s-coutrobot').value=4000;
   recalc();
+  recalcRobots();
 }
 
 function resetFin(){

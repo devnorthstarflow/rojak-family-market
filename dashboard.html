@@ -120,6 +120,7 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     <button class="tab" onclick="setScenario('pessimiste',this)">Pessimiste −20%</button>
     <button class="tab" onclick="setScenario('optimiste',this)">Optimiste +20%</button>
     <button class="tab" onclick="setScenario('custom',this)">Personnalisé</button>
+    <button class="tab" onclick="resetAll()" style="margin-left:auto;border-color:rgba(201,168,76,0.3);">↺ Tout réinitialiser</button>
   </div>
 
   <div class="sliders-grid">
@@ -129,6 +130,30 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     <div class="slider-card"><div class="slider-label">Clients snacking / jour</div><div class="slider-row"><input type="range" id="s-snack" min="10" max="100" step="1" value="50" oninput="recalc()"><span class="slider-val" id="v-snack">50</span></div></div>
     <div class="slider-card"><div class="slider-label">Food cost restaurant</div><div class="slider-row"><input type="range" id="s-fc" min="0.22" max="0.42" step="0.01" value="0.30" oninput="recalc()"><span class="slider-val" id="v-fc">30%</span></div></div>
     <div class="slider-card"><div class="slider-label">Mix Tang Frères épicerie</div><div class="slider-row"><input type="range" id="s-mix" min="0" max="1" step="0.05" value="0.80" oninput="recalc()"><span class="slider-val" id="v-mix">80%</span></div></div>
+  </div>
+
+  <div class="sec-label" style="margin-top:.5rem;">Masse salariale</div>
+  <div class="sliders-grid" style="margin-bottom:1.5rem;">
+    <div class="slider-card">
+      <div class="slider-label">Chef cuisinier (€/mois chargé)</div>
+      <div class="slider-row"><input type="range" id="s-chef" min="2500" max="5500" step="100" value="3800" oninput="recalc()"><span class="slider-val" id="v-chef">3800€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Second de cuisine (€/mois chargé)</div>
+      <div class="slider-row"><input type="range" id="s-second" min="2000" max="4500" step="100" value="2900" oninput="recalc()"><span class="slider-val" id="v-second">2900€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Salaire serveur (€/mois chargé)</div>
+      <div class="slider-row"><input type="range" id="s-serv" min="1800" max="4000" step="100" value="2600" oninput="recalc()"><span class="slider-val" id="v-serv">2600€</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Nb serveurs (sans robot)</div>
+      <div class="slider-row"><input type="range" id="s-nbserv" min="1" max="5" step="1" value="2" oninput="recalc()"><span class="slider-val" id="v-nbserv">2</span></div>
+    </div>
+    <div class="slider-card">
+      <div class="slider-label">Gérant (€/mois chargé)</div>
+      <div class="slider-row"><input type="range" id="s-gerant" min="1500" max="5000" step="100" value="2500" oninput="recalc()"><span class="slider-val" id="v-gerant">2500€</span></div>
+    </div>
   </div>
 
   <div class="sec-label">Indicateurs clés</div>
@@ -267,8 +292,18 @@ function recalc(){
   var MG_E=mix*0.35+(1-mix)*0.42;
   var CT=CA_R*fc+CA_E*(1-MG_E)+CA_S*0.22+CA_B*0.25+CA_RT*0.45;
   var MB=CA-CT, MB_P=MB/CA;
-  var NS=nRobots===0?2:1;
-  var MS=(SC+SS+NS*SV+SG)*12+nRobots*CR/AR;
+  var chef   = +document.getElementById('s-chef').value;
+  var second = +document.getElementById('s-second').value;
+  var serv   = +document.getElementById('s-serv').value;
+  var nbserv = +document.getElementById('s-nbserv').value;
+  var gerant = +document.getElementById('s-gerant').value;
+  document.getElementById('v-chef').textContent   = chef.toLocaleString('fr-FR')+'€';
+  document.getElementById('v-second').textContent = second.toLocaleString('fr-FR')+'€';
+  document.getElementById('v-serv').textContent   = serv.toLocaleString('fr-FR')+'€';
+  document.getElementById('v-nbserv').textContent = nbserv;
+  document.getElementById('v-gerant').textContent = gerant.toLocaleString('fr-FR')+'€';
+  var NS = nRobots===0 ? nbserv : Math.max(1, Math.floor(nbserv/2));
+  var MS = (chef+second+NS*serv+gerant)*12 + nRobots*CR/AR;
   var CF=MS+(LOYER+CF_BASE)*12;
   var EBE=MB-CF, EBE_P=EBE/CA;
   var RN=EBE-8000-Math.max((EBE-8000)*0.25,0), RN_P=RN/CA;
@@ -298,10 +333,15 @@ function recalc(){
   badge('b-ms',MS_P<=.35?'OK ✓':MS_P<=.40?'Attention':'Élevé',MS_P<=.35?'ok':MS_P<=.40?'warn':'bad');
   badge('b-rn',RN_P>=.08?'OK ✓':RN_P>=.03?'Attention':'Négatif',RN_P>=.08?'ok':RN_P>=.03?'warn':'bad');
 
+  var nbserv_r = +document.getElementById('s-nbserv').value;
+  var serv_r   = +document.getElementById('s-serv').value;
+  var chef_r   = +document.getElementById('s-chef').value;
+  var second_r = +document.getElementById('s-second').value;
+  var gerant_r = +document.getElementById('s-gerant').value;
   for(var i=0;i<=3;i++){
-    var s2=i===0?2:1;
-    var ms0=(SC+SS+2*SV+SG)*12;
-    var msi=(SC+SS+s2*SV+SG)*12+i*CR/AR;
+    var s2 = i===0 ? nbserv_r : Math.max(1, Math.floor(nbserv_r/2));
+    var ms0=(chef_r+second_r+nbserv_r*serv_r+gerant_r)*12;
+    var msi=(chef_r+second_r+s2*serv_r+gerant_r)*12+i*CR/AR;
     var eco=ms0-msi;
     var el=document.getElementById('r'+i+'-eco');
     if(i===0){el.textContent='Référence: '+fmt(ms0)+'/an';el.className='robot-eco neg';}
@@ -487,6 +527,26 @@ function setScenario(s,el){
   document.getElementById('s-snack').value=sc.snack;
   document.getElementById('s-fc').value=sc.fc;
   document.getElementById('s-mix').value=sc.mix;
+  recalc();
+}
+
+function resetAll(){
+  document.getElementById('s-couverts').value=75;
+  document.getElementById('s-ticket').value=22;
+  document.getElementById('s-epics').value=35;
+  document.getElementById('s-snack').value=50;
+  document.getElementById('s-fc').value=0.30;
+  document.getElementById('s-mix').value=0.80;
+  document.getElementById('s-chef').value=3800;
+  document.getElementById('s-second').value=2900;
+  document.getElementById('s-serv').value=2600;
+  document.getElementById('s-nbserv').value=2;
+  document.getElementById('s-gerant').value=2500;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelector('.tab').classList.add('active');
+  nRobots=0;
+  document.querySelectorAll('.robot-opt').forEach(function(e){e.classList.remove('active');});
+  document.querySelector('.robot-opt').classList.add('active');
   recalc();
 }
 

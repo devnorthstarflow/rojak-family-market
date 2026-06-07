@@ -601,7 +601,7 @@ function recalcRobots(){
   var ms_new  = (chef+second+nbservr*serv+gerant)*12 + amort;
   var eco     = ms_ref - ms_new;
   var invest_r= nbrobot*coutrobot;
-  var be_mois = eco>0 ? Math.round(invest_r/(eco/12)) : null;
+  var be_mois = (eco>0 && invest_r>0) ? Math.round(invest_r/(eco/12)) : null;
 
   document.getElementById('r-ref-ms').textContent    = Math.round(ms_ref/1000)+'k€/an';
   document.getElementById('r-ref-detail').textContent = nbserv+' serveur'+(nbserv>1?'s':'')+' humain'+(nbserv>1?'s':'')+' · salaire '+serv.toLocaleString('fr-FR')+'€/mois';
@@ -630,27 +630,26 @@ function recalcRobots(){
   var postes_sup = nbserv - nbservr;
   var eco_postes = postes_sup * serv * 12;
   var cout_amort = nbrobot * coutrobot / 3;
+  var tipHtml = '';
   if(nbrobot === 0){
-    tipEl.innerHTML = '<strong>Aucun robot sélectionné.</strong><br>Ajoutez des robots et réduisez le nombre de serveurs conservés pour générer des économies.';
+    tipHtml = '<strong>Aucun robot.</strong> Ajoutez des robots et reduisez les serveurs conserves pour economiser.';
   } else if(eco > 0){
-    tipEl.innerHTML =
-      '<strong style="color:#7ec87e;">Économie positive ✓</strong><br><br>'+
-      '− '+postes_sup+' poste'+(postes_sup>1?'s':'')+' supprimé'+(postes_sup>1?'s':'')+' : <strong>+'+Math.round(eco_postes/1000)+'k€/an</strong><br>'+
-      'Amortissement robots : <strong>−'+Math.round(cout_amort/1000)+'k€/an</strong><br>'+
-      '<hr style="border-color:rgba(201,168,76,0.2);margin:6px 0;">'+
-      'Économie nette : <strong style="color:#7ec87e;">+'+Math.round(eco/1000)+'k€/an</strong><br>'+
-      'Break-even : <strong>'+be_mois+' mois</strong><br><br>'+
-      '<span style="opacity:.7;font-size:.65rem;">Le robot remplace, il ne s'ajoute pas. L'économie vient de la réduction des postes humains.</span>';
+    tipHtml = '<strong style="color:#7ec87e">Economie positive</strong><br><br>'
+      + postes_sup + ' poste(s) supprime(s) : <strong>+' + Math.round(eco_postes/1000) + 'k/an</strong><br>'
+      + 'Amort. robots : <strong>-' + Math.round(cout_amort/1000) + 'k/an</strong><br>'
+      + '<hr style="border:0;border-top:1px solid rgba(201,168,76,0.2);margin:5px 0">'
+      + 'Net : <strong style="color:#7ec87e">+' + Math.round(eco/1000) + 'k/an</strong>'
+      + (be_mois ? ' · BE : <strong>' + be_mois + ' mois</strong>' : '')
+      + '<br><br><em style="opacity:.7;font-size:.65rem">Le robot remplace, il ne s'ajoute pas a l'effectif.</em>';
   } else {
-    tipEl.innerHTML =
-      '<strong style="color:#e07060;">Surcoût — configuration non optimale</strong><br><br>'+
-      'Postes supprimés : '+postes_sup+'<br>'+
-      'Économie sur salaires : <strong>'+Math.round(eco_postes/1000)+'k€/an</strong><br>'+
-      'Amortissement robots : <strong>−'+Math.round(cout_amort/1000)+'k€/an</strong><br>'+
-      '<hr style="border-color:rgba(201,168,76,0.2);margin:6px 0;">'+
-      'Résultat : <strong style="color:#e07060;">'+Math.round(eco/1000)+'k€/an</strong><br><br>'+
-      '<span style="opacity:.7;font-size:.65rem;">Pour économiser, réduisez le nombre de serveurs conservés. Le robot remplace, il ne s'ajoute pas à l'effectif existant.</span>';
+    tipHtml = '<strong style="color:#e07060">Surcout</strong><br><br>'
+      + postes_sup + ' poste(s) supprime(s) : +' + Math.round(eco_postes/1000) + 'k/an<br>'
+      + 'Amort. robots : -' + Math.round(cout_amort/1000) + 'k/an<br>'
+      + '<hr style="border:0;border-top:1px solid rgba(201,168,76,0.2);margin:5px 0">'
+      + 'Net : <strong style="color:#e07060">' + Math.round(eco/1000) + 'k/an</strong><br><br>'
+      + '<em style="opacity:.7;font-size:.65rem">Reduisez les serveurs conserves pour economiser.</em>';
   }
+  tipEl.innerHTML = tipHtml;
 }
 
 function setScenario(s,el){
@@ -747,7 +746,13 @@ function recalcFin(){
   card.style.borderColor = emprunt < 0 ? 'rgba(126,200,126,0.4)' : emprunt > invest*0.7 ? 'rgba(224,112,96,0.4)' : 'var(--border)';
 }
 
-window.addEventListener('load',function(){recalc();recalcFin();recalcRobots();});
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    recalc();
+    recalcFin();
+    recalcRobots();
+  }, 100);
+});
 </script>
 </body>
 </html>

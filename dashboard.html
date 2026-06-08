@@ -276,7 +276,7 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="sec-label">Indicateurs clés</div>
   <div class="kpi-grid">
     <div class="kpi-card gold-border" data-tip="Chiffre d'affaires total toutes activités consolidées (restaurant + épicerie + snacking + bière + rooftop) sur 300 jours d'ouverture."><div class="kpi-label">CA total / an</div><div class="kpi-val" id="k-ca">—</div><div class="kpi-sub" id="k-ca-sub">—</div></div>
-    <div class="kpi-card" data-tip="CA moins le coût des matières premières. Norme restauration : > 60%. En dessous de 55% : alerte sur les prix d'achat ou le food cost."><div class="kpi-label">Marge brute</div><div class="kpi-val" id="k-mb">—</div><div class="kpi-sub" id="k-mb-pct">—</div><div><span class="kpi-badge" id="b-mb">—</span></div></div>
+    <div class="kpi-card" data-tip="CA moins le cout des matieres premieres. Norme restauration : > 60%. Marge epicerie reelle : 43% (Tang Freres) a 50% (import Singapour) - meilleure que les 35% initialement estimees."><div class="kpi-label">Marge brute</div><div class="kpi-val" id="k-mb">—</div><div class="kpi-sub" id="k-mb-pct">—</div><div><span class="kpi-badge" id="b-mb">—</span></div></div>
     <div class="kpi-card" data-tip="Excédent Brut d'Exploitation = Marge brute moins toutes les charges fixes. Norme saine : 12-18% du CA. En dessous de 8% : vigilance."><div class="kpi-label">EBE estimé</div><div class="kpi-val" id="k-ebe">—</div><div class="kpi-sub" id="k-ebe-pct">—</div><div><span class="kpi-badge" id="b-ebe">—</span></div></div>
     <div class="kpi-card" data-tip="Nombre de couverts/jour necessaire pour couvrir TOUTES les charges fixes (salaires, loyer, energie, emprunt...). Calcul : Charges fixes mensuelles divise par la Marge sur Cout Variable (ticket moyen x (1 - food cost)). En dessous de ce seuil = perte quotidienne. Au-dessus = contribution aux benefices."><div class="kpi-label">Seuil rentabilité</div><div class="kpi-val" id="k-seuil">—</div><div class="kpi-sub" id="k-seuil-sub">—</div><div><span class="kpi-badge" id="b-seuil">—</span></div></div>
     <div class="kpi-card" data-tip="Food cost restaurant uniquement (coût matières / CA resto). Norme : 28-32%. Le food cost global toutes activités est plus élevé car l'épicerie a un coût d'achat de ~63%."><div class="kpi-label">Food cost restaurant</div><div class="kpi-val" id="k-fc">—</div><div class="kpi-sub">Norme : 28–32% · resto seul</div><div><span class="kpi-badge" id="b-fc">—</span></div></div>
@@ -536,7 +536,7 @@ function recalc(){
   document.getElementById('hyp-snack').textContent=snk+' ventes/jour · ticket '+tkt_snack.toFixed(1)+'€ · bubble tea, kopi, matcha, snacks et pâtisseries.';
   var CA_R=cov*tkt*JOURS, CA_E=epi*tkt_epic*JOURS, CA_S=snk*tkt_snack*JOURS, CA_B=30*4.55*JOURS, CA_RT=getRooftopCA();
   var CA=CA_R+CA_E+CA_S+CA_B+CA_RT;
-  var MG_E=mix*0.35+(1-mix)*0.42;
+  var MG_E=mix*0.43+(1-mix)*0.50; // Vrais prix Tang Freres 43% / Import Singapour 50%
   var CT=CA_R*fc+CA_E*(1-MG_E)+CA_S*0.22+CA_B*0.25+CA_RT*0.45;
   var MB=CA-CT, MB_P=MB/CA;
   var chef   = +document.getElementById('s-chef').value;

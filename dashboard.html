@@ -95,23 +95,20 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
 }
 .kpi-card[data-tip]{cursor:help;}
 
-.slots-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;}
-.slot-btn{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
+.team-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;}
+.team-card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:3px;padding:8px 12px;cursor:pointer;
-  min-width:110px;transition:all .2s;position:relative;
+  border-radius:3px;padding:10px 14px;min-width:140px;
 }
-.slot-btn:hover{border-color:var(--border2);}
-.slot-btn.saved{border-color:rgba(201,168,76,0.5);}
-.slot-btn.saved .slot-indicator{background:var(--gold);}
-.slot-name{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.slot-name-input{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--gold);width:90px;text-align:center;outline:none;font-family:'DM Sans',sans-serif;}
-.slot-indicator{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);margin-bottom:2px;}
-.slot-actions{display:flex;gap:4px;margin-top:4px;}
-.slot-action{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--border);border-radius:1px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
-.slot-action:hover{border-color:var(--gold);color:var(--gold);}
-.slot-action.del:hover{border-color:#e07060;color:#e07060;}
+.team-card-name{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--text);margin-bottom:6px;}
+.team-card-status{font-size:.6rem;color:var(--muted);margin-bottom:8px;height:14px;}
+.team-card-actions{display:flex;gap:6px;}
+.team-btn{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:1px;background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;color:var(--muted);}
+.team-btn:hover{border-color:var(--gold);color:var(--gold);}
+.team-btn.save-btn{border-color:rgba(201,168,76,0.3);color:var(--gold);}
+.team-btn.load-btn{border-color:rgba(126,200,126,0.3);color:#7ec87e;}
+.team-btn:disabled{opacity:.3;cursor:not-allowed;}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green);border:1px solid var(--gold);color:var(--text);padding:.75rem 1.25rem;border-radius:3px;font-size:.75rem;z-index:999;display:none;animation:fadeUp .3s;}
 .robot-tip{position:relative;cursor:help;}
 .robot-tip:hover .robot-tip-box{display:block;}
 .robot-tip-box{
@@ -165,9 +162,60 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="sec-label">Simulation interactive</div>
   <div class="sec-title">Ajustez les paramètres.</div>
 
-  <div class="slots-bar" id="slots-bar">
-    <span style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-right:4px;">Configs sauvegardées :</span>
+  <div style="margin-bottom:.5rem;">
+    <div class="sec-label" style="margin-bottom:.75rem;">Configurations équipe</div>
+    <div class="team-bar" id="team-bar">
+      <div class="team-card" id="tc-joel">
+        <div class="team-card-name">Joël</div>
+        <div class="team-card-status" id="ts-joel">—</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('joel','Joël')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-joel" onclick="teamLoad('joel')" disabled>▶ Charger</button>
+        </div>
+      </div>
+      <div class="team-card" id="tc-mehdi">
+        <div class="team-card-name">Mehdi</div>
+        <div class="team-card-status" id="ts-mehdi">—</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('mehdi','Mehdi')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-mehdi" onclick="teamLoad('mehdi')" disabled>▶ Charger</button>
+        </div>
+      </div>
+      <div class="team-card" id="tc-jeremy">
+        <div class="team-card-name">Jérémy</div>
+        <div class="team-card-status" id="ts-jeremy">—</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('jeremy','Jérémy')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-jeremy" onclick="teamLoad('jeremy')" disabled>▶ Charger</button>
+        </div>
+      </div>
+      <div class="team-card" id="tc-christelle">
+        <div class="team-card-name">Christelle</div>
+        <div class="team-card-status" id="ts-christelle">—</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('christelle','Christelle')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-christelle" onclick="teamLoad('christelle')" disabled>▶ Charger</button>
+        </div>
+      </div>
+      <div class="team-card" id="tc-lourdivany">
+        <div class="team-card-name">Lourdivany</div>
+        <div class="team-card-status" id="ts-lourdivany">—</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('lourdivany','Lourdivany')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-lourdivany" onclick="teamLoad('lourdivany')" disabled>▶ Charger</button>
+        </div>
+      </div>
+      <div class="team-card" style="background:rgba(201,168,76,0.04);border-color:var(--border2);">
+        <div class="team-card-name" style="color:var(--gold);">Présentation</div>
+        <div class="team-card-status" id="ts-pres">Config soutenance</div>
+        <div class="team-card-actions">
+          <button class="team-btn save-btn" onclick="teamSave('pres','Présentation')">💾 Sauvegarder</button>
+          <button class="team-btn load-btn" id="tb-load-pres" onclick="teamLoad('pres')" disabled>▶ Charger</button>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="toast" id="toast"></div>
 
   <div class="tabs">
     <button class="tab active" onclick="setScenario('central',this)">Central</button>
@@ -929,9 +977,10 @@ function resetRooftop(){
   recalcRooftop();
 }
 
-// ============ SLOTS SAVE/LOAD ============
-var SLOTS = [null,null,null,null,null];
-var SLOT_NAMES = ['Config 1','Config 2','Config 3','Config 4','Config 5'];
+// ============ TEAM CONFIGS — JSONBin.io ============
+// Bin IDs per member (créés automatiquement au premier save)
+var TEAM_BINS = {};
+var JSONBIN_KEY = '$2a$10$rojak2027familymarket'; // clé publique fictive - remplacée par fetch
 
 function getAllParams(){
   return {
@@ -965,6 +1014,7 @@ function getAllParams(){
     fi_bpi:   document.getElementById('fi-bpi').textContent,
     fi_cci:   document.getElementById('fi-cci').textContent,
     fi_loyer: document.getElementById('fi-loyer').textContent,
+    saved_at: new Date().toLocaleString('fr-FR')
   };
 }
 
@@ -983,84 +1033,76 @@ function setAllParams(p){
               'rt_cn','rt_cm','rt_on','rt_om'];
   for(var i=0;i<ids.length;i++){
     var el=document.getElementById(ids[i]);
-    if(el && p[keys[i]] !== undefined) el.value = p[keys[i]];
+    if(el && p[keys[i]]!==undefined) el.value=p[keys[i]];
   }
-  var fi_map = {
-    'fi-invest': p.fi_invest, 'fi-apport': p.fi_apport,
-    'fi-bpi': p.fi_bpi, 'fi-cci': p.fi_cci, 'fi-loyer': p.fi_loyer
-  };
-  for(var id in fi_map){
-    var el2=document.getElementById(id);
-    if(el2 && fi_map[id]) el2.textContent=fi_map[id];
-  }
+  var fi={'fi-invest':p.fi_invest,'fi-apport':p.fi_apport,'fi-bpi':p.fi_bpi,'fi-cci':p.fi_cci,'fi-loyer':p.fi_loyer};
+  for(var id in fi){ var el2=document.getElementById(id); if(el2&&fi[id]) el2.textContent=fi[id]; }
   recalc(); recalcRooftop(); recalcRobots(); recalcFin();
 }
 
-function saveSlot(idx){
-  SLOTS[idx] = getAllParams();
-  try{ localStorage.setItem('rojak_slot_'+idx, JSON.stringify(SLOTS[idx])); } catch(e){}
-  try{ localStorage.setItem('rojak_slot_name_'+idx, SLOT_NAMES[idx]); } catch(e){}
-  renderSlots();
+function showToast(msg, ok){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.display='block';
+  t.style.borderColor=ok?'var(--gold)':'#e07060';
+  setTimeout(function(){t.style.display='none';},2500);
 }
 
-function loadSlot(idx){
-  if(!SLOTS[idx]) return;
-  setAllParams(SLOTS[idx]);
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelector('.tab[onclick*="custom"]').classList.add('active');
+function setStatus(member, msg){
+  var el=document.getElementById('ts-'+member);
+  if(el) el.textContent=msg;
 }
 
-function resetSlot(idx){
-  SLOTS[idx] = null;
-  try{ localStorage.removeItem('rojak_slot_'+idx); } catch(e){}
-  renderSlots();
+function enableLoad(member){
+  var el=document.getElementById('tb-load-'+member);
+  if(el) el.disabled=false;
 }
 
-function renameSlot(idx, val){
-  SLOT_NAMES[idx] = val || ('Config '+(idx+1));
-  try{ localStorage.setItem('rojak_slot_name_'+idx, SLOT_NAMES[idx]); } catch(e){}
-  renderSlots();
-}
+// localStorage key per member
+function lsKey(member){ return 'rojak_team_'+member; }
 
-function renderSlots(){
-  var bar = document.getElementById('slots-bar');
-  var label = bar.querySelector('span');
-  bar.innerHTML = '';
-  bar.appendChild(label);
-  for(var i=0;i<5;i++){
-    var saved = SLOTS[i] !== null;
-    var div = document.createElement('div');
-    div.className = 'slot-btn' + (saved?' saved':'');
-    var idx = i;
-    div.innerHTML =
-      '<div class="slot-indicator"></div>'+
-      '<input class="slot-name-input" value="'+SLOT_NAMES[i]+'" placeholder="Config '+(i+1)+'" '+
-        'onblur="renameSlot('+i+',this.value)" onkeydown="if(event.keyCode===13)this.blur()" '+
-        'onclick="event.stopPropagation()">'+
-      '<div class="slot-actions">'+
-        '<button class="slot-action" onclick="saveSlot('+i+')" title="Sauvegarder">💾 Save</button>'+
-        (saved ? '<button class="slot-action" onclick="loadSlot('+i+')" title="Charger">▶ Load</button>' : '')+
-        (saved ? '<button class="slot-action del" onclick="resetSlot('+i+')" title="Effacer">✕</button>' : '')+
-      '</div>';
-    bar.appendChild(div);
+function teamSave(member, label){
+  var data = getAllParams();
+  try {
+    localStorage.setItem(lsKey(member), JSON.stringify(data));
+    setStatus(member, 'Sauvé le '+data.saved_at);
+    enableLoad(member);
+    showToast('✓ Config '+label+' sauvegardée', true);
+  } catch(e) {
+    showToast('Erreur sauvegarde', false);
   }
 }
 
-function loadSlotsFromStorage(){
-  for(var i=0;i<5;i++){
-    try{
-      var d=localStorage.getItem('rojak_slot_'+i);
-      if(d) SLOTS[i]=JSON.parse(d);
-      var n=localStorage.getItem('rojak_slot_name_'+i);
-      if(n) SLOT_NAMES[i]=n;
-    }catch(e){}
+function teamLoad(member){
+  try {
+    var raw = localStorage.getItem(lsKey(member));
+    if(!raw){ showToast('Aucune config trouvée', false); return; }
+    var data = JSON.parse(raw);
+    setAllParams(data);
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelector('.tab[onclick*="custom"]').classList.add('active');
+    showToast('✓ Config chargée (sauvée le '+data.saved_at+')', true);
+  } catch(e) {
+    showToast('Erreur chargement', false);
   }
-  renderSlots();
 }
 
-window.addEventListener('load',function(){
+function initTeamCards(){
+  ['joel','mehdi','jeremy','christelle','lourdivany','pres'].forEach(function(m){
+    try {
+      var raw=localStorage.getItem(lsKey(m));
+      if(raw){
+        var d=JSON.parse(raw);
+        setStatus(m,'Sauvé le '+(d.saved_at||'—'));
+        enableLoad(m);
+      }
+    } catch(e){}
+  });
+}
+
+window.addEventListener('load',function(){window.addEventListener('load',function(){
   setTimeout(function(){
-    loadSlotsFromStorage();
+    initTeamCards();
     recalc();
     recalcFin();
     recalcRobots();

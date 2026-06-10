@@ -505,14 +505,14 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
     <rect x="170" y="70" width="148" height="60" rx="4" fill="#1C3D2B" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
     <text x="244" y="92" text-anchor="middle" fill="#e8dfc8" font-size="10" font-weight="500">NOPAT</text>
     <text x="244" y="106" text-anchor="middle" fill="rgba(232,223,200,0.6)" font-size="8">EBE − Amort. − IS</text>
-    <text x="244" y="120" text-anchor="middle" fill="#C9A84C" font-size="9" font-weight="600">~142k€</text>
+    <text id="svg-nopat" x="244" y="120" text-anchor="middle" fill="#C9A84C" font-size="9" font-weight="600">—</text>
     <!-- Flèche CMPR × CE -->
     <line x1="580" y1="100" x2="530" y2="100" stroke="#8B2A1A" stroke-width="1.2" marker-end="url(#arr2)"/>
     <!-- Box CMPR × CE -->
     <rect x="582" y="70" width="148" height="60" rx="4" fill="#1C3D2B" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
     <text x="656" y="92" text-anchor="middle" fill="#e8dfc8" font-size="10" font-weight="500">CMPR × CE</text>
-    <text x="656" y="106" text-anchor="middle" fill="rgba(232,223,200,0.6)" font-size="8">5,44% × 430k€</text>
-    <text x="656" y="120" text-anchor="middle" fill="#e07060" font-size="9" font-weight="600">~23k€</text>
+    <text id="svg-cmpr-lbl" x="656" y="106" text-anchor="middle" fill="rgba(232,223,200,0.6)" font-size="8">— × —k€</text>
+    <text id="svg-cc" x="656" y="120" text-anchor="middle" fill="#e07060" font-size="9" font-weight="600">—</text>
     <!-- Leviers NOPAT à gauche -->
     <rect x="4" y="18" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
     <text x="69" y="30" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↑ Augmenter les ventes</text>
@@ -1342,6 +1342,14 @@ function calcEVA(){
   document.getElementById('ev-ratio').textContent = isFinite(ratio) ? ratio.toFixed(1)+'×' : '—';
   document.getElementById('ev-ratio-sub').textContent = 'vs CMPR sectoriel Damodaran 6,2%';
 
+  // Mise à jour SVG dynamique
+  var svgN = document.getElementById('svg-nopat');
+  var svgL = document.getElementById('svg-cmpr-lbl');
+  var svgC = document.getElementById('svg-cc');
+  if(svgN) svgN.textContent = k(NOPAT_K);
+  if(svgL) svgL.textContent = p(CMPR)+' × '+Math.round(CE_K)+'k€';
+  if(svgC){ svgC.textContent = k(CC_K); svgC.setAttribute('fill', CC_K < NOPAT_K ? '#e07060' : '#f85149'); }
+
   // Badge EVA
   var badge = document.getElementById('ev-badge');
   if(EVA_K > 50){ badge.textContent='Création de valeur ✓'; badge.className='kpi-badge ok'; }
@@ -1382,7 +1390,7 @@ function calcEVA(){
   });
 }
 
-window.addEventListener('load', function(){
+
   setTimeout(function(){
     initTeamCards();
     recalc();
@@ -1390,7 +1398,7 @@ window.addEventListener('load', function(){
     recalcRobots();
     recalcRooftop();
     calcEVA();
-  }, 150);
+  }, 100);
 });
 </script>
 </body>

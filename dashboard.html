@@ -669,7 +669,30 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   </div>
 </div>
 
-<div id="ev-alert" style="margin-bottom:2rem;"></div>
+<div id="ev-alert" style="margin-bottom:1.5rem;"></div>
+<!-- Matrices de sensibilité EVA -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:2rem;">
+  <!-- Matrice EVA k€ -->
+  <div class="chart-card">
+    <div class="chart-title">Matrice EVA (k€) — NOPAT × CMPR</div>
+    <div style="font-size:.65rem;color:var(--muted);margin-bottom:8px;">
+      <span style="color:#7ec87e;">■</span> Création de valeur &nbsp;
+      <span style="color:#e07060;">■</span> Destruction &nbsp;
+      <span style="color:var(--gold);">★</span> Position Rojak actuelle
+    </div>
+    <div style="overflow-x:auto;"><table id="eva-matrix" style="border-collapse:collapse;width:100%;font-size:.68rem;"></table></div>
+  </div>
+  <!-- Matrice ratio RCE/CMPR -->
+  <div class="chart-card">
+    <div class="chart-title">Ratio RCE/CMPR — couverture du coût capital</div>
+    <div style="font-size:.65rem;color:var(--muted);margin-bottom:8px;">
+      <span style="color:#7ec87e;">■</span> ≥ 1× (RCE couvre CMPR) &nbsp;
+      <span style="color:#e07060;">■</span> &lt; 1× (insuffisant) &nbsp;
+      <span style="color:var(--gold);">★</span> Rojak
+    </div>
+    <div style="overflow-x:auto;"><table id="eva-matrix2" style="border-collapse:collapse;width:100%;font-size:.68rem;"></table></div>
+  </div>
+</div>
 
 <footer>
   <div class="footer-logo">ROJAK <span>FAMILY</span> MARKET</div>
@@ -1298,6 +1321,70 @@ function initTeamCards(){
 }
 
 // ═══════════════════════ CRÉATION DE VALEUR / EVA ═══════════════════════
+function calcEvaMat(){
+  var CE_K = (function(){
+    var el = document.getElementById('fi-invest');
+    return el ? (parseFloat(el.textContent)||430) : 430;
+  })();
+  var t = 0.28;
+  var erdt = parseFloat(document.getElementById('ev-erdt').value) / 100;
+  var iat  = parseFloat(document.getElementById('ev-iat').value)  / 100;
+  var pd   = parseFloat(document.getElementById('ev-pd').value)   / 100;
+  var cmpr_cur = (1-pd)*erdt + pd*iat;
+
+  // Current NOPAT from displayed value
+  var nEl = document.getElementById('ev-nopat');
+  var nopat_cur = nEl ? (parseFloat(nEl.textContent)||0) : 0;
+
+  var nopats = [40,60,80,100,120,140,160,180,200];
+  var cmprs  = [0.03,0.04,0.05,0.06,0.07,0.08,0.10];
+
+  function thStyle(){ return 'padding:5px 8px;font-size:.6rem;color:var(--muted);text-align:center;border:1px solid rgba(201,168,76,0.12);background:rgba(28,61,43,0.6);text-transform:uppercase;letter-spacing:.06em;'; }
+  function tdBase(bg,fc){ return 'padding:5px 8px;text-align:center;border:1px solid rgba(201,168,76,0.08);background:'+bg+';color:'+fc+';font-variant-numeric:tabular-nums;'; }
+
+  // Matrix 1: EVA k€
+  var h1 = '<thead><tr><th style="'+thStyle()+'">NOPAT\CMPR</th>';
+  cmprs.forEach(function(c){ h1 += '<th style="'+thStyle()+'">'+Math.round(c*100)+'%</th>'; });
+  h1 += '</tr></thead><tbody>';
+  nopats.forEach(function(np){
+    var isNRow = Math.abs(np - nopat_cur) <= 12;
+    h1 += '<tr>';
+    h1 += '<td style="'+thStyle()+';color:var(--gold);">'+np+'k€</td>';
+    cmprs.forEach(function(c){
+      var eva = np - c * CE_K;
+      var isCur = isNRow && Math.abs(c - cmpr_cur) < 0.006;
+      var bg = isCur ? 'rgba(201,168,76,0.20)' : (eva>0 ? 'rgba(126,200,126,0.10)' : 'rgba(224,112,96,0.10)');
+      var fc = isCur ? 'var(--gold)' : (eva>0 ? '#7ec87e' : '#e07060');
+      h1 += '<td style="'+tdBase(bg,fc)+'">'+(isCur?'★ ':'')+( eva>=0?'+':'')+Math.round(eva)+'</td>';
+    });
+    h1 += '</tr>';
+  });
+  h1 += '</tbody>';
+  document.getElementById('eva-matrix').innerHTML = h1;
+
+  // Matrix 2: RCE/CMPR ratio
+  var h2 = '<thead><tr><th style="'+thStyle()+'">NOPAT\CMPR</th>';
+  cmprs.forEach(function(c){ h2 += '<th style="'+thStyle()+'">'+Math.round(c*100)+'%</th>'; });
+  h2 += '</tr></thead><tbody>';
+  nopats.forEach(function(np){
+    var isNRow = Math.abs(np - nopat_cur) <= 12;
+    h2 += '<tr>';
+    h2 += '<td style="'+thStyle()+';color:var(--gold);">'+np+'k€</td>';
+    cmprs.forEach(function(c){
+      var rce = np / CE_K;
+      var ratio = c > 0 ? rce / c : 0;
+      var isCur = isNRow && Math.abs(c - cmpr_cur) < 0.006;
+      var bg = isCur ? 'rgba(201,168,76,0.20)' : (ratio>=1 ? 'rgba(126,200,126,0.10)' : 'rgba(224,112,96,0.10)');
+      var fc = isCur ? 'var(--gold)' : (ratio>=2 ? '#7ec87e' : ratio>=1 ? '#b8e0b8' : '#e07060');
+      h2 += '<td style="'+tdBase(bg,fc)+'">'+(isCur?'★ ':'')+ratio.toFixed(1)+'×</td>';
+    });
+    h2 += '</tr>';
+  });
+  h2 += '</tbody>';
+  document.getElementById('eva-matrix2').innerHTML = h2;
+}
+
+
 function calcEVA(){
   // Récupérer EBE depuis le dashboard (calculé par recalc)
   var ebeEl = document.getElementById('k-ebe');
@@ -1388,6 +1475,7 @@ function calcEVA(){
       +'<span style="color:var(--muted);">EVA </span><strong style="color:'+col+';">'+k(sEVA)+'</strong><br>'
       +'<span style="color:var(--muted);">RCE / CMPR </span><strong style="color:var(--gold);">'+(CMPR>0?(sRCE/CMPR).toFixed(1)+'×':'—')+'</strong>';
   });
+  calcEvaMat();
 }
 
 

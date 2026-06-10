@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Financier — Rojak Family Market</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{
   --bg:#07120c;--bg2:#0d1f15;--green:#1C3D2B;
@@ -489,6 +490,80 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <strong style="color:var(--text);">EBE et CE se mettent à jour automatiquement depuis les curseurs ci-dessus.</strong>
 </div>
 
+<!-- Schéma visuel modèle général -->
+<div style="background:var(--card);border:1px solid var(--border);border-radius:3px;padding:20px 24px;margin-bottom:1.5rem;overflow-x:auto;">
+  <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:.85;">Modèle général de création de valeur — appliqué à Rojak</div>
+  <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;height:auto;font-family:'DM Sans',sans-serif;">
+    <!-- EVA centrale -->
+    <rect x="370" y="70" width="160" height="60" rx="4" fill="#C9A84C" opacity="0.15" stroke="#C9A84C" stroke-width="1.5"/>
+    <text x="450" y="94" text-anchor="middle" fill="#C9A84C" font-size="11" font-weight="600" letter-spacing="1">CRÉATION</text>
+    <text x="450" y="110" text-anchor="middle" fill="#C9A84C" font-size="11" font-weight="600" letter-spacing="1">DE VALEUR</text>
+    <text x="450" y="124" text-anchor="middle" fill="#C9A84C" font-size="8.5" opacity="0.8">NOPAT − CMPR × CE</text>
+    <!-- Flèche NOPAT -->
+    <line x1="320" y1="100" x2="370" y2="100" stroke="#C9A84C" stroke-width="1.2" marker-end="url(#arr)"/>
+    <!-- Box NOPAT -->
+    <rect x="170" y="70" width="148" height="60" rx="4" fill="#1C3D2B" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+    <text x="244" y="92" text-anchor="middle" fill="#e8dfc8" font-size="10" font-weight="500">NOPAT</text>
+    <text x="244" y="106" text-anchor="middle" fill="rgba(232,223,200,0.6)" font-size="8">EBE − Amort. − IS</text>
+    <text x="244" y="120" text-anchor="middle" fill="#C9A84C" font-size="9" font-weight="600">~142k€</text>
+    <!-- Flèche CMPR × CE -->
+    <line x1="580" y1="100" x2="530" y2="100" stroke="#8B2A1A" stroke-width="1.2" marker-end="url(#arr2)"/>
+    <!-- Box CMPR × CE -->
+    <rect x="582" y="70" width="148" height="60" rx="4" fill="#1C3D2B" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+    <text x="656" y="92" text-anchor="middle" fill="#e8dfc8" font-size="10" font-weight="500">CMPR × CE</text>
+    <text x="656" y="106" text-anchor="middle" fill="rgba(232,223,200,0.6)" font-size="8">5,44% × 430k€</text>
+    <text x="656" y="120" text-anchor="middle" fill="#e07060" font-size="9" font-weight="600">~23k€</text>
+    <!-- Leviers NOPAT à gauche -->
+    <rect x="4" y="18" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="69" y="30" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↑ Augmenter les ventes</text>
+    <text x="69" y="41" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">Rooftop · CERN · Bubble tea</text>
+    <rect x="4" y="54" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="69" y="66" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Réduire les coûts</text>
+    <text x="69" y="77" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">Groupage · Mutualisation</text>
+    <rect x="4" y="90" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="69" y="102" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Réduire les immos</text>
+    <text x="69" y="113" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">Containers · Leasing</text>
+    <rect x="4" y="126" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="69" y="138" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Réduire le BFR</text>
+    <text x="69" y="149" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">Cash immédiat · Délais 30j</text>
+    <!-- Flèches leviers NOPAT → NOPAT box -->
+    <line x1="134" y1="32" x2="168" y2="82" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="134" y1="68" x2="168" y2="88" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="134" y1="104" x2="168" y2="100" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="134" y1="140" x2="168" y2="114" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <!-- Leviers CMPR à droite -->
+    <rect x="766" y="18" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="831" y="30" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Prime de risque</text>
+    <text x="831" y="41" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">Site validé · BP audité</text>
+    <rect x="766" y="54" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="831" y="66" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Coût de la dette</text>
+    <text x="831" y="77" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">BPI 0% · Garantie Bpifrance</text>
+    <rect x="766" y="90" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="831" y="102" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↑ Endettement optimal</text>
+    <text x="831" y="113" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">D/(D+E) = 65% · Désend. an 3</text>
+    <rect x="766" y="126" width="130" height="28" rx="3" fill="rgba(28,61,43,0.6)" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+    <text x="831" y="138" text-anchor="middle" fill="rgba(232,223,200,0.7)" font-size="8">↓ Aides publiques</text>
+    <text x="831" y="149" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7">BPI + CCI Ain + AuRA = 0%</text>
+    <!-- Flèches leviers CMPR → CMPR box -->
+    <line x1="766" y1="32" x2="732" y2="82" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="766" y1="68" x2="732" y2="92" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="766" y1="104" x2="732" y2="100" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <line x1="766" y1="140" x2="732" y2="114" stroke="rgba(201,168,76,0.25)" stroke-width="0.8"/>
+    <!-- Labels missions -->
+    <text x="69" y="174" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="8" letter-spacing="1">MISSION OPÉRATIONNELS</text>
+    <text x="831" y="174" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="8" letter-spacing="1">MISSION FINANCIERS</text>
+    <!-- Marqueurs flèches -->
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#C9A84C"/>
+      </marker>
+      <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#8B2A1A"/>
+      </marker>
+    </defs>
+  </svg>
+</div>
+
 <!-- Curseurs CMPR -->
 <div class="sliders-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:1rem;">
   <div class="slider-card">
@@ -602,7 +677,6 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   <div class="footer-note">Singapore spirit. Alpine soul.</div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const JOURS=300,LOYER=2500,MENSUALITE=2700,INVEST=430000;
 const SC=3800,SS=2900,SV=2600,SG=2500,CR=4000,AR=3;

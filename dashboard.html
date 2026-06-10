@@ -474,6 +474,128 @@ footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justi
   </div>
 </div>
 
+<!-- ═══════════════════════ CRÉATION DE VALEUR ═══════════════════════ -->
+<div class="divider"></div>
+<div class="sec-label">Analyse financière avancée — Cours Finance pour Manager</div>
+<div class="sec-title">Création de <em style="color:var(--gold);font-style:normal;">Valeur</em></div>
+
+<div style="background:rgba(201,168,76,0.05);border-left:3px solid var(--gold);padding:12px 18px;margin-bottom:1.5rem;font-size:.78rem;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.8;">
+  Création de valeur<sub>n</sub> = <strong style="color:var(--gold);">NOPAT<sub>n</sub></strong> − <strong style="color:var(--gold);">CMPR × CE<sub>n−1</sub></strong>
+  &nbsp;·&nbsp;
+  CMPR = (CP/CE) × E(Rdt) + (D/CE) × i × (1−t)
+  &nbsp;·&nbsp;
+  Source sectorielle : <strong style="color:var(--text);">Damodaran — Retail Grocery &amp; Food</strong>
+  &nbsp;·&nbsp;
+  <strong style="color:var(--text);">EBE et CE se mettent à jour automatiquement depuis les curseurs ci-dessus.</strong>
+</div>
+
+<!-- Curseurs CMPR -->
+<div class="sliders-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:1rem;">
+  <div class="slider-card">
+    <div class="slider-label">Amortissements / an (k€)</div>
+    <div class="slider-row">
+      <input type="range" id="ev-amo" min="5" max="80" step="1" value="43" oninput="calcEVA()">
+      <span class="slider-val" id="evv-amo">43k€</span>
+    </div>
+  </div>
+  <div class="slider-card">
+    <div class="slider-label">E(Rdt) fonds propres — Damodaran</div>
+    <div class="slider-row">
+      <input type="range" id="ev-erdt" min="3" max="20" step="0.5" value="8.1" oninput="calcEVA()">
+      <span class="slider-val" id="evv-erdt">8.1%</span>
+    </div>
+  </div>
+  <div class="slider-card">
+    <div class="slider-label">Coût dette after-tax i×(1−t)</div>
+    <div class="slider-row">
+      <input type="range" id="ev-iat" min="1" max="8" step="0.1" value="4" oninput="calcEVA()">
+      <span class="slider-val" id="evv-iat">4.0%</span>
+    </div>
+  </div>
+  <div class="slider-card">
+    <div class="slider-label">Part dettes / CE (%)</div>
+    <div class="slider-row">
+      <input type="range" id="ev-pd" min="0" max="90" step="1" value="65" oninput="calcEVA()">
+      <span class="slider-val" id="evv-pd">65%</span>
+    </div>
+  </div>
+</div>
+
+<!-- KPI EVA -->
+<div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:1.5rem;">
+  <div class="kpi-card gold-border">
+    <div class="kpi-label">REX (EBE − Amort.)</div>
+    <div class="kpi-val" id="ev-rex" style="color:var(--gold);">—</div>
+    <div class="kpi-sub">k€ · résultat d'exploitation</div>
+  </div>
+  <div class="kpi-card gold-border">
+    <div class="kpi-label">NOPAT (REX après IS)</div>
+    <div class="kpi-val" id="ev-nopat" style="color:var(--gold);">—</div>
+    <div class="kpi-sub">k€ · performance opérationnelle nette</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">CMPR</div>
+    <div class="kpi-val" id="ev-cmpr">—</div>
+    <div class="kpi-sub">coût moyen pondéré des ressources</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Charge en capital</div>
+    <div class="kpi-val" id="ev-cc">—</div>
+    <div class="kpi-sub">k€ · CMPR × CE</div>
+  </div>
+  <div class="kpi-card" id="ev-eva-card">
+    <div class="kpi-label">EVA — Création de valeur</div>
+    <div class="kpi-val" id="ev-eva">—</div>
+    <div class="kpi-sub">k€ · NOPAT − Charge en capital</div>
+    <div id="ev-badge" class="kpi-badge ok" style="margin-top:6px;">—</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">RCE après IS vs CMPR</div>
+    <div class="kpi-val" id="ev-ratio" style="color:var(--gold);">—</div>
+    <div class="kpi-sub" id="ev-ratio-sub">× le coût des ressources</div>
+  </div>
+</div>
+
+<!-- Modèle général — 2 colonnes -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;">
+  <div class="chart-card">
+    <div class="chart-title">↑ Améliorer le NOPAT — Mission opérationnels</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.72rem;margin-top:6px;">
+      <tr><td style="padding:5px 0;color:var(--gold);width:36%;">Augmenter les ventes</td><td style="color:var(--muted);line-height:1.5;">Rooftop an 2, fidélisation frontaliers CERN, bubble tea 7h–20h</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Réduire les coûts</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">Groupage fournisseurs asiatiques, mutualisation cuisine centrale + épicerie</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Réduire les immos</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">Containers revendables (valeur résiduelle), équipements en leasing</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Réduire le BFR</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">Cash immédiat restauration, délais fournisseurs 30j, stocks pilotés par rotation</td></tr>
+    </table>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">↓ Réduire le CMPR — Mission financiers</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.72rem;margin-top:6px;">
+      <tr><td style="padding:5px 0;color:var(--gold);width:36%;">Baisser la prime risque</td><td style="color:var(--muted);line-height:1.5;">Valider le site en amont, BP audité, benchmark S-Mart rassurant</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Réduire coût dette</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">BPI taux 0 déjà intégré, garantie BPI sur prêt bancaire → taux préférentiel</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Optimiser endettement</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">D/(D+E) = 65% justifié par EBE fort. Désendettement an 3 → CMPR baisse encore</td></tr>
+      <tr><td style="padding:5px 0;color:var(--gold);border-top:1px solid var(--border);">Aides publiques</td><td style="color:var(--muted);border-top:1px solid var(--border);line-height:1.5;">Subventions AuRA + CCI Ain à coût 0 → comprime mécaniquement le CMPR global</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Scénarios EVA -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem;" id="ev-scens">
+  <div class="chart-card" id="ev-s-pess-card">
+    <div class="chart-title">Scénario pessimiste (EBE −20%)</div>
+    <div id="ev-s-pess" style="font-size:.78rem;line-height:2.3;margin-top:6px;"></div>
+  </div>
+  <div class="chart-card" id="ev-s-base-card" style="border-color:var(--gold);">
+    <div class="chart-title" style="color:var(--gold);">Scénario base — Livrable 1</div>
+    <div id="ev-s-base" style="font-size:.78rem;line-height:2.3;margin-top:6px;"></div>
+  </div>
+  <div class="chart-card" id="ev-s-opti-card">
+    <div class="chart-title">Scénario optimiste (EBE +20%)</div>
+    <div id="ev-s-opti" style="font-size:.78rem;line-height:2.3;margin-top:6px;"></div>
+  </div>
+</div>
+
+<div id="ev-alert" style="margin-bottom:2rem;"></div>
+
 <footer>
   <div class="footer-logo">ROJAK <span>FAMILY</span> MARKET</div>
   <div class="footer-note">Saint-Genis-Pouilly · Pays de Gex · Ouverture 2027 · Document confidentiel</div>
@@ -591,6 +713,7 @@ function recalc(){
   drawCA([CA_R,CA_E,CA_S,CA_B,CA_RT]);
   drawPL(CA,CT,CF,EBE,RN);
   drawTrezo(CA,CF);
+  calcEVA();
 }
 
 function drawCA(data){
@@ -1100,13 +1223,99 @@ function initTeamCards(){
   });
 }
 
-window.addEventListener('load',function(){
+// ═══════════════════════ CRÉATION DE VALEUR / EVA ═══════════════════════
+function calcEVA(){
+  // Récupérer EBE depuis le dashboard (calculé par recalc)
+  var ebeEl = document.getElementById('k-ebe');
+  var ebeRaw = ebeEl ? ebeEl.textContent.replace('k€','').replace('−','-').trim() : '0';
+  var EBE_K = parseFloat(ebeRaw) || 0; // en k€
+
+  // CE = investissement total depuis la section financement
+  var ceEl = document.getElementById('fi-invest');
+  var CE_K = ceEl ? (parseFloat(ceEl.textContent)||430) : 430; // en k€
+
+  // Curseurs EVA
+  var amo   = parseFloat(document.getElementById('ev-amo').value)  || 43;  // k€
+  var erdt  = parseFloat(document.getElementById('ev-erdt').value) / 100;  // E(Rdt) FP
+  var iat   = parseFloat(document.getElementById('ev-iat').value)  / 100;  // i after-tax
+  var pd    = parseFloat(document.getElementById('ev-pd').value)   / 100;  // D/CE
+
+  document.getElementById('evv-amo').textContent  = amo+'k€';
+  document.getElementById('evv-erdt').textContent = (erdt*100).toFixed(1)+'%';
+  document.getElementById('evv-iat').textContent  = (iat*100).toFixed(1)+'%';
+  document.getElementById('evv-pd').textContent   = Math.round(pd*100)+'%';
+
+  var IS_RATE = 0.28;
+  var REX_K  = EBE_K - amo;
+  var NOPAT_K = REX_K * (1 - IS_RATE);
+
+  // CMPR = (1-pd)*E(Rdt) + pd*i*(1-t)  — ici iat = i*(1-t) déjà
+  var CMPR = (1-pd)*erdt + pd*iat;
+
+  var CC_K   = CMPR * CE_K;  // Charge en capital en k€
+  var EVA_K  = NOPAT_K - CC_K;
+  var RCE_AI = REX_K>0 ? (NOPAT_K / CE_K) : 0;
+  var ratio  = CMPR>0 ? RCE_AI/CMPR : 0;
+
+  function k(v){ return (isNaN(v)||!isFinite(v)) ? '—' : Math.round(v)+'k€'; }
+  function p(v){ return (isNaN(v)||!isFinite(v)) ? '—' : (v*100).toFixed(1)+'%'; }
+
+  document.getElementById('ev-rex').textContent   = k(REX_K);
+  document.getElementById('ev-nopat').textContent = k(NOPAT_K);
+  document.getElementById('ev-cmpr').textContent  = p(CMPR);
+  document.getElementById('ev-cc').textContent    = k(CC_K);
+  document.getElementById('ev-eva').textContent   = k(EVA_K);
+  document.getElementById('ev-ratio').textContent = isFinite(ratio) ? ratio.toFixed(1)+'×' : '—';
+  document.getElementById('ev-ratio-sub').textContent = 'vs CMPR sectoriel Damodaran 6,2%';
+
+  // Badge EVA
+  var badge = document.getElementById('ev-badge');
+  if(EVA_K > 50){ badge.textContent='Création de valeur ✓'; badge.className='kpi-badge ok'; }
+  else if(EVA_K > 0){ badge.textContent='Valeur créée (faible)'; badge.className='kpi-badge warn'; }
+  else { badge.textContent='Destruction de valeur ⚠'; badge.className='kpi-badge bad'; }
+
+  // Alerte principale
+  var alertHTML = '';
+  if(EVA_K > 0){
+    alertHTML = '<div style="border-radius:3px;padding:12px 16px;font-size:.78rem;line-height:1.6;background:rgba(126,200,126,0.08);border-left:3px solid #7ec87e;color:#7ec87e;">'
+      +'✓ <strong>Création de valeur : '+k(EVA_K)+'</strong> — NOPAT ('+k(NOPAT_K)+') couvre '
+      +ratio.toFixed(1)+'× la charge en capital ('+k(CC_K)+'). '
+      +'RCE après IS = '+p(RCE_AI)+' vs CMPR = '+p(CMPR)+'. '
+      +'Le BPI taux 0 et les aides publiques compriment mécaniquement le CMPR.'
+      +'</div>';
+  } else {
+    alertHTML = '<div style="border-radius:3px;padding:12px 16px;font-size:.78rem;line-height:1.6;background:rgba(224,112,96,0.08);border-left:3px solid #e07060;color:#e07060;">'
+      +'⚠ <strong>Valeur détruite : '+k(EVA_K)+'</strong> — Revoir la structure de financement ou améliorer l\'EBE.'
+      +'</div>';
+  }
+  document.getElementById('ev-alert').innerHTML = alertHTML;
+
+  // Scénarios (−20%, base, +20%)
+  [['ev-s-pess',0.8],['ev-s-base',1],['ev-s-opti',1.2]].forEach(function(sc){
+    var mult = sc[1];
+    var sEBE  = EBE_K * mult;
+    var sREX  = sEBE - amo;
+    var sNOP  = sREX * (1 - IS_RATE);
+    var sEVA  = sNOP - CC_K;
+    var sRCE  = CE_K>0 ? sNOP/CE_K : 0;
+    var col   = sEVA > 0 ? '#7ec87e' : '#e07060';
+    document.getElementById(sc[0]).innerHTML =
+      '<span style="color:var(--muted);">EBE </span><strong style="color:var(--gold);">'+k(sEBE)+'</strong><br>'
+      +'<span style="color:var(--muted);">NOPAT </span><strong>'+k(sNOP)+'</strong><br>'
+      +'<span style="color:var(--muted);">Charge capital </span><strong>'+k(CC_K)+'</strong><br>'
+      +'<span style="color:var(--muted);">EVA </span><strong style="color:'+col+';">'+k(sEVA)+'</strong><br>'
+      +'<span style="color:var(--muted);">RCE / CMPR </span><strong style="color:var(--gold);">'+(CMPR>0?(sRCE/CMPR).toFixed(1)+'×':'—')+'</strong>';
+  });
+}
+
+
   setTimeout(function(){
     initTeamCards();
     recalc();
     recalcFin();
     recalcRobots();
     recalcRooftop();
+    calcEVA();
   }, 100);
 });
 </script>

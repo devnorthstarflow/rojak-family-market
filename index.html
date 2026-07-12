@@ -211,6 +211,22 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
 /* Corrections livrable finance */
 .piliers{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .kpi-sub,.proj-net,.fin-note{line-height:1.45}
+
+/* Correction section finance : cohérence avec le dashboard Excel */
+.finance-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px}
+.finance-kpi-card{border:1px solid var(--line);background:rgba(244,235,216,.035);border-radius:18px;padding:22px 20px;min-height:158px;display:flex;flex-direction:column;justify-content:space-between}
+.finance-kpi-card.warning{border-color:rgba(212,168,67,.65);background:linear-gradient(180deg,rgba(212,168,67,.10),rgba(212,168,67,.035))}
+.finance-kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:var(--cream-2);margin-bottom:10px}
+.finance-kpi-value{font-family:"Bebas Neue",sans-serif;font-size:clamp(30px,3vw,44px);letter-spacing:.035em;color:var(--cream);line-height:1}
+.finance-kpi-note{font-size:13px;line-height:1.45;color:var(--cream-2);margin-top:12px}
+.finance-kpi-note strong{color:var(--gold)}
+.finance-pill{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid rgba(92,231,111,.42);color:#6df075;background:rgba(92,231,111,.08);font-size:11px;text-transform:uppercase;letter-spacing:.12em;width:max-content}
+.finance-pill.danger{border-color:rgba(192,57,43,.58);color:#ff8a72;background:rgba(192,57,43,.10)}
+.finance-note-box{margin-top:18px;border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:rgba(0,0,0,.16);font-size:14px;line-height:1.6;color:var(--cream-2)}
+.finance-note-box strong{color:var(--gold)}
+@media(max-width:960px){.finance-kpi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.finance-kpi-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -428,38 +444,76 @@ footer{padding:46px clamp(22px,6vw,92px);background:#020403;border-top:1px solid
 </div>
 </div>
 <!-- PROJECTION FINANCIÈRE -->
-<div class="projection reveal">
-<div class="proj-title">Synthèse financière du scénario central.</div>
-<div class="proj-grid">
-<div class="proj-col">
-<div class="proj-year">CA annuel</div>
-<div class="proj-ca">937k€</div>
-<div class="proj-ebe">937 k€ · scénario central</div>
-<div class="proj-net">Dont restaurant 495 k€ et épicerie 294 k€</div>
-<div class="proj-bar-wrap"><div class="proj-bar" style="width:100%"></div></div>
-</div>
-<div class="proj-col">
-<div class="proj-year">Rentabilité opérationnelle</div>
-<div class="proj-ca">219k€</div>
-<div class="proj-ebe">EBE estimé · 23,4 % du CA</div>
-<div class="proj-net">Marge brute 584 k€ · 62,3 % du CA</div>
-<div class="proj-bar-wrap"><div class="proj-bar" style="width:70%"></div></div>
-</div>
-<div class="proj-col best">
-<div class="proj-year">Résultat net estimé</div>
-<div class="proj-ca">158k€</div>
-<div class="proj-ebe">Résultat net · 16,9 % du CA</div>
-<div class="proj-net">Masse salariale 173 k€ · 18,4 % du CA</div>
-<div class="proj-bar-wrap"><div class="proj-bar" style="width:60%"></div></div>
-</div>
-<div class="proj-col best">
-<div class="proj-year">Création de valeur</div>
-<div class="proj-ca">104k€</div>
-<div class="proj-ebe">EVA positive · NOPAT 127 k€</div>
-<div class="proj-net">RCE/CMPR 5,5× · CMPR 5,4 %</div>
-<div class="proj-bar-wrap"><div class="proj-bar" style="width:55%"></div></div>
-</div>
-</div>
+<div class="projection reveal" id="finance">
+  <div class="proj-title">Synthèse financière du scénario central.</div>
+  <div class="finance-kpi-grid">
+    <div class="finance-kpi-card warning">
+      <div>
+        <div class="finance-kpi-label">CA total / an</div>
+        <div class="finance-kpi-value">937 k€</div>
+        <div class="finance-kpi-note"><strong>Scénario central</strong><br/>Restaurant 495 k€ · Épicerie 294 k€ · Snacking 75 k€ · Bière 41 k€ · Rooftop 32 k€</div>
+      </div>
+    </div>
+    <div class="finance-kpi-card">
+      <div>
+        <div class="finance-kpi-label">Marge brute</div>
+        <div class="finance-kpi-value">584 k€</div>
+        <div class="finance-kpi-note"><strong>62,3 % du CA</strong><br/>Food cost restaurant : 30,0 %, cohérent avec la norme 28–32 %.</div>
+      </div>
+      <span class="finance-pill">OK</span>
+    </div>
+    <div class="finance-kpi-card">
+      <div>
+        <div class="finance-kpi-label">EBE estimé</div>
+        <div class="finance-kpi-value">219 k€</div>
+        <div class="finance-kpi-note"><strong>23,4 % du CA</strong><br/>Rentabilité opérationnelle au-dessus de la norme 12–18 %.</div>
+      </div>
+      <span class="finance-pill">OK</span>
+    </div>
+    <div class="finance-kpi-card warning">
+      <div>
+        <div class="finance-kpi-label">Seuil de rentabilité</div>
+        <div class="finance-kpi-value">79 cvts/j</div>
+        <div class="finance-kpi-note"><strong>105,3 % de la capacité</strong><br/>Point de vigilance : le taux de remplissage doit être sécurisé.</div>
+      </div>
+      <span class="finance-pill danger">Difficile</span>
+    </div>
+    <div class="finance-kpi-card">
+      <div>
+        <div class="finance-kpi-label">Break-even cash-flow</div>
+        <div class="finance-kpi-value">41 mois</div>
+        <div class="finance-kpi-note">Retour sur cash-flow libre : horizon acceptable pour un projet d’ouverture.</div>
+      </div>
+      <span class="finance-pill">Bon</span>
+    </div>
+    <div class="finance-kpi-card">
+      <div>
+        <div class="finance-kpi-label">Masse salariale / an</div>
+        <div class="finance-kpi-value">173 k€</div>
+        <div class="finance-kpi-note"><strong>18,4 % du CA</strong><br/>Niveau maîtrisé, inférieur au seuil de vigilance de 35 %.</div>
+      </div>
+      <span class="finance-pill">OK</span>
+    </div>
+    <div class="finance-kpi-card">
+      <div>
+        <div class="finance-kpi-label">Résultat net estimé</div>
+        <div class="finance-kpi-value">158 k€</div>
+        <div class="finance-kpi-note"><strong>16,9 % du CA</strong><br/>Rentabilité nette positive dans le scénario central.</div>
+      </div>
+      <span class="finance-pill">OK</span>
+    </div>
+    <div class="finance-kpi-card warning">
+      <div>
+        <div class="finance-kpi-label">EVA — création de valeur</div>
+        <div class="finance-kpi-value">104 k€</div>
+        <div class="finance-kpi-note"><strong>NOPAT 127 k€ − charge capital 23 k€</strong><br/>RCE/CMPR : 5,5× · CMPR : 5,4 %.</div>
+      </div>
+      <span class="finance-pill">Création de valeur</span>
+    </div>
+  </div>
+  <div class="finance-note-box">
+    Lecture : le projet est rentable en scénario central, mais la cohérence financière dépend surtout de deux leviers : maintenir l’EBE autour de <strong>219 k€</strong> et sécuriser le seuil de rentabilité de <strong>79 couverts/jour</strong>. La recommandation est donc favorable, sous réserve d’un pilotage strict du remplissage, du food cost et du BFR.
+  </div>
 </div>
 <!-- SCÉNARIOS -->
 <div class="preopen-note reveal">
